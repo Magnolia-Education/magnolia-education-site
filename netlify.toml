@@ -5,6 +5,12 @@
 [functions]
   node_bundler = "esbuild"
 
+# Route /ticktick-callback to the Netlify function (clean URL for TickTick OAuth redirect URI)
+[[redirects]]
+  from = "/ticktick-callback"
+  to = "/.netlify/functions/ticktick-callback"
+  status = 200
+
 # Protect the admin with a redirect that still allows the page to load.
 # For full password protection, set NETLIFY_AUTH_PASSWORD in Netlify dashboard.
 [[headers]]
