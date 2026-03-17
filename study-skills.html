@@ -239,6 +239,33 @@
     .hw-step-content p { font-size: 0.9rem; line-height: 1.6; color: var(--text-light); }
 
     /* ─────────────────────────────────────
+       TESTIMONIALS CAROUSEL
+    ───────────────────────────────────── */
+    .testimonials-section { background: linear-gradient(135deg, var(--hero-start), var(--hero-end)); padding: 100px 0; }
+    .testimonials-header { max-width: 1120px; margin: 0 auto; padding: 0 48px 48px; }
+    .testimonials-scroll {
+      display: flex; flex-wrap: nowrap; gap: 24px; overflow-x: auto; overflow-y: visible;
+      padding: 12px 48px 24px; scrollbar-width: none; cursor: grab;
+    }
+    .testimonials-scroll::-webkit-scrollbar { display: none; }
+    .testimonials-scroll:active { cursor: grabbing; }
+    .testimonial-card {
+      background: #fff; border-radius: 14px; padding: 28px 28px 24px;
+      min-width: 320px; max-width: 320px;
+      box-shadow: 0 4px 24px rgba(61,68,102,0.08); flex-shrink: 0;
+    }
+    .stars { color: #f5a623; font-size: 0.95rem; margin-bottom: 14px; letter-spacing: 2px; }
+    .testimonial-card p { color: var(--text); font-size: 0.9rem; line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+    .testimonial-author { font-weight: 600; font-size: 0.8rem; color: var(--navy); letter-spacing: 0.05em; }
+    .testimonial-role { font-size: 0.75rem; color: var(--text-light); margin-top: 2px; }
+
+    @media (max-width: 600px) {
+      .testimonials-header { padding: 0 20px 32px; }
+      .testimonials-scroll { padding: 12px 20px 24px; }
+      .testimonial-card { min-width: 280px; max-width: 280px; }
+    }
+
+    /* ─────────────────────────────────────
        CTA
     ───────────────────────────────────── */
     .cta-section {
@@ -429,6 +456,15 @@
   </div>
 </section>
 
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <div class="testimonials-header reveal">
+    <p class="section-label" id="ss-test-label"></p>
+    <h2 class="section-title" id="ss-test-title"></h2>
+  </div>
+  <div class="testimonials-scroll" id="ss-testimonials-scroll"></div>
+</section>
+
 <!-- CTA -->
 <section class="cta-section">
   <div class="cta-inner reveal">
@@ -549,6 +585,21 @@
     `).join('');
   }
 
+  // Testimonials
+  setText('ss-test-label', SS.testimonials.label);
+  setText('ss-test-title', SS.testimonials.title);
+  const ssTestScroll = document.getElementById('ss-testimonials-scroll');
+  if (ssTestScroll) {
+    ssTestScroll.innerHTML = SS.testimonials.items.map(t =>
+      `<div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p>\u201c${t.quote}\u201d</p>
+        <p class="testimonial-author">${t.author}</p>
+        <p class="testimonial-role">${t.role}</p>
+      </div>`
+    ).join('');
+  }
+
   // CTA
   setText('ss-cta-title', SS.cta.title);
   setText('ss-cta-body', SS.cta.body);
@@ -587,6 +638,24 @@
     hamburger.classList.remove('open');
     mobileNav.classList.remove('open');
   }));
+
+  // Drag-to-scroll testimonials
+  const ssSlider = document.getElementById('ss-testimonials-scroll');
+  if (ssSlider) {
+    let isDown = false, startX, scrollLeft;
+    ssSlider.addEventListener('mousedown', e => {
+      isDown = true; ssSlider.style.cursor = 'grabbing';
+      startX = e.pageX - ssSlider.offsetLeft; scrollLeft = ssSlider.scrollLeft;
+    });
+    document.addEventListener('mouseup', () => { isDown = false; ssSlider.style.cursor = 'grab'; });
+    ssSlider.addEventListener('mousemove', e => {
+      if (!isDown) return; e.preventDefault();
+      ssSlider.scrollLeft = scrollLeft - (e.pageX - ssSlider.offsetLeft - startX) * 1.5;
+    });
+    let tx = 0, tsl = 0;
+    ssSlider.addEventListener('touchstart', e => { tx = e.touches[0].pageX; tsl = ssSlider.scrollLeft; }, { passive: true });
+    ssSlider.addEventListener('touchmove', e => { ssSlider.scrollLeft = tsl - (e.touches[0].pageX - tx) * 1.2; }, { passive: true });
+  }
 })();
 </script>
 </body>

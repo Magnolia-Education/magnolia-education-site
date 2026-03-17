@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Story | Magnolia Education</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="content.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #3D4466;
+      --coral: #E8836A;
+      --coral-pale: #FDF0EC;
+      --hero-start: #E2EAF2;
+      --hero-end: #D4E5EE;
+      --beige: #EDE8E0;
+      --white: #ffffff;
+      --text: #2a2a2a;
+      --text-light: #5a5a6a;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: var(--text); background: #fff; overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--navy);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 68px; display: flex; align-items: center;
+      padding: 0 48px; gap: 40px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; margin-right: auto; }
+    .nav-logo img { height: 38px; width: auto; }
+    .nav-logo-text { font-family: var(--font-display); font-size: 1.25rem; color: var(--white); font-weight: 500; letter-spacing: 0.02em; }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a, .nav-dropdown > a {
+      color: rgba(255,255,255,0.88); font-size: 0.9rem; text-decoration: none;
+      font-weight: 400; letter-spacing: 0.01em; transition: color .2s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown > a::after { content: ' ▾'; font-size: 0.7em; opacity: 0.7; }
+    .nav-dropdown-menu {
+      display: none; position: absolute; top: 100%; left: 0;
+      background: var(--navy); border-top: 2px solid var(--coral);
+      min-width: 180px; padding: 8px 0;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+    .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+    .nav-dropdown-menu a { display: block; padding: 10px 20px; color: rgba(255,255,255,0.8); font-size: 0.875rem; }
+    .nav-dropdown-menu a:hover { color: #fff; background: rgba(255,255,255,0.05); }
+    .nav-cta {
+      background: var(--coral); color: #fff !important; padding: 9px 22px;
+      border-radius: 6px; font-weight: 500; font-size: 0.875rem !important;
+      transition: background .2s, transform .15s !important;
+    }
+    .nav-cta:hover { background: #d96e54 !important; transform: translateY(-1px); }
+
+    /* ── HAMBURGER ── */
+    .nav-hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      padding: 8px; margin-left: auto; background: none; border: none;
+    }
+    .nav-hamburger span { display: block; width: 24px; height: 2px; background: rgba(255,255,255,0.88); border-radius: 2px; transition: transform .3s, opacity .3s; }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-mobile {
+      display: none; position: fixed; top: 68px; left: 0; right: 0;
+      background: var(--navy); z-index: 99; padding: 16px 24px 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      transform: translateY(-10px); opacity: 0;
+      transition: transform .25s ease, opacity .25s ease;
+      pointer-events: none;
+    }
+    .nav-mobile.open { transform: none; opacity: 1; pointer-events: all; }
+    .nav-mobile a { display: block; color: rgba(255,255,255,0.85); font-size: 1rem; text-decoration: none; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .nav-mobile a:last-child { border-bottom: none; }
+    .nav-mobile .mobile-cta { display: block; margin-top: 16px; background: var(--coral); color: #fff; text-align: center; padding: 14px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+
+    /* ── SHARED ── */
+    .btn-primary {
+      display: inline-block; background: var(--coral); color: #fff;
+      padding: 14px 32px; border-radius: 8px; text-decoration: none;
+      font-weight: 500; font-size: 0.95rem; transition: background .2s, transform .15s;
+    }
+    .btn-primary:hover { background: #d96e54; transform: translateY(-2px); }
+    .btn-white { background: #fff; color: var(--navy); padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: background .2s; display: inline-block; }
+    .btn-white:hover { background: rgba(255,255,255,0.9); }
+    .btn-outline-white { background: transparent; color: #fff; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: 500; font-size: 0.95rem; border: 2px solid rgba(255,255,255,0.5); transition: border-color .2s, background .2s; display: inline-block; }
+    .btn-outline-white:hover { border-color: #fff; background: rgba(255,255,255,0.05); }
+    .section-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--coral); margin-bottom: 16px; display: block; }
+    .section-title { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 500; line-height: 1.2; color: var(--navy); margin-bottom: 20px; }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--hero-start) 0%, var(--hero-end) 100%);
+      padding-top: 68px; min-height: 560px;
+      display: flex; align-items: center;
+    }
+    .hero-inner {
+      max-width: 1120px; margin: 0 auto; width: 100%;
+      padding: 80px 48px;
+      display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 64px;
+    }
+    .hero-eyebrow { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--coral); margin-bottom: 20px; }
+    .hero-title { font-family: var(--font-display); font-size: clamp(2.8rem, 5vw, 4rem); font-weight: 500; line-height: 1.1; color: var(--navy); margin-bottom: 24px; }
+    .hero-subtitle { font-size: 1.05rem; line-height: 1.7; color: var(--text-light); max-width: 480px; }
+    .hero-img { text-align: center; }
+    .hero-img img { max-width: 100%; height: auto; max-height: 400px; object-fit: contain; filter: drop-shadow(0 20px 60px rgba(61,68,102,0.12)); }
+
+    /* ── RACHIT STORY ── */
+    .story-section {
+      background: var(--navy); padding: 100px 48px;
+    }
+    .story-inner {
+      max-width: 1120px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .story-img img {
+      width: 100%; max-width: 420px; border-radius: 16px;
+      filter: drop-shadow(0 24px 48px rgba(0,0,0,0.3));
+    }
+    .story-text .section-label { color: var(--coral); }
+    .story-text .section-title { color: #fff; margin-bottom: 28px; }
+    .story-text p { color: rgba(255,255,255,0.8); line-height: 1.8; font-size: 1rem; margin-bottom: 16px; }
+
+    /* ── PHILOSOPHY ── */
+    .philosophy-section {
+      padding: 100px 48px; background: #fff;
+    }
+    .philosophy-inner {
+      max-width: 800px; margin: 0 auto; text-align: center;
+    }
+    .philosophy-quote {
+      font-family: var(--font-display); font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 500; color: var(--navy); line-height: 1.2;
+      font-style: italic; margin-bottom: 32px;
+    }
+    .philosophy-quote em { color: var(--coral); font-style: italic; }
+    .philosophy-body { font-size: 1.05rem; line-height: 1.8; color: var(--text-light); max-width: 640px; margin: 0 auto; }
+
+    /* ── VALUES ── */
+    .values-section { background: var(--beige); padding: 100px 48px; }
+    .values-header { text-align: center; margin-bottom: 64px; }
+    .values-grid {
+      max-width: 1120px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px;
+    }
+    .value-card { text-align: center; background: #fff; border-radius: 16px; padding: 40px 32px; box-shadow: 0 4px 24px rgba(61,68,102,0.06); }
+    .value-icon { font-size: 2.4rem; margin-bottom: 20px; }
+    .value-card h3 { font-family: var(--font-display); font-size: 1.5rem; color: var(--navy); margin-bottom: 12px; font-weight: 500; }
+    .value-card p { color: var(--text-light); font-size: 0.9rem; line-height: 1.7; }
+
+    /* ── GAVIN ── */
+    .gavin-section { background: var(--coral); padding: 100px 48px; }
+    .gavin-inner {
+      max-width: 1120px; margin: 0 auto;
+      display: grid; grid-template-columns: auto 1fr; gap: 80px; align-items: center;
+    }
+    .gavin-stat {
+      text-align: center; flex-shrink: 0;
+    }
+    .gavin-number {
+      font-family: var(--font-display); font-size: clamp(4rem, 8vw, 7rem);
+      font-weight: 600; color: #fff; line-height: 1; display: block;
+    }
+    .gavin-number-label {
+      font-size: 0.85rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(255,255,255,0.7); margin-top: 8px;
+    }
+    .gavin-text .section-label { color: rgba(255,255,255,0.7); }
+    .gavin-title {
+      font-family: var(--font-display); font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 500; color: #fff; margin-bottom: 24px; line-height: 1.2;
+    }
+    .gavin-text p { color: rgba(255,255,255,0.85); font-size: 1rem; line-height: 1.8; margin-bottom: 12px; }
+
+    /* ── CTA ── */
+    .cta-section { background: var(--navy); padding: 96px 48px; text-align: center; }
+    .cta-section h2 { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); color: #fff; margin-bottom: 16px; }
+    .cta-section p { color: rgba(255,255,255,0.75); font-size: 1.05rem; max-width: 540px; margin: 0 auto 40px; line-height: 1.7; }
+    .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── FOOTER ── */
+    footer { background: #2a2d40; color: rgba(255,255,255,0.7); padding: 64px 48px 32px; }
+    .footer-grid { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand img { height: 36px; margin-bottom: 16px; }
+    .footer-brand p { font-size: 0.875rem; line-height: 1.7; color: rgba(255,255,255,0.55); max-width: 260px; }
+    .footer-tagline-text { font-family: var(--font-display); font-size: 1rem; color: rgba(255,255,255,0.7); font-style: italic; margin-top: 12px; }
+    .footer-col h4 { color: #fff; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+    .footer-col a { display: block; color: rgba(255,255,255,0.55); font-size: 0.875rem; text-decoration: none; margin-bottom: 10px; transition: color .2s; }
+    .footer-col a:hover { color: rgba(255,255,255,0.9); }
+    .footer-bottom { max-width: 1120px; margin: 0 auto; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 0.8rem; color: rgba(255,255,255,0.35); }
+    .footer-fun-fact { font-size: 0.78rem; color: rgba(255,255,255,0.35); font-style: italic; max-width: 440px; text-align: right; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      nav { padding: 0 24px; gap: 20px; }
+      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+      .hero-img { order: -1; }
+      .story-inner { grid-template-columns: 1fr; gap: 48px; }
+      .story-img { text-align: center; }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+      .gavin-inner { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-mobile { display: block; }
+
+      .hero { min-height: auto; }
+      .hero-inner { padding: 60px 20px 48px; }
+      .story-section { padding: 72px 20px; }
+      .philosophy-section { padding: 72px 20px; }
+      .values-section { padding: 72px 20px; }
+      .values-grid { grid-template-columns: 1fr; }
+      .gavin-section { padding: 72px 20px; }
+      .cta-section { padding: 72px 20px; }
+      .cta-buttons { flex-direction: column; align-items: center; }
+      .cta-buttons a { width: 100%; text-align: center; max-width: 340px; }
+
+      footer { padding: 48px 20px 24px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-fun-fact { text-align: left; max-width: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="images/MAGNOLIA.PNG" alt="Magnolia flower logo" />
+    <span class="nav-logo-text">Magnolia Education</span>
+  </a>
+  <div class="nav-links">
+    <div class="nav-dropdown">
+      <a href="#">Services</a>
+      <div class="nav-dropdown-menu">
+        <a href="tutoring.html">Tutoring</a>
+        <a href="mock-exams.html">Mock Exams</a>
+        <a href="study-skills.html">Study Skills</a>
+        <a href="prep-cohorts.html">Prep Cohorts</a>
+      </div>
+    </div>
+    <div class="nav-dropdown">
+      <a href="#">About</a>
+      <div class="nav-dropdown-menu">
+        <a href="story.html">Our Story</a>
+        <a href="tutors.html">Our Tutors</a>
+      </div>
+    </div>
+    <a href="contact.html">Contact</a>
+    <a href="https://calendly.com/rachit-chakerwarti/call" target="_blank" class="nav-cta">Book a Free Call</a>
+  </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE NAV -->
+<nav class="nav-mobile" id="mobile-nav">
+  <a href="tutoring.html">Tutoring</a>
+  <a href="mock-exams.html">Mock Exams</a>
+  <a href="study-skills.html">Study Skills</a>
+  <a href="prep-cohorts.html">Prep Cohorts</a>
+  <a href="story.html">Our Story</a>
+  <a href="tutors.html">Our Tutors</a>
+  <a href="contact.html">Contact</a>
+  <a href="https://calendly.com/rachit-chakerwarti/call" target="_blank" class="mobile-cta">Book a Free Call</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text reveal">
+      <p class="hero-eyebrow" id="st-hero-eyebrow"></p>
+      <h1 class="hero-title" id="st-hero-title"></h1>
+      <p class="hero-subtitle" id="st-hero-subtitle"></p>
+    </div>
+    <div class="hero-img reveal">
+      <img src="images/11Ourstory.png" alt="Magnolia Education story illustration" />
+    </div>
+  </div>
+</section>
+
+<!-- RACHIT'S STORY -->
+<section class="story-section">
+  <div class="story-inner">
+    <div class="story-img reveal">
+      <img src="images/13portrait.png" alt="Rachit Chakerwarti, founder of Magnolia Education" />
+    </div>
+    <div class="story-text reveal">
+      <p class="section-label" id="st-rachit-label"></p>
+      <h2 class="section-title" id="st-rachit-title"></h2>
+      <p id="st-rachit-p1"></p>
+      <p id="st-rachit-p2"></p>
+      <p id="st-rachit-p3"></p>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy-section">
+  <div class="philosophy-inner reveal">
+    <p class="section-label" id="st-phil-label"></p>
+    <h2 class="philosophy-quote" id="st-phil-title"></h2>
+    <p class="philosophy-body" id="st-phil-body"></p>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values-section">
+  <div class="values-header reveal">
+    <p class="section-label" style="text-align:center" id="st-val-label"></p>
+  </div>
+  <div class="values-grid" id="st-values-grid"></div>
+</section>
+
+<!-- GAVIN -->
+<section class="gavin-section">
+  <div class="gavin-inner">
+    <div class="gavin-stat reveal">
+      <span class="gavin-number">100%</span>
+      <p class="gavin-number-label">Grade 12 Adv. Functions</p>
+    </div>
+    <div class="gavin-text reveal">
+      <p class="section-label" id="st-gavin-label"></p>
+      <h2 class="gavin-title" id="st-gavin-title"></h2>
+      <p id="st-gavin-body1"></p>
+      <p id="st-gavin-body2"></p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2 class="reveal" id="st-cta-title"></h2>
+  <p class="reveal" id="st-cta-body"></p>
+  <div class="cta-buttons reveal">
+    <a href="#" id="st-cta-primary" target="_blank" class="btn-white"></a>
+    <a href="#" id="st-cta-secondary" class="btn-outline-white"></a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="images/MAGNOLIA.PNG" alt="Magnolia Education logo" />
+      <p id="f-tagline"></p>
+      <p class="footer-tagline-text" id="f-quote"></p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="tutoring.html">Tutoring</a>
+      <a href="mock-exams.html">Mock Exams</a>
+      <a href="study-skills.html">Study Skills</a>
+      <a href="prep-cohorts.html">Prep Cohorts</a>
+    </div>
+    <div class="footer-col">
+      <h4>About</h4>
+      <a href="story.html">Our Story</a>
+      <a href="tutors.html">Our Tutors</a>
+      <a href="https://purrfect-single-1d6.notion.site/18bb3ed99418804298c0c90bf3f02862" target="_blank">Join Our Team</a>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <a href="contact.html">Contact</a>
+      <a href="mailto:hello@magnolia-education.com">hello@magnolia-education.com</a>
+      <a href="https://calendly.com/rachit-chakerwarti/call" target="_blank">Book a Call</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p id="f-copyright"></p>
+    <p class="footer-fun-fact" id="f-funfact"></p>
+  </div>
+</footer>
+
+
+<script>
+(function () {
+  const C = window.CONTENT;
+  if (!C) return;
+
+  const S = C.story;
+  const H = C.homepage;
+
+  function setText(id, val) {
+    const el = document.getElementById(id);
+    if (el && val != null) el.textContent = val;
+  }
+  function setAttr(id, attr, val) {
+    const el = document.getElementById(id);
+    if (el && val != null) el.setAttribute(attr, val);
+  }
+
+  document.title = S.meta.title;
+
+  // Hero
+  setText('st-hero-eyebrow', S.hero.eyebrow);
+  setText('st-hero-title', S.hero.title);
+  setText('st-hero-subtitle', S.hero.subtitle);
+
+  // Rachit
+  setText('st-rachit-label', S.rachit.label);
+  setText('st-rachit-title', S.rachit.title);
+  setText('st-rachit-p1', S.rachit.para1);
+  setText('st-rachit-p2', S.rachit.para2);
+  setText('st-rachit-p3', S.rachit.para3);
+
+  // Philosophy
+  setText('st-phil-label', S.philosophy.label);
+  setText('st-phil-title', S.philosophy.title);
+  setText('st-phil-body', S.philosophy.body);
+
+  // Values
+  setText('st-val-label', S.values.label);
+  const valGrid = document.getElementById('st-values-grid');
+  if (valGrid) {
+    valGrid.innerHTML = S.values.items.map(v =>
+      `<div class="value-card reveal">
+        <div class="value-icon">${v.icon}</div>
+        <h3>${v.title}</h3>
+        <p>${v.body}</p>
+      </div>`
+    ).join('');
+  }
+
+  // Gavin
+  setText('st-gavin-label', S.gavin.label);
+  setText('st-gavin-title', S.gavin.title);
+  setText('st-gavin-body1', S.gavin.body1);
+  setText('st-gavin-body2', S.gavin.body2);
+
+  // CTA
+  setText('st-cta-title', S.cta.title);
+  setText('st-cta-body', S.cta.body);
+  setText('st-cta-primary', S.cta.primaryLabel);
+  setAttr('st-cta-primary', 'href', S.cta.primaryHref);
+  setText('st-cta-secondary', S.cta.secondaryLabel);
+  setAttr('st-cta-secondary', 'href', S.cta.secondaryHref);
+
+  // Footer
+  setText('f-tagline', H.footer.tagline);
+  setText('f-quote', H.footer.quote);
+  setText('f-copyright', H.footer.copyright);
+  setText('f-funfact', H.footer.funFact);
+
+  // Reveal
+  function initReveal() {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.05 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    document.querySelectorAll('.reveal').forEach(el => {
+      if (el.getBoundingClientRect().top < window.innerHeight + 40) el.classList.add('visible');
+    });
+  }
+  setTimeout(initReveal, 50);
+  window.addEventListener('scroll', () => {
+    document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
+      if (el.getBoundingClientRect().top < window.innerHeight + 40) el.classList.add('visible');
+    });
+  }, { passive: true });
+
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobile-nav');
+  hamburger && hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+  });
+  mobileNav && mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileNav.classList.remove('open');
+  }));
+})();
+</script>
+</body>
+</html>
