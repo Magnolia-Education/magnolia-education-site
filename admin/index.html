@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Magnolia Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #3D4466; --coral: #E8836A; --coral-pale: #FDF0EC;
+      --bg: #F4F5F8; --white: #fff; --border: #dde1ed;
+      --text: #2a2a2a; --muted: #6b7280;
+      --success: #22c55e; --error: #ef4444; --warn: #f59e0b;
+      --font: 'DM Sans', system-ui, sans-serif;
+    }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; }
+    input, textarea, select, button { font-family: var(--font); }
+
+    /* ── LOGIN SCREEN ── */
+    #login-screen {
+      position: fixed; inset: 0; background: var(--navy);
+      display: flex; align-items: center; justify-content: center; z-index: 1000;
+    }
+    #login-screen.hidden { display: none; }
+    .login-card {
+      background: var(--white); border-radius: 16px; padding: 48px;
+      width: 100%; max-width: 440px; box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+    }
+    .login-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
+    .login-logo img { height: 40px; }
+    .login-logo span { font-size: 1.2rem; font-weight: 600; color: var(--navy); }
+    .login-card h1 { font-size: 1.4rem; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
+    .login-card p { color: var(--muted); font-size: 0.875rem; margin-bottom: 28px; line-height: 1.6; }
+    .field { margin-bottom: 20px; }
+    .field label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--navy); margin-bottom: 6px; letter-spacing: 0.03em; text-transform: uppercase; }
+    .field input {
+      width: 100%; padding: 11px 14px; border: 2px solid var(--border);
+      border-radius: 8px; font-size: 0.9rem; transition: border-color .2s;
+    }
+    .field input:focus { outline: none; border-color: var(--navy); }
+    .field .hint { font-size: 0.78rem; color: var(--muted); margin-top: 5px; }
+    .btn-login {
+      width: 100%; background: var(--coral); color: #fff; border: none;
+      padding: 13px; border-radius: 8px; font-size: 0.95rem; font-weight: 600;
+      cursor: pointer; transition: background .2s;
+    }
+    .btn-login:hover { background: #d96e54; }
+    #login-error { color: var(--error); font-size: 0.85rem; margin-top: 12px; display: none; }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; height: 60px;
+      background: var(--navy); display: flex; align-items: center;
+      padding: 0 24px; gap: 16px; z-index: 50;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .topbar-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .topbar-logo img { height: 32px; }
+    .topbar-logo span { color: #fff; font-weight: 600; font-size: 1rem; }
+    .topbar-badge { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.7); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; }
+    .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+    #status-msg { font-size: 0.8rem; color: rgba(255,255,255,0.7); }
+    #status-msg.ok { color: var(--success); }
+    #status-msg.err { color: #ff8080; }
+    .btn-save {
+      background: var(--coral); color: #fff; border: none;
+      padding: 9px 22px; border-radius: 6px; font-size: 0.875rem; font-weight: 600;
+      cursor: pointer; transition: background .2s, opacity .2s;
+    }
+    .btn-save:hover { background: #d96e54; }
+    .btn-save:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-logout {
+      background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); border: none;
+      padding: 8px 14px; border-radius: 6px; font-size: 0.8rem;
+      cursor: pointer; transition: background .2s;
+    }
+    .btn-logout:hover { background: rgba(255,255,255,0.18); }
+
+    /* ── LAYOUT ── */
+    #app { display: none; padding-top: 60px; min-height: 100vh; }
+    #app.visible { display: flex; }
+    .sidebar {
+      width: 220px; flex-shrink: 0;
+      background: var(--white); border-right: 1px solid var(--border);
+      position: fixed; top: 60px; bottom: 0; overflow-y: auto;
+      padding: 20px 0;
+    }
+    .sidebar-group { padding: 0 12px 8px; }
+    .sidebar-group-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); padding: 4px 8px 8px; }
+    .sidebar-btn {
+      display: block; width: 100%; text-align: left;
+      padding: 9px 12px; border-radius: 6px; border: none;
+      background: none; cursor: pointer; font-size: 0.875rem; color: var(--text);
+      transition: background .15s, color .15s;
+    }
+    .sidebar-btn:hover { background: var(--bg); }
+    .sidebar-btn.active { background: var(--coral-pale); color: var(--coral); font-weight: 600; }
+
+    /* ── MAIN ── */
+    .main { margin-left: 220px; flex: 1; padding: 32px; max-width: 860px; }
+    .panel { display: none; }
+    .panel.active { display: block; }
+    .panel-title { font-size: 1.3rem; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+    .panel-desc { font-size: 0.875rem; color: var(--muted); margin-bottom: 32px; line-height: 1.6; }
+
+    /* ── CARDS ── */
+    .card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; }
+    .card-title { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--navy); margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+
+    /* ── FIELDS ── */
+    .field-row { margin-bottom: 18px; }
+    .field-row label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--navy); margin-bottom: 5px; letter-spacing: 0.03em; }
+    .field-row .desc { font-size: 0.75rem; color: var(--muted); margin-bottom: 6px; }
+    .field-row input[type="text"],
+    .field-row input[type="url"],
+    .field-row input[type="password"],
+    .field-row textarea {
+      width: 100%; padding: 10px 13px; border: 2px solid var(--border);
+      border-radius: 8px; font-size: 0.875rem; transition: border-color .2s;
+      resize: vertical;
+    }
+    .field-row input:focus,
+    .field-row textarea:focus { outline: none; border-color: var(--navy); }
+    .field-row textarea { min-height: 80px; line-height: 1.6; }
+    .field-row textarea.tall { min-height: 130px; }
+
+    /* ── TUTOR CARDS ── */
+    .tutor-card {
+      background: var(--white); border: 1px solid var(--border); border-radius: 12px;
+      padding: 20px; margin-bottom: 16px; position: relative;
+    }
+    .tutor-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .tutor-avatar { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border); }
+    .tutor-name-preview { font-weight: 600; font-size: 0.95rem; color: var(--navy); }
+    .tutor-title-preview { font-size: 0.8rem; color: var(--muted); }
+    .tutor-remove {
+      position: absolute; top: 16px; right: 16px;
+      background: none; border: 1px solid var(--border); border-radius: 6px;
+      padding: 5px 10px; font-size: 0.78rem; color: var(--error);
+      cursor: pointer; transition: background .15s;
+    }
+    .tutor-remove:hover { background: #fef2f2; }
+    .tutor-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .tutor-fields .span2 { grid-column: span 2; }
+    .btn-add-tutor {
+      display: flex; align-items: center; gap: 8px;
+      background: none; border: 2px dashed var(--border); border-radius: 10px;
+      padding: 14px 20px; font-size: 0.875rem; font-weight: 600; color: var(--coral);
+      cursor: pointer; width: 100%; justify-content: center; transition: border-color .2s;
+    }
+    .btn-add-tutor:hover { border-color: var(--coral); }
+
+    /* ── SETTINGS ── */
+    .settings-note {
+      background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px;
+      padding: 14px 16px; font-size: 0.82rem; color: #92400e; line-height: 1.65;
+      margin-bottom: 20px;
+    }
+    .settings-note strong { font-weight: 600; }
+    .conn-status { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; margin-top: 10px; }
+    .conn-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+    .conn-dot.ok { background: var(--success); }
+    .conn-dot.err { background: var(--error); }
+    .btn-test {
+      margin-top: 12px; background: none; border: 2px solid var(--navy);
+      color: var(--navy); padding: 9px 18px; border-radius: 8px;
+      font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: background .2s;
+    }
+    .btn-test:hover { background: var(--navy); color: #fff; }
+
+    /* ── INLINE ITEMS (principles, services, values, testimonials) ── */
+    .inline-item {
+      background: var(--bg); border-radius: 8px; padding: 16px; margin-bottom: 12px;
+    }
+    .inline-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .inline-item-label { font-size: 0.8rem; font-weight: 600; color: var(--navy); }
+    .btn-remove-item { background: none; border: none; font-size: 0.78rem; color: var(--error); cursor: pointer; }
+
+    @media (max-width: 700px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; padding: 20px; }
+      .tutor-fields { grid-template-columns: 1fr; }
+      .tutor-fields .span2 { grid-column: span 1; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ LOGIN SCREEN ═══ -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <img src="../images/MAGNOLIA.PNG" alt="Magnolia" />
+      <span>Magnolia Admin</span>
+    </div>
+    <h1>Sign in</h1>
+    <p>Enter the admin password to access the content editor. Your GitHub settings are stored securely in your browser.</p>
+    <div class="field">
+      <label>Admin Password</label>
+      <input type="password" id="pw-input" placeholder="••••••••••" />
+      <p class="hint">Default: magnolia2025 — change this in admin/index.html line marked CHANGE_THIS</p>
+    </div>
+    <button class="btn-login" id="btn-login">Sign In</button>
+    <p id="login-error">Incorrect password. Please try again.</p>
+  </div>
+</div>
+
+<!-- ═══ APP ═══ -->
+<div id="app">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <a href="../index.html" class="topbar-logo">
+      <img src="../images/MAGNOLIA.PNG" alt="Magnolia" />
+      <span>Magnolia Education</span>
+    </a>
+    <span class="topbar-badge">Admin</span>
+    <div class="topbar-right">
+      <span id="status-msg">Not connected to GitHub</span>
+      <button class="btn-save" id="btn-save" disabled>Save &amp; Deploy</button>
+      <button class="btn-logout" id="btn-logout">Sign Out</button>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-group">
+      <div class="sidebar-group-label">Homepage</div>
+      <button class="sidebar-btn active" data-panel="hero">Hero</button>
+      <button class="sidebar-btn" data-panel="founder">Founder</button>
+      <button class="sidebar-btn" data-panel="services">Services</button>
+      <button class="sidebar-btn" data-panel="exam">Exam Banner</button>
+      <button class="sidebar-btn" data-panel="values">Values</button>
+      <button class="sidebar-btn" data-panel="testimonials">Testimonials</button>
+      <button class="sidebar-btn" data-panel="cta">CTA &amp; Email</button>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-label">Tutoring Page</div>
+      <button class="sidebar-btn" data-panel="t-hero">Hero</button>
+      <button class="sidebar-btn" data-panel="t-benefits">Benefits</button>
+      <button class="sidebar-btn" data-panel="t-how">How It Works</button>
+      <button class="sidebar-btn" data-panel="t-success">Technology &amp; Mindfulness</button>
+      <button class="sidebar-btn" data-panel="t-reviews">Reviews</button>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-label">Tutors</div>
+      <button class="sidebar-btn" data-panel="tutors">Tutor Profiles</button>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-label">Settings</div>
+      <button class="sidebar-btn" data-panel="settings">GitHub Settings</button>
+    </div>
+  </aside>
+
+  <!-- MAIN PANELS -->
+  <main class="main">
+
+    <!-- ── HERO ── -->
+    <div class="panel active" id="panel-hero">
+      <h2 class="panel-title">Homepage Hero</h2>
+      <p class="panel-desc">The first section visitors see. Keep the eyebrow short — it sets the context.</p>
+      <div class="card">
+        <div class="card-title">Hero Copy</div>
+        <div class="field-row"><label>Eyebrow (small text above heading)</label><input type="text" data-path="homepage.hero.eyebrow" /></div>
+        <div class="field-row"><label>Main Title (first line)</label><input type="text" data-path="homepage.hero.title" /></div>
+        <div class="field-row"><label>Italic Title (second line, shown in coral)</label><input type="text" data-path="homepage.hero.titleItalic" /></div>
+        <div class="field-row"><label>Subtitle paragraph</label><textarea data-path="homepage.hero.subtitle"></textarea></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Buttons</div>
+        <div class="field-row"><label>Primary button label</label><input type="text" data-path="homepage.hero.ctaPrimaryLabel" /></div>
+        <div class="field-row"><label>Primary button URL</label><input type="url" data-path="homepage.hero.ctaPrimaryHref" /></div>
+        <div class="field-row"><label>Secondary button label</label><input type="text" data-path="homepage.hero.ctaSecondaryLabel" /></div>
+        <div class="field-row"><label>Secondary button URL</label><input type="text" data-path="homepage.hero.ctaSecondaryHref" /></div>
+      </div>
+    </div>
+
+    <!-- ── FOUNDER ── -->
+    <div class="panel" id="panel-founder">
+      <h2 class="panel-title">Founder Section</h2>
+      <p class="panel-desc">The dark navy section with Rachit's photo and story. Three paragraphs + four principle cards.</p>
+      <div class="card">
+        <div class="card-title">Section Header</div>
+        <div class="field-row"><label>Label (small uppercase)</label><input type="text" data-path="homepage.founder.label" /></div>
+        <div class="field-row"><label>Heading</label><input type="text" data-path="homepage.founder.title" /></div>
+        <div class="field-row"><label>Paragraph 1</label><textarea data-path="homepage.founder.para1"></textarea></div>
+        <div class="field-row"><label>Paragraph 2</label><textarea data-path="homepage.founder.para2"></textarea></div>
+        <div class="field-row"><label>Paragraph 3</label><textarea data-path="homepage.founder.para3"></textarea></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Principle Cards (4 cards)</div>
+        <div id="principles-editor"></div>
+      </div>
+    </div>
+
+    <!-- ── SERVICES ── -->
+    <div class="panel" id="panel-services">
+      <h2 class="panel-title">Services Section</h2>
+      <p class="panel-desc">Three service cards on the homepage. Image filenames reference the local images/ folder.</p>
+      <div class="card">
+        <div class="card-title">Section Header</div>
+        <div class="field-row"><label>Label</label><input type="text" data-path="homepage.services.label" /></div>
+        <div class="field-row"><label>Title</label><input type="text" data-path="homepage.services.title" /></div>
+        <div class="field-row"><label>Subtitle</label><textarea data-path="homepage.services.subtitle"></textarea></div>
+      </div>
+      <div id="services-editor"></div>
+    </div>
+
+    <!-- ── EXAM BANNER ── -->
+    <div class="panel" id="panel-exam">
+      <h2 class="panel-title">Exam Banner</h2>
+      <p class="panel-desc">The coral-background banner promoting the next mock exam. Update the date and Stripe link each semester.</p>
+      <div class="card">
+        <div class="card-title">Banner Copy</div>
+        <div class="field-row"><label>Heading</label><input type="text" data-path="homepage.examBanner.title" /></div>
+        <div class="field-row"><label>Body text</label><textarea data-path="homepage.examBanner.body"></textarea></div>
+        <div class="field-row"><label>Date label (shown in coral)</label><input type="text" data-path="homepage.examBanner.date" /></div>
+        <div class="field-row"><label>Register button label</label><input type="text" data-path="homepage.examBanner.ctaLabel" /></div>
+        <div class="field-row"><label>Register button URL (Stripe link)</label><input type="url" data-path="homepage.examBanner.ctaHref" /></div>
+        <div class="field-row"><label>Secondary link label</label><input type="text" data-path="homepage.examBanner.linkLabel" /></div>
+        <div class="field-row"><label>Secondary link URL</label><input type="text" data-path="homepage.examBanner.linkHref" /></div>
+      </div>
+    </div>
+
+    <!-- ── VALUES ── -->
+    <div class="panel" id="panel-values">
+      <h2 class="panel-title">Values Section</h2>
+      <p class="panel-desc">"What makes Magnolia different" — three value cards with emoji icons.</p>
+      <div class="card">
+        <div class="card-title">Section Header</div>
+        <div class="field-row"><label>Label</label><input type="text" data-path="homepage.values.label" /></div>
+        <div class="field-row"><label>Title</label><input type="text" data-path="homepage.values.title" /></div>
+      </div>
+      <div id="values-editor"></div>
+    </div>
+
+    <!-- ── TESTIMONIALS ── -->
+    <div class="panel" id="panel-testimonials">
+      <h2 class="panel-title">Homepage Testimonials</h2>
+      <p class="panel-desc">The scrolling testimonial carousel. Add or remove cards as needed.</p>
+      <div class="card">
+        <div class="card-title">Section Header</div>
+        <div class="field-row"><label>Label</label><input type="text" data-path="homepage.testimonials.label" /></div>
+        <div class="field-row"><label>Title</label><input type="text" data-path="homepage.testimonials.title" /></div>
+      </div>
+      <div id="testimonials-editor"></div>
+    </div>
+
+    <!-- ── CTA & EMAIL ── -->
+    <div class="panel" id="panel-cta">
+      <h2 class="panel-title">CTA &amp; Email Signup</h2>
+      <p class="panel-desc">The navy bottom CTA section and the email newsletter strip above the footer.</p>
+      <div class="card">
+        <div class="card-title">Final CTA (navy section)</div>
+        <div class="field-row"><label>Heading</label><input type="text" data-path="homepage.cta.title" /></div>
+        <div class="field-row"><label>Body text</label><textarea data-path="homepage.cta.body"></textarea></div>
+        <div class="field-row"><label>Primary button label</label><input type="text" data-path="homepage.cta.primaryLabel" /></div>
+        <div class="field-row"><label>Primary button URL</label><input type="url" data-path="homepage.cta.primaryHref" /></div>
+        <div class="field-row"><label>Secondary button label</label><input type="text" data-path="homepage.cta.secondaryLabel" /></div>
+        <div class="field-row"><label>Secondary button URL</label><input type="text" data-path="homepage.cta.secondaryHref" /></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Email Signup Strip</div>
+        <div class="field-row"><label>Heading</label><input type="text" data-path="homepage.email.title" /></div>
+        <div class="field-row"><label>Body text</label><textarea data-path="homepage.email.body"></textarea></div>
+        <div class="field-row"><label>Input placeholder</label><input type="text" data-path="homepage.email.placeholder" /></div>
+        <div class="field-row"><label>Button label</label><input type="text" data-path="homepage.email.button" /></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Footer Copy</div>
+        <div class="field-row"><label>Tagline (brand description)</label><textarea data-path="homepage.footer.tagline"></textarea></div>
+        <div class="field-row"><label>Italic quote below tagline</label><input type="text" data-path="homepage.footer.quote" /></div>
+        <div class="field-row"><label>Copyright line</label><input type="text" data-path="homepage.footer.copyright" /></div>
+        <div class="field-row"><label>Fun fact (bottom right)</label><textarea data-path="homepage.footer.funFact"></textarea></div>
+      </div>
+    </div>
+
+    <!-- ── TUTORING HERO ── -->
+    <div class="panel" id="panel-t-hero">
+      <h2 class="panel-title">Tutoring Page — Hero</h2>
+      <p class="panel-desc">Top section of tutoring.html.</p>
+      <div class="card">
+        <div class="card-title">Hero Copy</div>
+        <div class="field-row"><label>Eyebrow</label><input type="text" data-path="tutoring.hero.eyebrow" /></div>
+        <div class="field-row"><label>Heading</label><input type="text" data-path="tutoring.hero.title" /></div>
+        <div class="field-row"><label>Subtitle</label><textarea data-path="tutoring.hero.subtitle"></textarea></div>
+        <div class="field-row"><label>Button label</label><input type="text" data-path="tutoring.hero.ctaLabel" /></div>
+        <div class="field-row"><label>Button URL</label><input type="url" data-path="tutoring.hero.ctaHref" /></div>
+      </div>
+    </div>
+
+    <!-- ── TUTORING BENEFITS ── -->
+    <div class="panel" id="panel-t-benefits">
+      <h2 class="panel-title">Tutoring Page — Benefits</h2>
+      <p class="panel-desc">The coral-background section with 5 benefit items.</p>
+      <div class="card">
+        <div class="card-title">Section Header</div>
+        <div class="field-row"><label>Label</label><input type="text" data-path="tutoring.benefits.label" /></div>
+        <div class="field-row"><label>Title</label><input type="text" data-path="tutoring.benefits.title" /></div>
+        <div class="field-row"><label>Subtitle</label><textarea data-path="tutoring.benefits.subtitle"></textarea></div>
+      </div>
+      <div id="t-benefits-editor"></div>
+    </div>
+
+    <!-- ── TUTORING HOW IT WORKS ── -->
+    <div class="panel" id="panel-t-how">
+      <h2 class="panel-title">Tutoring Page — How It Works</h2>
+      <p class="panel-desc">Session format descriptions (1:1, 1:3, multi-faceted).</p>
+      <div class="card">
+        <div class="card-title">Section Header</div>
+        <div class="field-row"><label>Label</label><input type="text" data-path="tutoring.howItWorks.label" /></div>
+        <div class="field-row"><label>Title</label><input type="text" data-path="tutoring.howItWorks.title" /></div>
+        <div class="field-row"><label>Body line 1</label><textarea data-path="tutoring.howItWorks.body1"></textarea></div>
+        <div class="field-row"><label>Body line 2</label><textarea data-path="tutoring.howItWorks.body2"></textarea></div>
+        <div class="field-row"><label>CTA button label</label><input type="text" data-path="tutoring.howItWorks.ctaLabel" /></div>
+        <div class="field-row"><label>CTA button URL</label><input type="url" data-path="tutoring.howItWorks.ctaHref" /></div>
+      </div>
+      <div id="t-sessions-editor"></div>
+    </div>
+
+    <!-- ── TUTORING TECHNOLOGY & MINDFULNESS ── -->
+    <div class="panel" id="panel-t-success">
+      <h2 class="panel-title">Tutoring Page — Technology &amp; Mindfulness</h2>
+      <p class="panel-desc">"Achieving success starts here" — two content blocks.</p>
+      <div class="card">
+        <div class="card-title">Section Header</div>
+        <div class="field-row"><label>Heading</label><input type="text" data-path="tutoring.success.title" /></div>
+        <div class="field-row"><label>Subtitle</label><textarea data-path="tutoring.success.subtitle"></textarea></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Technology Block</div>
+        <div class="field-row"><label>Heading</label><input type="text" data-path="tutoring.success.technology.title" /></div>
+        <div class="field-row"><label>Paragraph 1</label><textarea data-path="tutoring.success.technology.body1"></textarea></div>
+        <div class="field-row"><label>Paragraph 2</label><textarea data-path="tutoring.success.technology.body2"></textarea></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Mindfulness Block</div>
+        <div class="field-row"><label>Heading</label><input type="text" data-path="tutoring.success.mindfulness.title" /></div>
+        <div class="field-row"><label>Paragraph 1</label><textarea data-path="tutoring.success.mindfulness.body1"></textarea></div>
+        <div class="field-row"><label>Paragraph 2</label><textarea data-path="tutoring.success.mindfulness.body2"></textarea></div>
+      </div>
+    </div>
+
+    <!-- ── TUTORING REVIEWS ── -->
+    <div class="panel" id="panel-t-reviews">
+      <h2 class="panel-title">Tutoring Page — Reviews</h2>
+      <p class="panel-desc">"Straight-A Reviews" on the navy background of tutoring.html.</p>
+      <div class="card">
+        <div class="card-title">Section Header</div>
+        <div class="field-row"><label>Label</label><input type="text" data-path="tutoring.reviews.label" /></div>
+        <div class="field-row"><label>Title</label><textarea data-path="tutoring.reviews.title"></textarea></div>
+      </div>
+      <div id="t-reviews-editor"></div>
+    </div>
+
+    <!-- ── TUTORS ── -->
+    <div class="panel" id="panel-tutors">
+      <h2 class="panel-title">Tutor Profiles</h2>
+      <p class="panel-desc">Each tutor has a name, title, subjects (comma-separated), photo URL, and bio.</p>
+      <div id="tutors-editor"></div>
+      <button class="btn-add-tutor" id="btn-add-tutor">+ Add Tutor</button>
+    </div>
+
+    <!-- ── SETTINGS ── -->
+    <div class="panel" id="panel-settings">
+      <h2 class="panel-title">GitHub Settings</h2>
+      <p class="panel-desc">Connect to GitHub so "Save &amp; Deploy" commits content.js to your repo. Netlify auto-deploys on every commit (~30 seconds).</p>
+
+      <div class="settings-note">
+        <strong>How it works:</strong> When you click "Save &amp; Deploy", this admin reads content.js from your GitHub repo, replaces the content with your edits, and commits the updated file. Netlify detects the new commit and rebuilds your site automatically.<br /><br />
+        <strong>GitHub PAT:</strong> You need a Personal Access Token with <code>repo</code> scope. Create one at github.com → Settings → Developer settings → Personal access tokens.
+      </div>
+
+      <div class="card">
+        <div class="card-title">Repository</div>
+        <div class="field-row"><label>GitHub Username or Org</label><input type="text" id="gh-owner" placeholder="e.g. rachit-chakerwarti" /></div>
+        <div class="field-row"><label>Repository Name</label><input type="text" id="gh-repo" placeholder="e.g. magnolia-website" /></div>
+        <div class="field-row"><label>Branch</label><input type="text" id="gh-branch" placeholder="main" /></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Authentication</div>
+        <div class="field-row">
+          <label>GitHub Personal Access Token</label>
+          <div class="desc">Stored in your browser only — never sent anywhere except GitHub.</div>
+          <input type="password" id="gh-token" placeholder="ghp_••••••••••••••••••••" />
+        </div>
+        <button class="btn-test" id="btn-test-conn">Test Connection</button>
+        <div class="conn-status">
+          <div class="conn-dot" id="conn-dot"></div>
+          <span id="conn-label">Not tested</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Admin Password</div>
+        <div class="settings-note">To change the admin password, open <code>admin/index.html</code> and find the line marked <code>CHANGE_THIS</code>. Replace the password string there, then commit the file.</div>
+      </div>
+    </div>
+
+  </main><!-- /main -->
+</div><!-- /app -->
+
+
+<script>
+// ═══════════════════════════════════════════════════════════
+//  ADMIN — password gate + content editor + GitHub commit
+// ═══════════════════════════════════════════════════════════
+
+// ── CHANGE THIS to set the admin password ──
+const ADMIN_PASSWORD = 'magnolia2025'; // CHANGE_THIS
+
+// ── GLOBALS ──
+let data = null;      // live copy of CONTENT object
+let ghSHA  = null;    // current file SHA from GitHub
+
+// ── LOGIN ──
+const loginScreen = document.getElementById('login-screen');
+const pwInput     = document.getElementById('pw-input');
+const btnLogin    = document.getElementById('btn-login');
+const loginErr    = document.getElementById('login-error');
+const app         = document.getElementById('app');
+
+function tryLogin() {
+  if (pwInput.value === ADMIN_PASSWORD) {
+    loginScreen.classList.add('hidden');
+    app.classList.add('visible');
+    loginErr.style.display = 'none';
+    initApp();
+  } else {
+    loginErr.style.display = 'block';
+    pwInput.value = '';
+    pwInput.focus();
+  }
+}
+btnLogin.addEventListener('click', tryLogin);
+pwInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
+document.getElementById('btn-logout').addEventListener('click', () => {
+  location.reload();
+});
+
+// ── SIDEBAR NAV ──
+document.querySelectorAll('.sidebar-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + btn.dataset.panel).classList.add('active');
+  });
+});
+
+// ── DEEP GET/SET on nested object ──
+function deepGet(obj, path) {
+  return path.split('.').reduce((o, k) => (o == null ? undefined : o[k]), obj);
+}
+function deepSet(obj, path, val) {
+  const keys = path.split('.');
+  let cur = obj;
+  for (let i = 0; i < keys.length - 1; i++) {
+    if (cur[keys[i]] == null) cur[keys[i]] = {};
+    cur = cur[keys[i]];
+  }
+  cur[keys[keys.length - 1]] = val;
+}
+
+// ── BIND plain fields (data-path) ──
+function bindFields() {
+  document.querySelectorAll('[data-path]').forEach(el => {
+    const path = el.dataset.path;
+    el.value = deepGet(data, path) || '';
+    el.addEventListener('input', () => deepSet(data, path, el.value));
+  });
+}
+
+// ── DYNAMIC EDITORS ──
+function buildPrinciples() {
+  const container = document.getElementById('principles-editor');
+  const items = data.homepage.founder.principles;
+  container.innerHTML = '';
+  items.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'inline-item';
+    div.innerHTML = `
+      <div class="inline-item-header">
+        <span class="inline-item-label">Principle ${i+1}</span>
+      </div>
+      <div class="field-row"><label>Title</label><input type="text" value="${esc(item.title)}" /></div>
+      <div class="field-row"><label>Body</label><textarea>${esc(item.body)}</textarea></div>`;
+    div.querySelectorAll('input')[0].addEventListener('input', e => { items[i].title = e.target.value; });
+    div.querySelectorAll('textarea')[0].addEventListener('input', e => { items[i].body = e.target.value; });
+    container.appendChild(div);
+  });
+}
+
+function buildServices() {
+  const container = document.getElementById('services-editor');
+  const items = data.homepage.services.items;
+  container.innerHTML = '';
+  items.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'card';
+    div.innerHTML = `
+      <div class="card-title">Service ${i+1}: ${esc(item.title)}</div>
+      <div class="field-row"><label>Tag (small label)</label><input type="text" value="${esc(item.tag)}" /></div>
+      <div class="field-row"><label>Title</label><input type="text" value="${esc(item.title)}" /></div>
+      <div class="field-row"><label>Body</label><textarea class="tall">${esc(item.body)}</textarea></div>
+      <div class="field-row"><label>Link label</label><input type="text" value="${esc(item.linkLabel)}" /></div>
+      <div class="field-row"><label>Link URL</label><input type="text" value="${esc(item.linkHref)}" /></div>`;
+    const inputs = div.querySelectorAll('input');
+    const ta = div.querySelector('textarea');
+    inputs[0].addEventListener('input', e => { items[i].tag = e.target.value; });
+    inputs[1].addEventListener('input', e => { items[i].title = e.target.value; });
+    ta.addEventListener('input', e => { items[i].body = e.target.value; });
+    inputs[2].addEventListener('input', e => { items[i].linkLabel = e.target.value; });
+    inputs[3].addEventListener('input', e => { items[i].linkHref = e.target.value; });
+    container.appendChild(div);
+  });
+}
+
+function buildValues() {
+  const container = document.getElementById('values-editor');
+  const items = data.homepage.values.items;
+  container.innerHTML = '';
+  items.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'inline-item';
+    div.innerHTML = `
+      <div class="inline-item-header"><span class="inline-item-label">Value ${i+1}</span></div>
+      <div class="field-row"><label>Icon (emoji)</label><input type="text" value="${esc(item.icon)}" style="width:80px" /></div>
+      <div class="field-row"><label>Title</label><input type="text" value="${esc(item.title)}" /></div>
+      <div class="field-row"><label>Body</label><textarea>${esc(item.body)}</textarea></div>`;
+    const inputs = div.querySelectorAll('input');
+    inputs[0].addEventListener('input', e => { items[i].icon = e.target.value; });
+    inputs[1].addEventListener('input', e => { items[i].title = e.target.value; });
+    div.querySelector('textarea').addEventListener('input', e => { items[i].body = e.target.value; });
+    container.appendChild(div);
+  });
+}
+
+function buildTestimonials() {
+  const container = document.getElementById('testimonials-editor');
+  const items = data.homepage.testimonials.items;
+  container.innerHTML = '';
+  items.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'inline-item';
+    div.innerHTML = `
+      <div class="inline-item-header">
+        <span class="inline-item-label">Review ${i+1}</span>
+        <button class="btn-remove-item" data-idx="${i}">Remove</button>
+      </div>
+      <div class="field-row"><label>Quote</label><textarea class="tall">${esc(item.quote)}</textarea></div>
+      <div class="field-row"><label>Author (e.g. PARENT OF GRADE 11)</label><input type="text" value="${esc(item.author)}" /></div>
+      <div class="field-row"><label>Role (e.g. Advanced Functions)</label><input type="text" value="${esc(item.role)}" /></div>`;
+    div.querySelector('.btn-remove-item').addEventListener('click', () => {
+      items.splice(i, 1); buildTestimonials();
+    });
+    div.querySelector('textarea').addEventListener('input', e => { items[i].quote = e.target.value; });
+    div.querySelectorAll('input')[0].addEventListener('input', e => { items[i].author = e.target.value; });
+    div.querySelectorAll('input')[1].addEventListener('input', e => { items[i].role = e.target.value; });
+    container.appendChild(div);
+  });
+  const addBtn = document.createElement('button');
+  addBtn.className = 'btn-add-tutor';
+  addBtn.textContent = '+ Add Review';
+  addBtn.addEventListener('click', () => {
+    items.push({ quote: '', author: '', role: '' });
+    buildTestimonials();
+  });
+  container.appendChild(addBtn);
+}
+
+function buildTutorBenefits() {
+  const container = document.getElementById('t-benefits-editor');
+  const items = data.tutoring.benefits.items;
+  container.innerHTML = '';
+  items.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'inline-item';
+    div.innerHTML = `
+      <div class="inline-item-header"><span class="inline-item-label">Benefit ${i+1}</span></div>
+      <div class="field-row"><label>Title</label><input type="text" value="${esc(item.title)}" /></div>
+      <div class="field-row"><label>Body</label><textarea>${esc(item.body)}</textarea></div>`;
+    div.querySelector('input').addEventListener('input', e => { items[i].title = e.target.value; });
+    div.querySelector('textarea').addEventListener('input', e => { items[i].body = e.target.value; });
+    container.appendChild(div);
+  });
+}
+
+function buildSessions() {
+  const container = document.getElementById('t-sessions-editor');
+  const items = data.tutoring.howItWorks.sessions;
+  container.innerHTML = '';
+  items.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'card';
+    div.innerHTML = `
+      <div class="card-title">Session Format ${i+1}</div>
+      <div class="field-row"><label>Title</label><input type="text" value="${esc(item.title)}" /></div>
+      <div class="field-row"><label>Paragraph 1</label><textarea>${esc(item.body1)}</textarea></div>
+      <div class="field-row"><label>Paragraph 2</label><textarea>${esc(item.body2)}</textarea></div>`;
+    div.querySelectorAll('input')[0].addEventListener('input', e => { items[i].title = e.target.value; });
+    div.querySelectorAll('textarea')[0].addEventListener('input', e => { items[i].body1 = e.target.value; });
+    div.querySelectorAll('textarea')[1].addEventListener('input', e => { items[i].body2 = e.target.value; });
+    container.appendChild(div);
+  });
+}
+
+function buildTutoringReviews() {
+  const container = document.getElementById('t-reviews-editor');
+  const items = data.tutoring.reviews.items;
+  container.innerHTML = '';
+  items.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'inline-item';
+    div.innerHTML = `
+      <div class="inline-item-header">
+        <span class="inline-item-label">Review ${i+1}</span>
+        <button class="btn-remove-item" data-idx="${i}">Remove</button>
+      </div>
+      <div class="field-row"><label>Heading (italic quote title)</label><input type="text" value="${esc(item.heading)}" /></div>
+      <div class="field-row"><label>Full quote</label><textarea class="tall">${esc(item.quote)}</textarea></div>
+      <div class="field-row"><label>Author name</label><input type="text" value="${esc(item.author)}" /></div>
+      <div class="field-row"><label>Role (Student / Parent)</label><input type="text" value="${esc(item.role)}" /></div>`;
+    div.querySelector('.btn-remove-item').addEventListener('click', () => {
+      items.splice(i, 1); buildTutoringReviews();
+    });
+    div.querySelectorAll('input')[0].addEventListener('input', e => { items[i].heading = e.target.value; });
+    div.querySelector('textarea').addEventListener('input', e => { items[i].quote = e.target.value; });
+    div.querySelectorAll('input')[1].addEventListener('input', e => { items[i].author = e.target.value; });
+    div.querySelectorAll('input')[2].addEventListener('input', e => { items[i].role = e.target.value; });
+    container.appendChild(div);
+  });
+}
+
+function buildTutors() {
+  const container = document.getElementById('tutors-editor');
+  const items = data.tutors.team;
+  container.innerHTML = '';
+  items.forEach((tutor, i) => {
+    const div = document.createElement('div');
+    div.className = 'tutor-card';
+    div.innerHTML = `
+      <div class="tutor-card-header">
+        <img class="tutor-avatar" src="${esc(tutor.photo)}" alt="${esc(tutor.name)}" onerror="this.src='../images/MAGNOLIA.PNG'" />
+        <div>
+          <div class="tutor-name-preview">${esc(tutor.name)}</div>
+          <div class="tutor-title-preview">${esc(tutor.title)}</div>
+        </div>
+      </div>
+      <button class="tutor-remove" data-idx="${i}">Remove</button>
+      <div class="tutor-fields">
+        <div class="field-row"><label>Full Name</label><input type="text" value="${esc(tutor.name)}" /></div>
+        <div class="field-row"><label>Title</label><input type="text" value="${esc(tutor.title)}" /></div>
+        <div class="field-row"><label>Subjects (comma-separated)</label><input type="text" value="${esc(tutor.subjects.join(', '))}" /></div>
+        <div class="field-row"><label>Photo URL</label><input type="url" value="${esc(tutor.photo)}" /></div>
+        <div class="field-row span2"><label>Bio</label><textarea class="tall">${esc(tutor.bio)}</textarea></div>
+      </div>`;
+    div.querySelector('.tutor-remove').addEventListener('click', () => {
+      items.splice(i, 1); buildTutors();
+    });
+    const inputs = div.querySelectorAll('input');
+    inputs[0].addEventListener('input', e => { items[i].name = e.target.value; buildTutors(); });
+    inputs[1].addEventListener('input', e => { items[i].title = e.target.value; });
+    inputs[2].addEventListener('input', e => { items[i].subjects = e.target.value.split(',').map(s => s.trim()).filter(Boolean); });
+    inputs[3].addEventListener('input', e => { items[i].photo = e.target.value; div.querySelector('.tutor-avatar').src = e.target.value; });
+    div.querySelector('textarea').addEventListener('input', e => { items[i].bio = e.target.value; });
+    container.appendChild(div);
+  });
+}
+
+document.getElementById('btn-add-tutor').addEventListener('click', () => {
+  data.tutors.team.push({ name: 'New Tutor', title: '', subjects: [], photo: '', bio: '' });
+  buildTutors();
+});
+
+function esc(s) {
+  if (s == null) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── SETTINGS / GITHUB ──
+const ghOwner = document.getElementById('gh-owner');
+const ghRepo  = document.getElementById('gh-repo');
+const ghBranch = document.getElementById('gh-branch');
+const ghToken = document.getElementById('gh-token');
+
+function loadGHSettings() {
+  ghOwner.value  = localStorage.getItem('gh_owner')  || '';
+  ghRepo.value   = localStorage.getItem('gh_repo')   || '';
+  ghBranch.value = localStorage.getItem('gh_branch') || 'main';
+  ghToken.value  = localStorage.getItem('gh_token')  || '';
+}
+function saveGHSettings() {
+  localStorage.setItem('gh_owner',  ghOwner.value.trim());
+  localStorage.setItem('gh_repo',   ghRepo.value.trim());
+  localStorage.setItem('gh_branch', ghBranch.value.trim() || 'main');
+  localStorage.setItem('gh_token',  ghToken.value.trim());
+}
+[ghOwner, ghRepo, ghBranch, ghToken].forEach(el => el.addEventListener('input', saveGHSettings));
+
+function getGHConfig() {
+  return {
+    owner:  localStorage.getItem('gh_owner')  || '',
+    repo:   localStorage.getItem('gh_repo')   || '',
+    branch: localStorage.getItem('gh_branch') || 'main',
+    token:  localStorage.getItem('gh_token')  || '',
+  };
+}
+
+async function testConnection() {
+  const cfg = getGHConfig();
+  const dot = document.getElementById('conn-dot');
+  const lbl = document.getElementById('conn-label');
+  if (!cfg.owner || !cfg.repo || !cfg.token) {
+    dot.className = 'conn-dot err'; lbl.textContent = 'Fill in owner, repo, and token first.'; return;
+  }
+  lbl.textContent = 'Testing…';
+  try {
+    const res = await fetch(`https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/content.js?ref=${cfg.branch}`, {
+      headers: { Authorization: `token ${cfg.token}`, Accept: 'application/vnd.github.v3+json' }
+    });
+    if (res.ok) {
+      const json = await res.json();
+      ghSHA = json.sha;
+      dot.className = 'conn-dot ok';
+      lbl.textContent = `Connected! File found (SHA: ${ghSHA.slice(0,7)})`;
+      setStatus('Connected to GitHub', 'ok');
+      document.getElementById('btn-save').disabled = false;
+    } else {
+      dot.className = 'conn-dot err';
+      lbl.textContent = `Error ${res.status}: ${res.statusText}`;
+    }
+  } catch(e) {
+    dot.className = 'conn-dot err';
+    lbl.textContent = 'Network error — check your connection.';
+  }
+}
+document.getElementById('btn-test-conn').addEventListener('click', testConnection);
+
+// ── STATUS BAR ──
+function setStatus(msg, type) {
+  const el = document.getElementById('status-msg');
+  el.textContent = msg; el.className = type || '';
+}
+
+// ── LOAD CONTENT FROM GITHUB ──
+async function loadFromGitHub() {
+  const cfg = getGHConfig();
+  if (!cfg.owner || !cfg.repo || !cfg.token) return null;
+  try {
+    setStatus('Loading from GitHub…');
+    const res = await fetch(`https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/content.js?ref=${cfg.branch}`, {
+      headers: { Authorization: `token ${cfg.token}`, Accept: 'application/vnd.github.v3+json' }
+    });
+    if (!res.ok) { setStatus('Could not load content.js from GitHub.', 'err'); return null; }
+    const json = await res.json();
+    ghSHA = json.sha;
+    const fileText = atob(json.content.replace(/\n/g, ''));
+    // Extract JSON between first { and last }
+    const start = fileText.indexOf('{');
+    const end   = fileText.lastIndexOf('}') + 1;
+    const parsed = JSON.parse(fileText.slice(start, end));
+    setStatus('Loaded from GitHub', 'ok');
+    document.getElementById('btn-save').disabled = false;
+    return parsed;
+  } catch(e) {
+    setStatus('Error parsing content.js — using local copy.', 'err');
+    return null;
+  }
+}
+
+// ── SAVE TO GITHUB ──
+async function saveToGitHub() {
+  const cfg = getGHConfig();
+  if (!cfg.owner || !cfg.repo || !cfg.token) {
+    alert('Please configure GitHub settings first (Settings tab).'); return;
+  }
+  if (!ghSHA) {
+    alert('Please test the connection first (Settings tab → Test Connection).'); return;
+  }
+  const btn = document.getElementById('btn-save');
+  btn.disabled = true;
+  setStatus('Saving…');
+
+  const jsonStr = JSON.stringify(data, null, 2);
+  const prefix  = '// Magnolia Education — content.js\n// All site copy and tutor data lives in this file.\n// Edit via admin/index.html or commit directly to GitHub.\n// The admin reads and writes everything between the braces below.\n\nwindow.CONTENT = ';
+  const suffix  = ';\n';
+  const newContent = prefix + jsonStr + suffix;
+  const encoded    = btoa(unescape(encodeURIComponent(newContent)));
+
+  try {
+    const res = await fetch(`https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/content.js`, {
+      method: 'PUT',
+      headers: { Authorization: `token ${cfg.token}`, 'Content-Type': 'application/json', Accept: 'application/vnd.github.v3+json' },
+      body: JSON.stringify({
+        message: 'Update content via Magnolia Admin',
+        content: encoded,
+        sha: ghSHA,
+        branch: cfg.branch,
+      })
+    });
+    if (res.ok) {
+      const json = await res.json();
+      ghSHA = json.content.sha;
+      setStatus('Saved! Netlify is deploying (~30 sec)…', 'ok');
+      btn.disabled = false;
+    } else {
+      const err = await res.json();
+      setStatus(`Save failed: ${err.message}`, 'err');
+      btn.disabled = false;
+    }
+  } catch(e) {
+    setStatus('Network error during save.', 'err');
+    btn.disabled = false;
+  }
+}
+document.getElementById('btn-save').addEventListener('click', saveToGitHub);
+
+// ── INIT ──
+async function initApp() {
+  loadGHSettings();
+
+  // Try to load from GitHub; fall back to local CONTENT if not configured
+  const remote = await loadFromGitHub();
+  if (remote) {
+    data = remote;
+  } else if (window.CONTENT) {
+    // Load local content.js via relative path
+    try {
+      const res = await fetch('../content.js');
+      const text = await res.text();
+      const start = text.indexOf('{');
+      const end   = text.lastIndexOf('}') + 1;
+      data = JSON.parse(text.slice(start, end));
+      setStatus('Loaded local content.js (not connected to GitHub)');
+    } catch(e) {
+      data = JSON.parse(JSON.stringify(window.CONTENT));
+      setStatus('Using in-memory content (not connected to GitHub)');
+    }
+  }
+
+  if (!data) { setStatus('Could not load content.', 'err'); return; }
+
+  // Bind all simple fields
+  bindFields();
+
+  // Build dynamic editors
+  buildPrinciples();
+  buildServices();
+  buildValues();
+  buildTestimonials();
+  buildTutorBenefits();
+  buildSessions();
+  buildTutoringReviews();
+  buildTutors();
+}
+</script>
+
+<!-- Load content.js so we have fallback data -->
+<script src="../content.js"></script>
+</body>
+</html>
