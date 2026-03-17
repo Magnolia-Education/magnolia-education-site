@@ -298,6 +298,20 @@ window.CONTENT = {
       "body": "Ready to prioritize personalized learning? Let’s talk.",
       "ctaLabel": "Book a Consultation",
       "ctaHref": "https://calendly.com/rachit-chakerwarti/call"
+    },
+    "testimonials": {
+      "label": "What Students & Parents Say",
+      "title": "Real results, real voices.",
+      "items": [
+        { "quote": "Working with Rachit for ~6 years. He\u2019s helped me succeed in middle and high school math. Previously difficult topics seem easy.", "author": "Simon Burn", "role": "Student" },
+        { "quote": "Rachit has a way of breaking down complex concepts into simpler, more digestible parts, making math feel accessible and even enjoyable. He is patient, approachable, and genuinely cares about his students\u2019 progress.", "author": "Priti Jain", "role": "Parent" },
+        { "quote": "I truly understand concepts in math to the best degree, compared to other tutors I have tried in the past.", "author": "Nova Carver-Cook", "role": "Student" },
+        { "quote": "One of my favourite things is how Rachit is able to adapt to my learning style. He never made me feel rushed to understand anything.", "author": "Will Crosland", "role": "Student" },
+        { "quote": "I can\u2019t say enough good things. One of my sons went from an 80% average to 98% on his final Grade 12 Advanced Functions exam.", "author": "Sylvia Apostolidis", "role": "Parent" },
+        { "quote": "Rachit is so kind and patient. He goes at the pace of his students and really helps with math anxiety.", "author": "Sarah-Jane", "role": "Parent" },
+        { "quote": "The one-on-one style eliminates any pressure from other students. It creates a safe environment where learning has never been easier.", "author": "Joshua Sutton", "role": "Student" },
+        { "quote": "Rachit has helped build confidence and independence while providing a supportive environment that pushes my kids beyond what they thought they were capable of.", "author": "Sarah Green", "role": "Parent" }
+      ]
     }
   },
   "mockExams": {
@@ -413,6 +427,19 @@ window.CONTENT = {
       "primaryHref": "https://calendly.com/rachit-chakerwarti/call",
       "secondaryLabel": "Call us",
       "secondaryHref": "tel:+12899141644"
+    },
+    "testimonials": {
+      "label": "What Families Say",
+      "title": "The difference it makes.",
+      "items": [
+        { "quote": "The mock exam helped me understand where I needed to study more, while also helping my confidence going into the exam.", "author": "Simon Burn", "role": "Student" },
+        { "quote": "A very good reflection of the actual exam \u2014 my kids increased their confidence and focused their studying on specific topics.", "author": "Sylvia Apostolidis", "role": "Parent" },
+        { "quote": "The mock exam is really useful to evaluate what skills you are comfortable with and what skills you need work on.", "author": "Marco Chirigoni", "role": "Student" },
+        { "quote": "I especially appreciate the breathing exercise at the start of the exam.", "author": "Fatema Khan", "role": "Parent" },
+        { "quote": "It took a lot of the nervousness away from exam day. The mock exams are extremely valuable \u2014 I believe they are essential.", "author": "Joshua Sutton", "role": "Student" },
+        { "quote": "The mock exam is a wonderful way to understand readiness levels and is a very unique offering from a tutoring partner.", "author": "Sarah Green", "role": "Parent" },
+        { "quote": "It helped relieve some anxiety around the main event.", "author": "Melissa Bubb-Clarke", "role": "Parent" }
+      ]
     }
   },
   "studySkills": {
@@ -502,6 +529,17 @@ window.CONTENT = {
       "primaryHref": "https://calendly.com/rachit-chakerwarti/call",
       "secondaryLabel": "Call us",
       "secondaryHref": "tel:+12899141644"
+    },
+    "testimonials": {
+      "label": "What Families Say",
+      "title": "The systems that stick.",
+      "items": [
+        { "quote": "The three review system helped me a lot once I implemented. It is much more efficient and effective than only reviewing before a test.", "author": "Simon Burn", "role": "Student" },
+        { "quote": "The 3 Review System has been a huge success for our daughter. It has really helped her learn better and develop study notes as the semester progressed.", "author": "Dave Cook", "role": "Parent" },
+        { "quote": "Marking his own homework has encouraged independence and an appreciation for process.", "author": "Fatema Khan", "role": "Parent" },
+        { "quote": "I find I enjoy math so much more since I started tutoring. I can look at it as having fun and solving problems versus the mark.", "author": "Jocelyn Landry", "role": "Student" },
+        { "quote": "Thanks to Rachit\u2019s system and coaching, our son\u2019s study habits continue to improve.", "author": "Melissa Bubb-Clarke", "role": "Parent" }
+      ]
     }
   },
   "prepCohorts": {
@@ -661,6 +699,59 @@ window.CONTENT = {
       "primaryHref": "https://calendly.com/rachit-chakerwarti/call",
       "secondaryLabel": "Email Us",
       "secondaryHref": "mailto:hello@magnolia-education.com"
+    }
+  },
+  "story": {
+    "meta": { "title": "Our Story | Magnolia Education" },
+    "hero": {
+      "eyebrow": "Our Story",
+      "title": "Learning from both sides.",
+      "subtitle": "Magnolia was built by people who know what it means to struggle \u2014 and what it takes to turn that around."
+    },
+    "rachit": {
+      "label": "The Founder",
+      "title": "Not always the student I wanted to be.",
+      "para1": "I wasn\u2019t always the confident, capable student I became. Early on, I struggled \u2014 with math, with anxiety, with the feeling that school was happening to me rather than for me.",
+      "para2": "What changed wasn\u2019t my intelligence. It was finding a way to learn that actually worked for my brain \u2014 building habits, slowing down, and discovering that math has a real beauty to it once you stop being afraid of it.",
+      "para3": "That experience \u2014 of struggling and then thriving \u2014 is the core of everything Magnolia does. I built this because I genuinely believe every student can find their version of that click. They just need the right support."
+    },
+    "philosophy": {
+      "label": "Our Philosophy",
+      "title": "Tutors should become useless.",
+      "body": "That sounds counterintuitive, but it\u2019s the truest thing I can say about what we do. Our goal is always independence. Every technique we teach, every habit we build, every moment of insight \u2014 it all points toward a student who doesn\u2019t need us anymore. That\u2019s the win."
+    },
+    "values": {
+      "label": "What We Believe",
+      "items": [
+        { "icon": "\ud83c\udf38", "title": "Seva \u2014 Service", "body": "An act of selfless service without expectation. We offer pro bono tutoring spots to students who need them, because access to quality education shouldn\u2019t depend on financial privilege." },
+        { "icon": "\ud83e\uddad", "title": "Independence", "body": "We teach students how to learn \u2014 not just what to learn. Every tool we give is designed to make students self-sufficient, long after our sessions end." },
+        { "icon": "\u2728", "title": "The Beauty of Math", "body": "Math isn\u2019t a set of rules to memorize. It\u2019s a language with elegance and logic. When students stop being afraid of it and start seeing its structure, something shifts \u2014 and that shift changes everything." }
+      ]
+    },
+    "gavin": {
+      "label": "Proof It Works",
+      "title": "From 33% to 100%.",
+      "body1": "Gavin Burn was once a Magnolia student. He came in struggling with Grade 9 Math \u2014 a 33%. Through tutoring, the Three Review System, and a lot of hard work, he ended his high school career with 100% in Grade 12 Advanced Functions.",
+      "body2": "He\u2019s now a Computer Engineering student at the University of Waterloo, and a Magnolia tutor himself. His story isn\u2019t an exception \u2014 it\u2019s what we work toward with every student we teach."
+    },
+    "cta": {
+      "title": "Let\u2019s write your student\u2019s story.",
+      "body": "Start with a free 30-minute consultation. No commitment \u2014 just a conversation.",
+      "primaryLabel": "Book a Free Consultation",
+      "primaryHref": "https://calendly.com/rachit-chakerwarti/call",
+      "secondaryLabel": "Email Us",
+      "secondaryHref": "mailto:hello@magnolia-education.com"
+    }
+  },
+  "contact": {
+    "meta": { "title": "Contact | Magnolia Education" },
+    "hero": {
+      "title": "Let\u2019s talk.",
+      "subtitle": "Book a free consultation call and we\u2019ll find the right fit for your student."
+    },
+    "cta": {
+      "label": "Book a Free Call",
+      "href": "https://calendly.com/rachit-chakerwarti/call"
     }
   }
 };

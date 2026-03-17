@@ -211,6 +211,33 @@
     .review-role { font-size: 0.78rem; color: rgba(255,255,255,0.5); margin-top: 3px; }
 
     /* ─────────────────────────────────
+       TESTIMONIALS CAROUSEL
+    ───────────────────────────────── */
+    .testimonials-section { background: linear-gradient(135deg, var(--hero-start), var(--hero-end)); padding: 100px 0; }
+    .testimonials-header { max-width: 1120px; margin: 0 auto; padding: 0 48px 48px; }
+    .testimonials-scroll {
+      display: flex; flex-wrap: nowrap; gap: 24px; overflow-x: auto; overflow-y: visible;
+      padding: 12px 48px 24px; scrollbar-width: none; cursor: grab;
+    }
+    .testimonials-scroll::-webkit-scrollbar { display: none; }
+    .testimonials-scroll:active { cursor: grabbing; }
+    .testimonial-card {
+      background: #fff; border-radius: 14px; padding: 28px 28px 24px;
+      min-width: 320px; max-width: 320px;
+      box-shadow: 0 4px 24px rgba(61,68,102,0.08); flex-shrink: 0;
+    }
+    .stars { color: #f5a623; font-size: 0.95rem; margin-bottom: 14px; letter-spacing: 2px; }
+    .testimonial-card p { color: var(--text); font-size: 0.9rem; line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+    .testimonial-author { font-weight: 600; font-size: 0.8rem; color: var(--navy); letter-spacing: 0.05em; }
+    .testimonial-role { font-size: 0.75rem; color: var(--text-light); margin-top: 2px; }
+
+    @media (max-width: 600px) {
+      .testimonials-header { padding: 0 20px 32px; }
+      .testimonials-scroll { padding: 12px 20px 24px; }
+      .testimonial-card { min-width: 280px; max-width: 280px; }
+    }
+
+    /* ─────────────────────────────────
        CTA
     ───────────────────────────────── */
     .cta-section {
@@ -428,6 +455,15 @@
   <div class="reviews-scroll" id="t-reviews-scroll"></div>
 </section>
 
+<!-- ── TESTIMONIALS ── -->
+<section class="testimonials-section">
+  <div class="testimonials-header reveal">
+    <p class="section-label" id="t-test-label"></p>
+    <h2 class="section-title" id="t-test-title"></h2>
+  </div>
+  <div class="testimonials-scroll" id="t-testimonials-scroll"></div>
+</section>
+
 <!-- ── CTA ── -->
 <section class="cta-section">
   <div class="cta-inner">
@@ -554,6 +590,21 @@
     ).join('');
   }
 
+  // Testimonials
+  setText('t-test-label', T.testimonials.label);
+  setText('t-test-title', T.testimonials.title);
+  const testScroll = document.getElementById('t-testimonials-scroll');
+  if (testScroll) {
+    testScroll.innerHTML = T.testimonials.items.map(t =>
+      `<div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p>\u201c${t.quote}\u201d</p>
+        <p class="testimonial-author">${t.author}</p>
+        <p class="testimonial-role">${t.role}</p>
+      </div>`
+    ).join('');
+  }
+
   // CTA
   setText('t-cta-title', T.cta.title);
   setText('t-cta-body', T.cta.body);
@@ -598,6 +649,24 @@ hamburger && hamburger.addEventListener('click', () => {
 mobileNav && mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
   hamburger.classList.remove('open'); mobileNav.classList.remove('open');
 }));
+
+// Drag-to-scroll testimonials
+const testSlider = document.getElementById('t-testimonials-scroll');
+if (testSlider) {
+  let tDown = false, tStartX, tScrollLeft;
+  testSlider.addEventListener('mousedown', e => {
+    tDown = true; testSlider.style.cursor = 'grabbing';
+    tStartX = e.pageX - testSlider.offsetLeft; tScrollLeft = testSlider.scrollLeft;
+  });
+  document.addEventListener('mouseup', () => { tDown = false; testSlider.style.cursor = 'grab'; });
+  testSlider.addEventListener('mousemove', e => {
+    if (!tDown) return; e.preventDefault();
+    testSlider.scrollLeft = tScrollLeft - (e.pageX - testSlider.offsetLeft - tStartX) * 1.5;
+  });
+  let ttx = 0, ttsl = 0;
+  testSlider.addEventListener('touchstart', e => { ttx = e.touches[0].pageX; ttsl = testSlider.scrollLeft; }, { passive: true });
+  testSlider.addEventListener('touchmove', e => { testSlider.scrollLeft = ttsl - (e.touches[0].pageX - ttx) * 1.2; }, { passive: true });
+}
 
 // Drag-to-scroll reviews
 const revScroll = document.getElementById('t-reviews-scroll');
