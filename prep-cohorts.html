@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prep Cohorts | Magnolia Education</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="content.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #3D4466;
+      --coral: #E8836A;
+      --coral-pale: #FDF0EC;
+      --hero-start: #E2EAF2;
+      --hero-end: #D4E5EE;
+      --beige: #EDE8E0;
+      --white: #ffffff;
+      --text: #2a2a2a;
+      --text-light: #5a5a6a;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: var(--text); background: #fff; overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--navy);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 68px; display: flex; align-items: center;
+      padding: 0 48px; gap: 40px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; margin-right: auto; }
+    .nav-logo img { height: 38px; width: auto; }
+    .nav-logo-text { font-family: var(--font-display); font-size: 1.25rem; color: var(--white); font-weight: 500; letter-spacing: 0.02em; }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a, .nav-dropdown > a {
+      color: rgba(255,255,255,0.88); font-size: 0.9rem; text-decoration: none;
+      font-weight: 400; letter-spacing: 0.01em; transition: color .2s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown > a::after { content: ' ▾'; font-size: 0.7em; opacity: 0.7; }
+    .nav-dropdown-menu {
+      display: none; position: absolute; top: 100%; left: 0;
+      background: var(--navy); border-top: 2px solid var(--coral);
+      min-width: 180px; padding: 8px 0;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+    .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+    .nav-dropdown-menu a { display: block; padding: 10px 20px; color: rgba(255,255,255,0.8); font-size: 0.875rem; }
+    .nav-dropdown-menu a:hover { color: #fff; background: rgba(255,255,255,0.05); }
+    .nav-cta {
+      background: var(--coral); color: #fff !important; padding: 9px 22px;
+      border-radius: 6px; font-weight: 500; font-size: 0.875rem !important;
+      transition: background .2s, transform .15s !important;
+    }
+    .nav-cta:hover { background: #d96e54 !important; transform: translateY(-1px); }
+
+    /* ── HAMBURGER ── */
+    .nav-hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      padding: 8px; margin-left: auto; background: none; border: none;
+    }
+    .nav-hamburger span { display: block; width: 24px; height: 2px; background: rgba(255,255,255,0.88); border-radius: 2px; transition: transform .3s, opacity .3s; }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-mobile {
+      display: none; position: fixed; top: 68px; left: 0; right: 0;
+      background: var(--navy); z-index: 99; padding: 16px 24px 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      transform: translateY(-10px); opacity: 0;
+      transition: transform .25s ease, opacity .25s ease;
+      pointer-events: none;
+    }
+    .nav-mobile.open { transform: none; opacity: 1; pointer-events: all; }
+    .nav-mobile a { display: block; color: rgba(255,255,255,0.85); font-size: 1rem; text-decoration: none; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .nav-mobile a:last-child { border-bottom: none; }
+    .nav-mobile .mobile-cta { display: block; margin-top: 16px; background: var(--coral); color: #fff; text-align: center; padding: 14px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+
+    /* ── SHARED ── */
+    .btn-primary {
+      display: inline-block; background: var(--coral); color: #fff;
+      padding: 14px 32px; border-radius: 8px; text-decoration: none;
+      font-weight: 500; font-size: 0.95rem; transition: background .2s, transform .15s;
+    }
+    .btn-primary:hover { background: #d96e54; transform: translateY(-1px); }
+    .btn-secondary {
+      display: inline-block; border: 1.5px solid currentColor; color: var(--navy);
+      padding: 13px 30px; border-radius: 8px; text-decoration: none;
+      font-weight: 500; font-size: 0.95rem; transition: background .2s, color .2s;
+    }
+    .btn-secondary:hover { background: var(--navy); color: #fff; }
+    .btn-ghost {
+      display: inline-block; border: 1.5px solid rgba(255,255,255,0.5); color: #fff;
+      padding: 13px 30px; border-radius: 8px; text-decoration: none;
+      font-weight: 500; font-size: 0.95rem; transition: border-color .2s, background .2s;
+    }
+    .btn-ghost:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
+    .section-label {
+      display: inline-block; font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--coral);
+      margin-bottom: 16px;
+    }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .55s ease, transform .55s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ─────────────────────────────────────
+       HERO
+    ───────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, var(--hero-start) 0%, var(--hero-end) 100%);
+      padding-top: 68px; min-height: 540px;
+      display: flex; align-items: center;
+    }
+    .hero-inner {
+      max-width: 1120px; margin: 0 auto; width: 100%;
+      padding: 80px 48px;
+      display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 64px;
+    }
+    .hero-eyebrow {
+      font-size: 0.82rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--coral); margin-bottom: 20px;
+    }
+    .hero-title {
+      font-family: var(--font-display); font-size: 3.5rem;
+      font-weight: 600; line-height: 1.1; color: var(--navy); margin-bottom: 20px;
+    }
+    .hero-subtitle {
+      font-size: 1.05rem; line-height: 1.7; color: var(--text-light);
+      margin-bottom: 36px; max-width: 480px;
+    }
+    .hero-placeholder {
+      background: rgba(61,68,102,0.08); border-radius: 20px;
+      aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
+    }
+    .hero-placeholder span { color: rgba(61,68,102,0.3); font-size: 0.85rem; }
+
+    /* ─────────────────────────────────────
+       THE JUMP IS REAL
+    ───────────────────────────────────── */
+    .jump-section {
+      padding: 100px 48px;
+      background: var(--beige);
+    }
+    .jump-inner {
+      max-width: 1120px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+    }
+    .jump-text .section-label { display: block; }
+    .jump-title {
+      font-family: var(--font-display); font-size: 2.8rem; font-weight: 600;
+      color: var(--navy); line-height: 1.2; margin-bottom: 28px;
+    }
+    .jump-body {
+      font-size: 1.05rem; line-height: 1.8; color: var(--text-light); margin-bottom: 16px;
+    }
+    .jump-note {
+      background: var(--white); border-left: 4px solid var(--coral);
+      padding: 16px 20px; border-radius: 0 8px 8px 0;
+      font-size: 0.9rem; line-height: 1.6; color: var(--text);
+      font-style: italic; margin-top: 24px;
+    }
+    .jump-placeholder {
+      background: rgba(61,68,102,0.08); border-radius: 20px;
+      aspect-ratio: 3/4; display: flex; align-items: center; justify-content: center;
+    }
+    .jump-placeholder span { color: rgba(61,68,102,0.3); font-size: 0.85rem; }
+
+    /* ─────────────────────────────────────
+       COHORT CARDS
+    ───────────────────────────────────── */
+    .cohorts-section { padding: 100px 48px; }
+    .cohorts-inner { max-width: 1120px; margin: 0 auto; }
+    .cohorts-header { text-align: center; margin-bottom: 56px; }
+    .cohorts-title {
+      font-family: var(--font-display); font-size: 2.6rem; font-weight: 600;
+      color: var(--navy); line-height: 1.2;
+    }
+    .cohort-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; align-items: start; }
+    .cohort-card {
+      border: 1.5px solid #e8eaf0; border-radius: 20px; padding: 36px 28px;
+      display: flex; flex-direction: column; gap: 20px;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .cohort-card:hover { box-shadow: 0 12px 32px rgba(61,68,102,0.1); transform: translateY(-3px); }
+    .cohort-card.highlighted {
+      border-color: var(--coral); background: var(--coral-pale);
+      position: relative;
+    }
+    .cohort-card.highlighted::before {
+      content: 'Most Popular';
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      background: var(--coral); color: #fff;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 5px 14px; border-radius: 40px;
+    }
+    .cohort-grade {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--coral);
+    }
+    .cohort-title {
+      font-family: var(--font-display); font-size: 1.5rem; font-weight: 600;
+      color: var(--navy); line-height: 1.3;
+    }
+    .cohort-subtitle { font-size: 0.9rem; color: var(--text-light); }
+    .cohort-features { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .cohort-features li {
+      font-size: 0.9rem; color: var(--text); line-height: 1.5;
+      padding-left: 22px; position: relative;
+    }
+    .cohort-features li::before {
+      content: '✓'; position: absolute; left: 0;
+      color: var(--coral); font-weight: 700;
+    }
+    .cohort-cta { margin-top: auto; }
+    .cohort-cta a { width: 100%; text-align: center; display: block; }
+
+    /* ─────────────────────────────────────
+       WHAT'S INCLUDED
+    ───────────────────────────────────── */
+    .included-section { background: var(--navy); padding: 100px 48px; }
+    .included-inner { max-width: 1120px; margin: 0 auto; }
+    .included-header { text-align: center; margin-bottom: 56px; }
+    .included-header .section-label { color: rgba(255,255,255,0.6); }
+    .included-title {
+      font-family: var(--font-display); font-size: 2.6rem; font-weight: 600;
+      color: #fff; line-height: 1.2;
+    }
+    .included-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+    }
+    .included-item {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px; padding: 20px 24px;
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .included-check {
+      color: var(--coral); font-size: 1rem; font-weight: 700;
+      margin-top: 2px; flex-shrink: 0;
+    }
+    .included-text { font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.75); }
+
+    /* ─────────────────────────────────────
+       HOW A SESSION WORKS
+    ───────────────────────────────────── */
+    .how-section { padding: 100px 48px; }
+    .how-inner {
+      max-width: 1120px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+    }
+    .how-header .section-label { display: block; }
+    .how-title {
+      font-family: var(--font-display); font-size: 2.6rem; font-weight: 600;
+      color: var(--navy); line-height: 1.2;
+    }
+    .how-placeholder {
+      background: rgba(61,68,102,0.06); border-radius: 20px;
+      aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
+    }
+    .how-placeholder span { color: rgba(61,68,102,0.3); font-size: 0.85rem; }
+    .how-steps { display: flex; flex-direction: column; gap: 28px; }
+    .how-step { display: flex; gap: 20px; align-items: flex-start; }
+    .how-step-num {
+      font-family: var(--font-display); font-size: 2rem; font-weight: 600;
+      color: rgba(61,68,102,0.15); line-height: 1; min-width: 44px;
+    }
+    .how-step-content h3 { font-size: 1.05rem; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+    .how-step-content p { font-size: 0.9rem; line-height: 1.6; color: var(--text-light); }
+
+    /* ─────────────────────────────────────
+       CTA
+    ───────────────────────────────────── */
+    .cta-section { background: var(--coral-pale); padding: 100px 48px; }
+    .cta-inner { max-width: 800px; margin: 0 auto; text-align: center; }
+    .cta-title {
+      font-family: var(--font-display); font-size: 2.8rem; font-weight: 600;
+      color: var(--navy); margin-bottom: 20px; line-height: 1.2;
+    }
+    .cta-body { font-size: 1.05rem; color: var(--text-light); line-height: 1.7; margin-bottom: 36px; }
+    .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* ─────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────── */
+    footer { background: #2a2d40; color: rgba(255,255,255,0.7); padding: 64px 48px 32px; }
+    .footer-grid { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand img { height: 36px; margin-bottom: 16px; }
+    .footer-brand p { font-size: 0.875rem; line-height: 1.7; color: rgba(255,255,255,0.55); max-width: 260px; }
+    .footer-tagline-text { font-family: var(--font-display); font-size: 1rem; color: rgba(255,255,255,0.7); font-style: italic; margin-top: 12px; }
+    .footer-col h4 { color: #fff; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+    .footer-col a { display: block; color: rgba(255,255,255,0.55); font-size: 0.875rem; text-decoration: none; margin-bottom: 10px; transition: color .2s; }
+    .footer-col a:hover { color: rgba(255,255,255,0.9); }
+    .footer-bottom { max-width: 1120px; margin: 0 auto; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 0.8rem; color: rgba(255,255,255,0.35); }
+    .footer-fun-fact { font-size: 0.78rem; color: rgba(255,255,255,0.35); font-style: italic; max-width: 440px; text-align: right; }
+
+    /* ─────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────── */
+    @media (max-width: 960px) {
+      .hero-inner { grid-template-columns: 1fr; padding: 80px 32px; gap: 40px; }
+      .hero-placeholder { display: none; }
+      .jump-inner { grid-template-columns: 1fr; gap: 40px; }
+      .jump-placeholder { display: none; }
+      .cohort-cards { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+      .included-grid { grid-template-columns: 1fr; }
+      .how-inner { grid-template-columns: 1fr; gap: 48px; }
+      .how-placeholder { display: none; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-mobile { display: block; }
+
+      .hero { min-height: auto; }
+      .hero-inner { padding: 60px 20px 48px; }
+      .hero-title { font-size: 2.6rem; }
+
+      .jump-section { padding: 72px 20px; }
+      .cohorts-section { padding: 72px 20px; }
+      .cohort-cards { max-width: none; }
+      .included-section { padding: 72px 20px; }
+      .how-section { padding: 72px 20px; }
+      .cta-section { padding: 72px 20px; }
+      .cta-title { font-size: 2.2rem; }
+      .cta-actions { flex-direction: column; }
+      .cta-actions a { width: 100%; text-align: center; }
+
+      footer { padding: 48px 20px 24px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-fun-fact { text-align: left; max-width: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="images/MAGNOLIA.PNG" alt="Magnolia flower logo" />
+    <span class="nav-logo-text">Magnolia Education</span>
+  </a>
+  <div class="nav-links">
+    <div class="nav-dropdown">
+      <a href="#">Services</a>
+      <div class="nav-dropdown-menu">
+        <a href="tutoring.html">Tutoring</a>
+        <a href="mock-exams.html">Mock Exams</a>
+        <a href="study-skills.html">Study Skills</a>
+        <a href="prep-cohorts.html">Prep Cohorts</a>
+      </div>
+    </div>
+    <div class="nav-dropdown">
+      <a href="#">About</a>
+      <div class="nav-dropdown-menu">
+        <a href="story.html">Our Story</a>
+        <a href="tutors.html">Our Tutors</a>
+      </div>
+    </div>
+    <a href="contact.html">Contact</a>
+    <a href="https://calendly.com/rachit-chakerwarti/call" target="_blank" class="nav-cta">Book a Free Call</a>
+  </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE NAV -->
+<nav class="nav-mobile" id="mobile-nav">
+  <a href="tutoring.html">Tutoring</a>
+  <a href="mock-exams.html">Mock Exams</a>
+  <a href="study-skills.html">Study Skills</a>
+  <a href="prep-cohorts.html">Prep Cohorts</a>
+  <a href="story.html">Our Story</a>
+  <a href="tutors.html">Our Tutors</a>
+  <a href="contact.html">Contact</a>
+  <a href="https://calendly.com/rachit-chakerwarti/call" target="_blank" class="mobile-cta">Book a Free Call</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text reveal">
+      <p class="hero-eyebrow" id="pc-hero-label"></p>
+      <h1 class="hero-title" id="pc-hero-title"></h1>
+      <p class="hero-subtitle" id="pc-hero-subtitle"></p>
+      <a href="#" class="btn-primary" id="pc-hero-cta"></a>
+    </div>
+    <div class="hero-placeholder reveal">
+      <span>Illustration coming soon</span>
+    </div>
+  </div>
+</section>
+
+<!-- THE JUMP IS REAL -->
+<section class="jump-section">
+  <div class="jump-inner">
+    <div class="jump-text reveal">
+      <p class="section-label" id="pc-jump-label"></p>
+      <h2 class="jump-title" id="pc-jump-title"></h2>
+      <p class="jump-body" id="pc-jump-body1"></p>
+      <p class="jump-body" id="pc-jump-body2"></p>
+      <div class="jump-note" id="pc-jump-note"></div>
+    </div>
+    <div class="jump-placeholder reveal">
+      <span>Illustration coming soon</span>
+    </div>
+  </div>
+</section>
+
+<!-- COHORT CARDS -->
+<section class="cohorts-section">
+  <div class="cohorts-inner">
+    <div class="cohorts-header reveal">
+      <h2 class="cohorts-title">Choose your cohort.</h2>
+    </div>
+    <div class="cohort-cards" id="pc-cohort-cards"></div>
+  </div>
+</section>
+
+<!-- WHAT'S INCLUDED -->
+<section class="included-section">
+  <div class="included-inner">
+    <div class="included-header reveal">
+      <p class="section-label" id="pc-included-label"></p>
+      <h2 class="included-title" id="pc-included-title"></h2>
+    </div>
+    <div class="included-grid" id="pc-included-items"></div>
+  </div>
+</section>
+
+<!-- HOW A SESSION WORKS -->
+<section class="how-section">
+  <div class="how-inner">
+    <div class="how-placeholder reveal">
+      <span>Illustration coming soon</span>
+    </div>
+    <div class="reveal">
+      <div class="how-header">
+        <p class="section-label" id="pc-how-label"></p>
+        <h2 class="how-title" id="pc-how-title"></h2>
+      </div>
+      <div class="how-steps" id="pc-how-steps" style="margin-top: 40px;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner reveal">
+    <h2 class="cta-title" id="pc-cta-title"></h2>
+    <p class="cta-body" id="pc-cta-body"></p>
+    <div class="cta-actions">
+      <a href="#" class="btn-primary" id="pc-cta-primary"></a>
+      <a href="#" class="btn-secondary" id="pc-cta-secondary"></a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="images/MAGNOLIA.PNG" alt="Magnolia Education logo" />
+      <p id="f-tagline"></p>
+      <p class="footer-tagline-text" id="f-quote"></p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="tutoring.html">Tutoring</a>
+      <a href="mock-exams.html">Mock Exams</a>
+      <a href="study-skills.html">Study Skills</a>
+      <a href="prep-cohorts.html">Prep Cohorts</a>
+    </div>
+    <div class="footer-col">
+      <h4>About</h4>
+      <a href="story.html">Our Story</a>
+      <a href="tutors.html">Our Tutors</a>
+      <a href="https://purrfect-single-1d6.notion.site/18bb3ed99418804298c0c90bf3f02862" target="_blank">Join Our Team</a>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <a href="contact.html">Contact</a>
+      <a href="#" id="f-email-link"></a>
+      <a href="#" id="f-phone-link"></a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p id="f-copyright"></p>
+    <p class="footer-fun-fact" id="f-funfact"></p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const C = window.CONTENT;
+  if (!C) return;
+
+  const PC = C.prepCohorts;
+  const G = C.global;
+  const H = C.homepage;
+
+  function setText(id, val) {
+    const el = document.getElementById(id);
+    if (el && val != null) el.textContent = val;
+  }
+  function setAttr(id, attr, val) {
+    const el = document.getElementById(id);
+    if (el && val != null) el.setAttribute(attr, val);
+  }
+
+  document.title = PC.meta.title;
+
+  // Hero
+  setText('pc-hero-label', PC.hero.label);
+  setText('pc-hero-title', PC.hero.title);
+  setText('pc-hero-subtitle', PC.hero.subtitle);
+  setText('pc-hero-cta', PC.hero.ctaLabel);
+  setAttr('pc-hero-cta', 'href', PC.hero.ctaHref);
+
+  // Jump
+  setText('pc-jump-label', PC.jump.label);
+  setText('pc-jump-title', PC.jump.title);
+  setText('pc-jump-body1', PC.jump.body1);
+  setText('pc-jump-body2', PC.jump.body2);
+  setText('pc-jump-note', PC.jump.note);
+
+  // Cohort cards
+  const cardsEl = document.getElementById('pc-cohort-cards');
+  if (cardsEl) {
+    cardsEl.innerHTML = PC.cohorts.map(cohort => `
+      <div class="cohort-card ${cohort.highlighted ? 'highlighted' : ''} reveal">
+        <p class="cohort-grade">${cohort.grade}</p>
+        <h3 class="cohort-title">${cohort.title}</h3>
+        <p class="cohort-subtitle">${cohort.subtitle}</p>
+        <ul class="cohort-features">
+          ${cohort.features.map(f => `<li>${f}</li>`).join('')}
+        </ul>
+        <div class="cohort-cta">
+          <a href="${C.global.calendlyHref}" target="_blank" class="btn-primary">Book a Consultation</a>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // What's included
+  setText('pc-included-label', PC.included.label);
+  setText('pc-included-title', PC.included.title);
+  const includedEl = document.getElementById('pc-included-items');
+  if (includedEl) {
+    includedEl.innerHTML = PC.included.items.map(item => `
+      <div class="included-item reveal">
+        <span class="included-check">✓</span>
+        <span class="included-text">${item}</span>
+      </div>
+    `).join('');
+  }
+
+  // How a session works
+  setText('pc-how-label', PC.howSession.label);
+  setText('pc-how-title', PC.howSession.title);
+  const howEl = document.getElementById('pc-how-steps');
+  if (howEl) {
+    howEl.innerHTML = PC.howSession.steps.map(s => `
+      <div class="how-step reveal">
+        <div class="how-step-num">${s.number}</div>
+        <div class="how-step-content">
+          <h3>${s.title}</h3>
+          <p>${s.body}</p>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // CTA
+  setText('pc-cta-title', PC.cta.title);
+  setText('pc-cta-body', PC.cta.body);
+  setText('pc-cta-primary', PC.cta.primaryLabel);
+  setAttr('pc-cta-primary', 'href', PC.cta.primaryHref);
+  setText('pc-cta-secondary', PC.cta.secondaryLabel);
+  setAttr('pc-cta-secondary', 'href', PC.cta.secondaryHref);
+
+  // Footer
+  setText('f-tagline', H.footer.tagline);
+  setText('f-quote', H.footer.quote);
+  setText('f-copyright', H.footer.copyright);
+  setText('f-funfact', H.footer.funFact);
+  const emailLink = document.getElementById('f-email-link');
+  if (emailLink) { emailLink.href = G.emailHref; emailLink.textContent = G.email; }
+  const phoneLink = document.getElementById('f-phone-link');
+  if (phoneLink) { phoneLink.href = G.phoneHref; phoneLink.textContent = G.phone; }
+
+  // Reveal
+  function initReveal() {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  }
+  setTimeout(initReveal, 50);
+
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobile-nav');
+  hamburger && hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+  });
+  mobileNav && mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileNav.classList.remove('open');
+  }));
+})();
+</script>
+</body>
+</html>

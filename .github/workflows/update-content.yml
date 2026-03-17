@@ -1,0 +1,41 @@
+name: Update content.js
+
+# Triggered by the Magnolia Admin via repository_dispatch.
+# Uses the built-in GITHUB_TOKEN — no PAT required in the workflow.
+
+on:
+  repository_dispatch:
+    types: [update-content]
+
+permissions:
+  contents: write
+
+jobs:
+  update-content:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Write content.js from payload
+        env:
+          CONTENT_B64: ${{ github.event.client_payload.content_b64 }}
+        run: |
+          echo "$CONTENT_B64" | base64 --decode > content.js
+          echo "content.js written ($(wc -c < content.js) bytes)"
+
+      - name: Commit and push
+        run: |
+          git config user.email "admin@magnolia-education.com"
+          git config user.name "Magnolia Admin Bot"
+          git add content.js
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: update content.js via admin panel [skip ci]"
+            git push origin main
+            echo "Pushed — Netlify will deploy shortly."
+          fi
