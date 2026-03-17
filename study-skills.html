@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Study Skills | Magnolia Education</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="content.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #3D4466;
+      --coral: #E8836A;
+      --coral-pale: #FDF0EC;
+      --hero-start: #E2EAF2;
+      --hero-end: #D4E5EE;
+      --beige: #EDE8E0;
+      --white: #ffffff;
+      --text: #2a2a2a;
+      --text-light: #5a5a6a;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: var(--text); background: #fff; overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--navy);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 68px; display: flex; align-items: center;
+      padding: 0 48px; gap: 40px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; margin-right: auto; }
+    .nav-logo img { height: 38px; width: auto; }
+    .nav-logo-text { font-family: var(--font-display); font-size: 1.25rem; color: var(--white); font-weight: 500; letter-spacing: 0.02em; }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a, .nav-dropdown > a {
+      color: rgba(255,255,255,0.88); font-size: 0.9rem; text-decoration: none;
+      font-weight: 400; letter-spacing: 0.01em; transition: color .2s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown > a::after { content: ' ▾'; font-size: 0.7em; opacity: 0.7; }
+    .nav-dropdown-menu {
+      display: none; position: absolute; top: 100%; left: 0;
+      background: var(--navy); border-top: 2px solid var(--coral);
+      min-width: 180px; padding: 8px 0;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+    .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+    .nav-dropdown-menu a { display: block; padding: 10px 20px; color: rgba(255,255,255,0.8); font-size: 0.875rem; }
+    .nav-dropdown-menu a:hover { color: #fff; background: rgba(255,255,255,0.05); }
+    .nav-cta {
+      background: var(--coral); color: #fff !important; padding: 9px 22px;
+      border-radius: 6px; font-weight: 500; font-size: 0.875rem !important;
+      transition: background .2s, transform .15s !important;
+    }
+    .nav-cta:hover { background: #d96e54 !important; transform: translateY(-1px); }
+
+    /* ── HAMBURGER ── */
+    .nav-hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      padding: 8px; margin-left: auto; background: none; border: none;
+    }
+    .nav-hamburger span { display: block; width: 24px; height: 2px; background: rgba(255,255,255,0.88); border-radius: 2px; transition: transform .3s, opacity .3s; }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-mobile {
+      display: none; position: fixed; top: 68px; left: 0; right: 0;
+      background: var(--navy); z-index: 99; padding: 16px 24px 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      transform: translateY(-10px); opacity: 0;
+      transition: transform .25s ease, opacity .25s ease;
+      pointer-events: none;
+    }
+    .nav-mobile.open { transform: none; opacity: 1; pointer-events: all; }
+    .nav-mobile a { display: block; color: rgba(255,255,255,0.85); font-size: 1rem; text-decoration: none; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .nav-mobile a:last-child { border-bottom: none; }
+    .nav-mobile .mobile-cta { display: block; margin-top: 16px; background: var(--coral); color: #fff; text-align: center; padding: 14px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+
+    /* ── SHARED ── */
+    .btn-primary {
+      display: inline-block; background: var(--coral); color: #fff;
+      padding: 14px 32px; border-radius: 8px; text-decoration: none;
+      font-weight: 500; font-size: 0.95rem; transition: background .2s, transform .15s;
+    }
+    .btn-primary:hover { background: #d96e54; transform: translateY(-1px); }
+    .btn-secondary {
+      display: inline-block; border: 1.5px solid currentColor; color: var(--navy);
+      padding: 13px 30px; border-radius: 8px; text-decoration: none;
+      font-weight: 500; font-size: 0.95rem; transition: background .2s, color .2s;
+    }
+    .btn-secondary:hover { background: var(--navy); color: #fff; }
+    .section-label {
+      display: inline-block; font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--coral);
+      margin-bottom: 16px;
+    }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .55s ease, transform .55s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ─────────────────────────────────────
+       HERO
+    ───────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, var(--hero-start) 0%, var(--hero-end) 100%);
+      padding-top: 68px; min-height: 540px;
+      display: flex; align-items: center;
+    }
+    .hero-inner {
+      max-width: 1120px; margin: 0 auto; width: 100%;
+      padding: 80px 48px;
+      display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 64px;
+    }
+    .hero-eyebrow {
+      font-size: 0.82rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--coral); margin-bottom: 20px;
+    }
+    .hero-title {
+      font-family: var(--font-display); font-size: 3.5rem;
+      font-weight: 600; line-height: 1.1; color: var(--navy); margin-bottom: 20px;
+    }
+    .hero-subtitle {
+      font-size: 1.05rem; line-height: 1.7; color: var(--text-light);
+      margin-bottom: 36px; max-width: 480px;
+    }
+    .hero-img { text-align: center; }
+    .hero-img img { max-width: 100%; height: auto; max-height: 380px; object-fit: contain; }
+
+    /* ─────────────────────────────────────
+       INTRO
+    ───────────────────────────────────── */
+    .intro-section {
+      padding: 100px 48px;
+      max-width: 1120px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 2fr; gap: 80px; align-items: start;
+    }
+    .intro-left .section-label { display: block; }
+    .intro-title {
+      font-family: var(--font-display); font-size: 2.6rem; font-weight: 600;
+      color: var(--navy); line-height: 1.2;
+    }
+    .intro-body { font-size: 1.05rem; line-height: 1.8; color: var(--text-light); }
+
+    /* ─────────────────────────────────────
+       THREE REVIEW SYSTEM
+    ───────────────────────────────────── */
+    .three-review-section {
+      background: var(--navy);
+      padding: 100px 48px;
+    }
+    .three-review-inner { max-width: 1120px; margin: 0 auto; }
+    .three-review-header { text-align: center; margin-bottom: 16px; }
+    .three-review-header .section-label { color: rgba(255,255,255,0.6); }
+    .three-review-title {
+      font-family: var(--font-display); font-size: 2.6rem; font-weight: 600;
+      color: #fff; line-height: 1.2; margin-bottom: 16px;
+    }
+    .three-review-subtitle {
+      font-size: 1rem; color: rgba(255,255,255,0.65); max-width: 600px;
+      margin: 0 auto 64px; line-height: 1.7; text-align: center;
+    }
+    .review-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .review-card {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px; padding: 36px 28px; display: flex; flex-direction: column; gap: 20px;
+      transition: background .2s;
+    }
+    .review-card:hover { background: rgba(255,255,255,0.1); }
+    .review-img { width: 100%; border-radius: 10px; overflow: hidden; aspect-ratio: 4/3; background: rgba(255,255,255,0.05); }
+    .review-img img { width: 100%; height: 100%; object-fit: cover; }
+    .review-number {
+      font-family: var(--font-display); font-size: 2.4rem; font-weight: 600;
+      color: var(--coral); line-height: 1;
+    }
+    .review-timing {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4); margin-bottom: -12px;
+    }
+    .review-title { font-size: 1.1rem; font-weight: 600; color: #fff; }
+    .review-body { font-size: 0.9rem; line-height: 1.7; color: rgba(255,255,255,0.65); }
+
+    /* ─────────────────────────────────────
+       POMODORO
+    ───────────────────────────────────── */
+    .pomodoro-section {
+      padding: 100px 48px; background: var(--coral-pale);
+    }
+    .pomodoro-inner {
+      max-width: 1120px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .pomodoro-text .section-label { display: block; }
+    .pomodoro-title {
+      font-family: var(--font-display); font-size: 2.6rem; font-weight: 600;
+      color: var(--navy); line-height: 1.2; margin-bottom: 24px;
+    }
+    .pomodoro-body {
+      font-size: 1.05rem; line-height: 1.8; color: var(--text-light); margin-bottom: 16px;
+    }
+    .pomodoro-tip {
+      background: #fff; border-left: 4px solid var(--coral);
+      padding: 16px 20px; border-radius: 0 8px 8px 0;
+      font-size: 0.9rem; line-height: 1.6; color: var(--text);
+      font-style: italic; margin-top: 24px;
+    }
+    .pomodoro-img { text-align: center; }
+    .pomodoro-img img { max-width: 100%; height: auto; max-height: 360px; object-fit: contain; }
+
+    /* ─────────────────────────────────────
+       HOMEWORK
+    ───────────────────────────────────── */
+    .homework-section {
+      padding: 100px 48px;
+      max-width: 1120px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .homework-img { text-align: center; }
+    .homework-img img { max-width: 100%; height: auto; max-height: 360px; object-fit: contain; }
+    .homework-text .section-label { display: block; }
+    .homework-title {
+      font-family: var(--font-display); font-size: 2.6rem; font-weight: 600;
+      color: var(--navy); line-height: 1.2; margin-bottom: 36px;
+    }
+    .hw-steps { display: flex; flex-direction: column; gap: 24px; }
+    .hw-step { display: flex; gap: 20px; align-items: flex-start; }
+    .hw-step-num {
+      font-family: var(--font-display); font-size: 1.8rem; font-weight: 600;
+      color: rgba(61,68,102,0.2); line-height: 1; min-width: 40px;
+    }
+    .hw-step-content h3 { font-size: 1rem; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+    .hw-step-content p { font-size: 0.9rem; line-height: 1.6; color: var(--text-light); }
+
+    /* ─────────────────────────────────────
+       CTA
+    ───────────────────────────────────── */
+    .cta-section {
+      background: var(--navy);
+      padding: 100px 48px;
+    }
+    .cta-inner { max-width: 800px; margin: 0 auto; text-align: center; }
+    .cta-title {
+      font-family: var(--font-display); font-size: 2.8rem; font-weight: 600;
+      color: #fff; margin-bottom: 20px; line-height: 1.2;
+    }
+    .cta-body { font-size: 1.05rem; color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 36px; }
+    .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-ghost {
+      display: inline-block; border: 1.5px solid rgba(255,255,255,0.5); color: #fff;
+      padding: 13px 30px; border-radius: 8px; text-decoration: none;
+      font-weight: 500; font-size: 0.95rem; transition: border-color .2s, background .2s;
+    }
+    .btn-ghost:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
+
+    /* ─────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────── */
+    footer { background: #2a2d40; color: rgba(255,255,255,0.7); padding: 64px 48px 32px; }
+    .footer-grid { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand img { height: 36px; margin-bottom: 16px; }
+    .footer-brand p { font-size: 0.875rem; line-height: 1.7; color: rgba(255,255,255,0.55); max-width: 260px; }
+    .footer-tagline-text { font-family: var(--font-display); font-size: 1rem; color: rgba(255,255,255,0.7); font-style: italic; margin-top: 12px; }
+    .footer-col h4 { color: #fff; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+    .footer-col a { display: block; color: rgba(255,255,255,0.55); font-size: 0.875rem; text-decoration: none; margin-bottom: 10px; transition: color .2s; }
+    .footer-col a:hover { color: rgba(255,255,255,0.9); }
+    .footer-bottom { max-width: 1120px; margin: 0 auto; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 0.8rem; color: rgba(255,255,255,0.35); }
+    .footer-fun-fact { font-size: 0.78rem; color: rgba(255,255,255,0.35); font-style: italic; max-width: 440px; text-align: right; }
+
+    /* ─────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────── */
+    @media (max-width: 960px) {
+      .hero-inner { grid-template-columns: 1fr; padding: 80px 32px; gap: 40px; }
+      .hero-img { display: none; }
+      .intro-section { grid-template-columns: 1fr; gap: 32px; }
+      .review-steps { grid-template-columns: 1fr; }
+      .pomodoro-inner { grid-template-columns: 1fr; gap: 48px; }
+      .pomodoro-img { display: none; }
+      .homework-section { grid-template-columns: 1fr; gap: 48px; }
+      .homework-img { display: none; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-mobile { display: block; }
+
+      .hero { min-height: auto; }
+      .hero-inner { padding: 60px 20px 48px; }
+      .hero-title { font-size: 2.6rem; }
+
+      .intro-section { padding: 72px 20px; }
+      .three-review-section { padding: 72px 20px; }
+      .pomodoro-section { padding: 72px 20px; }
+      .homework-section { padding: 72px 20px; }
+      .cta-section { padding: 72px 20px; }
+      .cta-title { font-size: 2.2rem; }
+      .cta-actions { flex-direction: column; }
+      .cta-actions a { width: 100%; text-align: center; }
+
+      footer { padding: 48px 20px 24px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-fun-fact { text-align: left; max-width: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="images/MAGNOLIA.PNG" alt="Magnolia flower logo" />
+    <span class="nav-logo-text">Magnolia Education</span>
+  </a>
+  <div class="nav-links">
+    <div class="nav-dropdown">
+      <a href="#">Services</a>
+      <div class="nav-dropdown-menu">
+        <a href="tutoring.html">Tutoring</a>
+        <a href="mock-exams.html">Mock Exams</a>
+        <a href="study-skills.html">Study Skills</a>
+        <a href="prep-cohorts.html">Prep Cohorts</a>
+      </div>
+    </div>
+    <div class="nav-dropdown">
+      <a href="#">About</a>
+      <div class="nav-dropdown-menu">
+        <a href="story.html">Our Story</a>
+        <a href="tutors.html">Our Tutors</a>
+      </div>
+    </div>
+    <a href="contact.html">Contact</a>
+    <a href="https://calendly.com/rachit-chakerwarti/call" target="_blank" class="nav-cta">Book a Free Call</a>
+  </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE NAV -->
+<nav class="nav-mobile" id="mobile-nav">
+  <a href="tutoring.html">Tutoring</a>
+  <a href="mock-exams.html">Mock Exams</a>
+  <a href="study-skills.html">Study Skills</a>
+  <a href="prep-cohorts.html">Prep Cohorts</a>
+  <a href="story.html">Our Story</a>
+  <a href="tutors.html">Our Tutors</a>
+  <a href="contact.html">Contact</a>
+  <a href="https://calendly.com/rachit-chakerwarti/call" target="_blank" class="mobile-cta">Book a Free Call</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text reveal">
+      <p class="hero-eyebrow" id="ss-hero-label"></p>
+      <h1 class="hero-title" id="ss-hero-title"></h1>
+      <p class="hero-subtitle" id="ss-hero-subtitle"></p>
+      <a href="#" class="btn-primary" id="ss-hero-cta"></a>
+    </div>
+    <div class="hero-img reveal">
+      <img src="images/TIMEMANGEMENT.PNG" alt="Student managing study schedule" />
+    </div>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section>
+  <div class="intro-section">
+    <div class="intro-left reveal">
+      <p class="section-label" id="ss-intro-label"></p>
+      <h2 class="intro-title" id="ss-intro-title"></h2>
+    </div>
+    <div class="reveal">
+      <p class="intro-body" id="ss-intro-body"></p>
+    </div>
+  </div>
+</section>
+
+<!-- THREE REVIEW SYSTEM -->
+<section class="three-review-section">
+  <div class="three-review-inner">
+    <div class="three-review-header reveal">
+      <p class="section-label" id="ss-tr-label"></p>
+      <h2 class="three-review-title" id="ss-tr-title"></h2>
+      <p class="three-review-subtitle" id="ss-tr-subtitle"></p>
+    </div>
+    <div class="review-steps" id="ss-review-steps"></div>
+  </div>
+</section>
+
+<!-- POMODORO -->
+<section class="pomodoro-section">
+  <div class="pomodoro-inner">
+    <div class="pomodoro-text reveal">
+      <p class="section-label" id="ss-pom-label"></p>
+      <h2 class="pomodoro-title" id="ss-pom-title"></h2>
+      <p class="pomodoro-body" id="ss-pom-body1"></p>
+      <p class="pomodoro-body" id="ss-pom-body2"></p>
+      <div class="pomodoro-tip" id="ss-pom-tip"></div>
+    </div>
+    <div class="pomodoro-img reveal">
+      <img src="images/10workinprogress.png" alt="Student working in focused blocks" />
+    </div>
+  </div>
+</section>
+
+<!-- HOMEWORK STRATEGY -->
+<section>
+  <div class="homework-section">
+    <div class="homework-img reveal">
+      <img src="images/9homeworkguideline.png" alt="Homework guidelines illustration" />
+    </div>
+    <div class="homework-text reveal">
+      <p class="section-label" id="ss-hw-label"></p>
+      <h2 class="homework-title" id="ss-hw-title"></h2>
+      <div class="hw-steps" id="ss-hw-steps"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner reveal">
+    <h2 class="cta-title" id="ss-cta-title"></h2>
+    <p class="cta-body" id="ss-cta-body"></p>
+    <div class="cta-actions">
+      <a href="#" class="btn-primary" id="ss-cta-primary"></a>
+      <a href="#" class="btn-ghost" id="ss-cta-secondary"></a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="images/MAGNOLIA.PNG" alt="Magnolia Education logo" />
+      <p id="f-tagline"></p>
+      <p class="footer-tagline-text" id="f-quote"></p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="tutoring.html">Tutoring</a>
+      <a href="mock-exams.html">Mock Exams</a>
+      <a href="study-skills.html">Study Skills</a>
+      <a href="prep-cohorts.html">Prep Cohorts</a>
+    </div>
+    <div class="footer-col">
+      <h4>About</h4>
+      <a href="story.html">Our Story</a>
+      <a href="tutors.html">Our Tutors</a>
+      <a href="https://purrfect-single-1d6.notion.site/18bb3ed99418804298c0c90bf3f02862" target="_blank">Join Our Team</a>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <a href="contact.html">Contact</a>
+      <a href="#" id="f-email-link"></a>
+      <a href="#" id="f-phone-link"></a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p id="f-copyright"></p>
+    <p class="footer-fun-fact" id="f-funfact"></p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const C = window.CONTENT;
+  if (!C) return;
+
+  const SS = C.studySkills;
+  const G = C.global;
+  const H = C.homepage;
+
+  function setText(id, val) {
+    const el = document.getElementById(id);
+    if (el && val != null) el.textContent = val;
+  }
+  function setAttr(id, attr, val) {
+    const el = document.getElementById(id);
+    if (el && val != null) el.setAttribute(attr, val);
+  }
+
+  document.title = SS.meta.title;
+
+  // Hero
+  setText('ss-hero-label', SS.hero.label);
+  setText('ss-hero-title', SS.hero.title);
+  setText('ss-hero-subtitle', SS.hero.subtitle);
+  setText('ss-hero-cta', SS.hero.ctaLabel);
+  setAttr('ss-hero-cta', 'href', SS.hero.ctaHref);
+
+  // Intro
+  setText('ss-intro-label', SS.intro.label);
+  setText('ss-intro-title', SS.intro.title);
+  setText('ss-intro-body', SS.intro.body);
+
+  // Three Review System
+  setText('ss-tr-label', SS.threeReview.label);
+  setText('ss-tr-title', SS.threeReview.title);
+  setText('ss-tr-subtitle', SS.threeReview.subtitle);
+  const reviewEl = document.getElementById('ss-review-steps');
+  if (reviewEl) {
+    reviewEl.innerHTML = SS.threeReview.steps.map(s => `
+      <div class="review-card reveal">
+        <div class="review-img">
+          <img src="${s.imgSrc}" alt="${s.imgAlt}" loading="lazy" />
+        </div>
+        <div class="review-number">${s.number}</div>
+        <p class="review-timing">${s.timing}</p>
+        <h3 class="review-title">${s.title}</h3>
+        <p class="review-body">${s.body}</p>
+      </div>
+    `).join('');
+  }
+
+  // Pomodoro
+  setText('ss-pom-label', SS.pomodoro.label);
+  setText('ss-pom-title', SS.pomodoro.title);
+  setText('ss-pom-body1', SS.pomodoro.body1);
+  setText('ss-pom-body2', SS.pomodoro.body2);
+  setText('ss-pom-tip', SS.pomodoro.tip);
+
+  // Homework
+  setText('ss-hw-label', SS.homework.label);
+  setText('ss-hw-title', SS.homework.title);
+  const hwEl = document.getElementById('ss-hw-steps');
+  if (hwEl) {
+    hwEl.innerHTML = SS.homework.steps.map(s => `
+      <div class="hw-step reveal">
+        <div class="hw-step-num">${s.number}</div>
+        <div class="hw-step-content">
+          <h3>${s.title}</h3>
+          <p>${s.body}</p>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // CTA
+  setText('ss-cta-title', SS.cta.title);
+  setText('ss-cta-body', SS.cta.body);
+  setText('ss-cta-primary', SS.cta.primaryLabel);
+  setAttr('ss-cta-primary', 'href', SS.cta.primaryHref);
+  setText('ss-cta-secondary', SS.cta.secondaryLabel);
+  setAttr('ss-cta-secondary', 'href', SS.cta.secondaryHref);
+
+  // Footer
+  setText('f-tagline', H.footer.tagline);
+  setText('f-quote', H.footer.quote);
+  setText('f-copyright', H.footer.copyright);
+  setText('f-funfact', H.footer.funFact);
+  const emailLink = document.getElementById('f-email-link');
+  if (emailLink) { emailLink.href = G.emailHref; emailLink.textContent = G.email; }
+  const phoneLink = document.getElementById('f-phone-link');
+  if (phoneLink) { phoneLink.href = G.phoneHref; phoneLink.textContent = G.phone; }
+
+  // Reveal
+  function initReveal() {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  }
+  setTimeout(initReveal, 50);
+
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobile-nav');
+  hamburger && hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+  });
+  mobileNav && mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileNav.classList.remove('open');
+  }));
+})();
+</script>
+</body>
+</html>
