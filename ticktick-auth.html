@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Connect TickTick | Magnolia Education</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #3D4466;
+      --coral: #E8836A;
+      --coral-pale: #FDF0EC;
+      --beige: #EDE8E0;
+      --white: #ffffff;
+      --text: #2a2a2a;
+      --text-light: #5a5a6a;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--text);
+      background: var(--beige);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 3.5rem 3rem;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: var(--navy);
+      letter-spacing: 0.02em;
+      margin-bottom: 2.5rem;
+      opacity: 0.7;
+    }
+
+    .icon-wrap {
+      width: 80px;
+      height: 80px;
+      background: var(--coral-pale);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 2.25rem;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    p {
+      color: var(--text-light);
+      line-height: 1.7;
+      font-size: 0.975rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--beige);
+      margin: 2rem 0;
+    }
+
+    .permissions {
+      text-align: left;
+      margin-bottom: 2rem;
+    }
+
+    .permissions h2 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-light);
+      margin-bottom: 0.75rem;
+    }
+
+    .permission-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.5rem 0;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    .permission-item .check {
+      color: var(--coral);
+      font-size: 1rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      background: var(--coral);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 1rem 2rem;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.2s, transform 0.15s;
+      text-decoration: none;
+    }
+
+    .btn:hover { background: #d4724f; transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+
+    .btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-icon { font-size: 1.2rem; }
+
+    .note {
+      margin-top: 1.25rem;
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+
+    .error-msg {
+      display: none;
+      background: #fdecea;
+      border: 1px solid #f5c6c3;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-size: 0.875rem;
+      color: #c0392b;
+      margin-top: 1rem;
+      text-align: left;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 2rem;
+      font-size: 0.875rem;
+      color: var(--navy);
+      text-decoration: none;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+    .back-link:hover { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="logo">Magnolia Education</div>
+
+    <div class="icon-wrap">📋</div>
+
+    <h1>Connect TickTick</h1>
+    <p>Link your TickTick account so Claude can manage your tasks, projects, and due dates.</p>
+
+    <div class="divider"></div>
+
+    <div class="permissions">
+      <h2>Claude will be able to</h2>
+      <div class="permission-item">
+        <span class="check">✓</span>
+        <span>Read and create tasks and projects</span>
+      </div>
+      <div class="permission-item">
+        <span class="check">✓</span>
+        <span>Update task details including due dates (and clear them)</span>
+      </div>
+      <div class="permission-item">
+        <span class="check">✓</span>
+        <span>Complete and delete tasks</span>
+      </div>
+      <div class="permission-item">
+        <span class="check">✓</span>
+        <span>Access your tags and productivity statistics</span>
+      </div>
+    </div>
+
+    <button class="btn" id="connect-btn" onclick="startAuth()">
+      <span class="btn-icon">🔗</span>
+      Connect TickTick
+    </button>
+
+    <div class="error-msg" id="error-msg"></div>
+
+    <p class="note">You'll be redirected to TickTick to authorise access. Tokens are stored securely in Netlify environment variables.</p>
+  </div>
+
+  <a href="/" class="back-link">← Back to Magnolia Education</a>
+
+  <script>
+    async function startAuth() {
+      const btn = document.getElementById('connect-btn');
+      const errorEl = document.getElementById('error-msg');
+
+      btn.disabled = true;
+      btn.textContent = 'Redirecting…';
+      errorEl.style.display = 'none';
+
+      try {
+        const res = await fetch('/.netlify/functions/ticktick-auth-url');
+        if (!res.ok) throw new Error(`Server error: ${res.status}`);
+        const { url, error } = await res.json();
+        if (error) throw new Error(error);
+        if (!url) throw new Error('No auth URL returned from server.');
+        window.location.href = url;
+      } catch (err) {
+        errorEl.textContent = err.message;
+        errorEl.style.display = 'block';
+        btn.disabled = false;
+        btn.innerHTML = '<span class="btn-icon">🔗</span> Connect TickTick';
+      }
+    }
+  </script>
+
+</body>
+</html>
