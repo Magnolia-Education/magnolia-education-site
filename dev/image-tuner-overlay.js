@@ -52,10 +52,22 @@
   }
 
   function applyAllSaved() {
+    // Only restores image transforms (scale, fit, position, radius) — NOT container
+    // dimensions (cw/ch). Container sizing comes from hardcoded HTML; restoring stale
+    // W/H values from a previous session can break layout (e.g. after an image swap).
     const cfg = loadConfig();
     document.querySelectorAll('img[data-tuner-id]').forEach(function (img) {
       const id = img.dataset.tunerId;
-      if (cfg[id]) applyToImage(img, cfg[id]);
+      if (cfg[id]) {
+        var v = cfg[id];
+        if (v.scale    !== undefined) img.style.transform      = 'scale(' + v.scale + ')';
+        img.style.transformOrigin = 'center';
+        if (v.objectFit !== undefined) img.style.objectFit      = v.objectFit;
+        if (v.posX !== undefined && v.posY !== undefined)
+          img.style.objectPosition = v.posX + '% ' + v.posY + '%';
+        if (v.borderRadius !== undefined)
+          img.style.borderRadius = v.borderRadius > 0 ? v.borderRadius + 'px' : '';
+      }
     });
   }
 

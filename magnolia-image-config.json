@@ -1,0 +1,64 @@
+{
+  "images": {
+    "images/CLOUDSURFING.png": {
+      "scale": 1.05,
+      "objectPositionX": 100,
+      "objectPositionY": 57,
+      "objectFit": "contain",
+      "borderRadius": 0,
+      "containerWidth": 470,
+      "containerHeight": 680,
+      "page": "index.html",
+      "section": "Hero Section",
+      "id": "idx-hero"
+    },
+    "images/MAGNOLIATREE.PNG": {
+      "scale": 1.2,
+      "objectPositionX": 50,
+      "objectPositionY": 40,
+      "objectFit": "cover",
+      "borderRadius": 0,
+      "containerWidth": 448,
+      "containerHeight": 340,
+      "page": "index.html",
+      "section": "Services Grid",
+      "id": "idx-svc-tutoring"
+    },
+    "images/TIMEMANGEMENT.PNG": {
+      "scale": 1.3,
+      "objectPositionX": 50,
+      "objectPositionY": 35,
+      "objectFit": "contain",
+      "borderRadius": 0,
+      "containerWidth": 448,
+      "containerHeight": 340,
+      "page": "index.html",
+      "section": "Services Grid",
+      "id": "idx-svc-study"
+    },
+    "images/4Mockexam.png": {
+      "scale": 0.9,
+      "objectPositionX": 50,
+      "objectPositionY": 50,
+      "objectFit": "contain",
+      "borderRadius": 0,
+      "containerWidth": 448,
+      "containerHeight": 340,
+      "page": "index.html",
+      "section": "Services Grid",
+      "id": "idx-svc-mock"
+    },
+    "images/2Bitpaper.png": {
+      "scale": 1,
+      "objectPositionX": 50,
+      "objectPositionY": 50,
+      "objectFit": "contain",
+      "borderRadius": 0,
+      "containerWidth": 400,
+      "containerHeight": 300,
+      "page": "index.html",
+      "section": "Services Grid",
+      "id": "idx-svc-cohorts"
+    }
+  }
+}
