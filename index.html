@@ -86,11 +86,11 @@
       display: none; position: fixed; top: 68px; left: 0; right: 0;
       background: #3D4466; z-index: 99; padding: 16px 24px 24px;
       border-top: 1px solid rgba(255,255,255,0.1);
-      transform: translateY(-10px); opacity: 0;
+      transform: translateY(-110%);
       transition: transform .25s ease, opacity .25s ease;
       pointer-events: none;
     }
-    .nav-mobile.open { transform: none; opacity: 1; pointer-events: all; }
+    .nav-mobile.open { transform: translateY(0); pointer-events: all; }
     .nav-mobile a {
       display: block; color: rgba(255,255,255,0.85); font-size: 1rem;
       text-decoration: none; padding: 12px 0;
