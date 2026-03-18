@@ -192,16 +192,6 @@
     .founder-text .section-title { color: #fff; margin-bottom: 8px; }
     .founder-pronunciation { color: rgba(255,255,255,0.5); font-size: 0.8rem; font-style: italic; margin-bottom: 24px; }
     .founder-text p { color: rgba(255,255,255,0.8); line-height: 1.8; font-size: 1rem; margin-bottom: 16px; }
-    .founder-principles {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 36px;
-    }
-    .principle-card {
-      background: rgba(255,255,255,0.07); border-radius: 10px;
-      padding: 20px; border: 1px solid rgba(255,255,255,0.1);
-    }
-    .principle-card h4 { color: var(--coral); font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em; margin-bottom: 8px; text-transform: uppercase; }
-    .principle-card p { color: rgba(255,255,255,0.7); font-size: 0.875rem; line-height: 1.6; }
-
     /* ── SERVICES ── */
     #services-grid { margin-top: 56px; }
     .service-row {
@@ -324,7 +314,6 @@
       .section { padding: 72px 20px; }
       nav { padding: 0 20px; }
       .hero-inner { padding: 60px 20px; }
-      .founder-principles { grid-template-columns: 1fr; }
       .service-row { margin-bottom: 56px; padding-bottom: 56px; }
       .footer-grid { grid-template-columns: 1fr; }
       .email-form { flex-direction: column; }
@@ -420,7 +409,6 @@
       <p id="founder-p1"></p>
       <p id="founder-p2"></p>
       <p id="founder-p3"></p>
-      <div class="founder-principles" id="founder-principles"></div>
     </div>
   </div>
 </section>
@@ -554,13 +542,6 @@
     setText('founder-p1', H.founder.para1);
     setText('founder-p2', H.founder.para2);
     setText('founder-p3', H.founder.para3);
-    const principlesEl = document.getElementById('founder-principles');
-    if (principlesEl) {
-      principlesEl.innerHTML = H.founder.principles.map(p =>
-        `<div class="principle-card"><h4>${p.title}</h4><p>${p.body}</p></div>`
-      ).join('');
-    }
-
     // Services header
     setText('services-label', H.services.label);
     setText('services-title', H.services.title);
