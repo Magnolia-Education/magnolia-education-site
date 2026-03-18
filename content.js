@@ -648,57 +648,79 @@ window.CONTENT = {
     },
     "hero": {
       "label": "Our Team",
-      "title": "Meet your tutors.",
-      "subtitle": "Handpicked for their warmth, patience, and deep subject knowledge — our tutors don’t just explain concepts, they build lasting confidence."
+      "title": "Meet the team.",
+      "subtitle": "Every Magnolia tutor is chosen for their subject expertise, their empathy, and their commitment to the philosophy that tutors should make themselves unnecessary."
     },
     "team": [
       {
+        "id": "rachit",
         "name": "Rachit Chakerwarti",
-        "title": "Mathematics Tutor · Founder",
-        "subjects": [
-          "Mathematics"
-        ],
-        "photo": "https://cdn.prod.website-files.com/678eb34ade602a9533f8e2f2/67cb36d4e95467fceef688e7_rachit-headshot.jpg",
-        "bio": "Rachit completed his Bachelor of Science in Psychology, Math & Economics at the University of Toronto. Having experienced both extremes of academic performance, he brings rare empathy to every session — understanding what it means to struggle, and what it takes to excel. He founded Magnolia because he believes every student deserves a tutor who genuinely cares."
+        "role": "Founder & Lead Tutor",
+        "subjects": ["Mathematics"],
+        "photo": "images/13portrait.png",
+        "founder": true,
+        "bio": "Rachit founded Magnolia Education after experiencing firsthand how the right support can transform a student’s relationship with math. His approach combines deep conceptual teaching with mindfulness, independence, and a genuine belief that every student can not only succeed — but come to love the process of learning."
       },
       {
+        "id": "benjamin-l",
         "name": "Benjamin Lappalainen",
-        "title": "Mathematics & Physics Tutor",
-        "subjects": [
-          "Mathematics",
-          "Physics"
-        ],
-        "photo": "https://cdn.prod.website-files.com/678eb34ade602a9533f8e2f2/67cb36d4dae1b861bd4b4a15_ben-headshot.jpg",
-        "bio": "Ben holds a Bachelor of Applied Science in Engineering Science (Aerospace) from the University of Toronto. He has taught at U of T’s DEEP Leadership Camp and with the Royal Astronomical Society of Canada. He believes anyone can learn anything given the right environment and support — and he proves it every session."
+        "role": "Tutor",
+        "subjects": ["Physics", "Mathematics"],
+        "photo": "images/Benjamin Lappalainen.jpg",
+        "founder": false,
+        "bio": "Benjamin completed his Bachelor of Applied Science in Engineering Science (Aerospace) at the University of Toronto. He has taught at U of T’s DEEP Leadership Camp and given talks on astrophotography for the Royal Astronomical Society of Canada. He believes anyone can learn anything given the right environment and support, and works with each student’s strengths to develop techniques that apply universally."
       },
       {
+        "id": "gladys",
+        "name": "Gladys Lou",
+        "role": "Tutor",
+        "subjects": ["Mathematics", "Chemistry", "Biology"],
+        "photo": "images/Gladys Lou.jpg",
+        "founder": false,
+        "bio": "Gladys completed her Bachelor of Arts in Psychology at the University of Toronto and is currently pursuing her Master of Arts at Bard College in New York. With experience as a Teaching Assistant and private tutor, she provides personalized support tailored to each student’s needs — believing that once students understand the underlying concepts, they can solve any problem with confidence."
+      },
+      {
+        "id": "callum",
+        "name": "Callum Camazzola",
+        "role": "Tutor",
+        "subjects": ["Math", "Chemistry", "Physics"],
+        "photo": "images/Callum Camazzola.HEIC",
+        "founder": false,
+        "bio": "Callum is pursuing a Bachelor’s in Management Engineering at the University of Waterloo. Having struggled with science in high school himself, he knows how hard it can be to feel like a subject just isn’t for you. He teaches in a way that fosters curiosity and motivation — because he believes success in any subject comes from leveraging curiosity into hard work, not from innate aptitude."
+      },
+      {
+        "id": "benjamin-g",
+        "name": "Benjamin Gladney",
+        "role": "Tutor",
+        "subjects": ["Math", "Physics"],
+        "photo": "images/Benjamin Gladney.jpg",
+        "founder": false,
+        "bio": "Ben is studying Data Science at the University of Waterloo. He loves software development and machine learning, but math has always been his favourite. His own academic success didn’t come easily — which is exactly why he’s a strong believer that hard work beats talent every time."
+      },
+      {
+        "id": "jess",
         "name": "Jess Nash",
-        "title": "Chemistry, Biology & Mathematics Tutor",
-        "subjects": [
-          "Chemistry",
-          "Biology",
-          "Mathematics"
-        ],
-        "photo": "https://cdn.prod.website-files.com/678eb34ade602a9533f8e2f2/67cb36d4c164a31457608318_jess-headshot.jpg",
-        "bio": "Jess holds a Bachelor of Science in Biochemistry from the University of Toronto, with experience as a freelance tutor, teaching assistant at U of T, and researcher at Yale. She is passionate about helping students discover their own motivation by connecting learning to their unique strengths."
+        "role": "Tutor",
+        "subjects": ["Chemistry", "Biology", "Mathematics"],
+        "photo": "images/Jess Nash.jpg",
+        "founder": false,
+        "bio": "Jess completed her Bachelor of Science in Biochemistry at the University of Toronto. She has worked as a freelance tutor, a Teaching Assistant at U of T, and a scientific researcher and communicator at Yale University. She believes every student can find the motivation and confidence to succeed in science — and even come to enjoy the challenges along the way."
       },
       {
+        "id": "gavin",
         "name": "Gavin Burn",
-        "title": "Mathematics Tutor",
-        "subjects": [
-          "Mathematics"
-        ],
-        "photo": "https://cdn.prod.website-files.com/678eb34ade602a9533f8e2f2/67cb36d453cae5d2ea82db13_gavin-headshot.jpg",
-        "bio": "A second-year Computer Engineering student at the University of Waterloo, Gavin was once a Magnolia student himself — improving from 33% in Grade 9 Math to 100% in Grade 12 Advanced Functions. He now channels that journey into helping students build the determination and critical thinking that changed his own academic path."
+        "role": "Tutor",
+        "subjects": ["Mathematics"],
+        "photo": "images/Gavin Burn.jpg",
+        "founder": false,
+        "bio": "Gavin is pursuing a Bachelor of Computer Engineering at the University of Waterloo — and is a former Magnolia student. When Rachit first started tutoring him, he had a 33 in Grade 9 Math. By Grade 12, he had a 100 in Advanced Functions. He aims to develop determination and critical thinking in every student, helping them succeed in any academic discipline."
       }
     ],
     "cta": {
-      "title": "Ready to find the right fit?",
-      "body": "Start with a free 30-minute consultation. We’ll match your student with the tutor who best fits their learning style, goals, and personality.",
-      "primaryLabel": "Book a Free Consultation",
-      "primaryHref": "https://calendly.com/rachit-chakerwarti/call",
-      "secondaryLabel": "Email Us",
-      "secondaryHref": "mailto:hello@magnolia-education.com"
+      "title": "Join Our Team",
+      "body": "We’re always looking for exceptional tutors who share our philosophy — deep subject knowledge, genuine empathy, and a commitment to student independence.",
+      "primaryLabel": "Get in Touch",
+      "primaryHref": "https://calendly.com/rachit-chakerwarti/call"
     }
   },
   "story": {
