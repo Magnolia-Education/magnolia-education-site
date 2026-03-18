@@ -131,7 +131,7 @@
       font-weight: 500; line-height: 1.1; color: var(--navy);
       margin-bottom: 24px;
     }
-    .hero-title em { font-style: italic; color: var(--coral); }
+    .hero-title em { font-style: italic; color: var(--coral); font-size: 0.67em; }
     .hero-subtitle {
       font-size: 1.05rem; line-height: 1.7; color: var(--text-light);
       margin-bottom: 36px; max-width: 480px;
@@ -178,15 +178,19 @@
     }
     .founder-inner {
       max-width: 1120px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+      display: grid; grid-template-columns: 29% 71%; gap: 72px; align-items: start;
+    }
+    .founder-image {
+      display: flex; align-items: start;
     }
     .founder-image img {
-      width: 100%; max-width: 440px;
-      border-radius: 16px;
+      width: 100%; height: auto;
+      border-radius: 16px; object-fit: contain; object-position: top center;
       filter: drop-shadow(0 24px 48px rgba(0,0,0,0.3));
     }
     .founder-text .section-label { color: var(--coral); }
-    .founder-text .section-title { color: #fff; margin-bottom: 24px; }
+    .founder-text .section-title { color: #fff; margin-bottom: 8px; }
+    .founder-pronunciation { color: rgba(255,255,255,0.5); font-size: 0.8rem; font-style: italic; margin-bottom: 24px; }
     .founder-text p { color: rgba(255,255,255,0.8); line-height: 1.8; font-size: 1rem; margin-bottom: 16px; }
     .founder-principles {
       display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 36px;
@@ -199,28 +203,28 @@
     .principle-card p { color: rgba(255,255,255,0.7); font-size: 0.875rem; line-height: 1.6; }
 
     /* ── SERVICES ── */
-    .services-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 56px;
+    #services-grid { margin-top: 56px; }
+    .service-row {
+      display: grid; grid-template-columns: 40% 60%;
+      gap: 72px; align-items: center;
+      margin-bottom: 80px; padding-bottom: 80px;
+      border-bottom: 1px solid rgba(61,68,102,0.08);
     }
-    .service-card {
-      background: #fff; border-radius: 16px; overflow: hidden;
-      border: 1px solid rgba(61,68,102,0.1);
-      box-shadow: 0 4px 24px rgba(61,68,102,0.06);
-      transition: transform .25s, box-shadow .25s;
-      display: flex; flex-direction: column;
-    }
-    .service-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(61,68,102,0.12); }
-    .service-image {
+    .service-row:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+    .service-row.reverse { grid-template-columns: 60% 40%; }
+    .service-row.reverse .service-row-img { order: 2; }
+    .service-row.reverse .service-row-text { order: 1; }
+    .service-row-img {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 300px;
       background: linear-gradient(135deg, var(--hero-start), var(--hero-end));
-      height: 220px; display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
+      border-radius: 20px; overflow: hidden;
     }
-    .service-image img { height: 180px; width: auto; object-fit: contain; }
-    .service-body { padding: 28px 28px 32px; flex: 1; display: flex; flex-direction: column; }
-    .service-tag { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--coral); margin-bottom: 12px; }
-    .service-body h3 { font-family: var(--font-display); font-size: 1.6rem; font-weight: 500; color: var(--navy); margin-bottom: 12px; }
-    .service-body p { color: var(--text-light); font-size: 0.9rem; line-height: 1.7; flex: 1; }
-    .service-link { display: inline-block; margin-top: 20px; color: var(--coral); font-weight: 600; font-size: 0.875rem; text-decoration: none; }
+    .service-row-img img { width: 100%; max-height: 340px; object-fit: contain; transform: scale(1.6); transform-origin: center; }
+    .service-row-tag { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--coral); margin-bottom: 14px; }
+    .service-row-title { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 500; color: var(--navy); margin-bottom: 16px; line-height: 1.15; }
+    .service-row-text p:not(.service-row-tag) { color: var(--text-light); font-size: 0.975rem; line-height: 1.75; margin-bottom: 24px; }
+    .service-link { display: inline-block; color: var(--coral); font-weight: 600; font-size: 0.9rem; text-decoration: none; }
     .service-link:hover { text-decoration: underline; }
 
     /* ── EXAM CTA BANNER ── */
@@ -295,13 +299,14 @@
 
     /* ── FOOTER ── */
     footer { background: #2a2d40; color: rgba(255,255,255,0.7); padding: 64px 48px 32px; }
-    .footer-grid { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-grid { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 48px; }
     .footer-brand img { height: 36px; margin-bottom: 16px; }
     .footer-brand p { font-size: 0.875rem; line-height: 1.7; color: rgba(255,255,255,0.55); max-width: 260px; }
     .footer-tagline { font-family: var(--font-display); font-size: 1rem; color: rgba(255,255,255,0.7); font-style: italic; margin-top: 12px; }
     .footer-col h4 { color: #fff; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
     .footer-col a { display: block; color: rgba(255,255,255,0.55); font-size: 0.875rem; text-decoration: none; margin-bottom: 10px; transition: color .2s; }
     .footer-col a:hover { color: rgba(255,255,255,0.9); }
+    .footer-col:last-child a { white-space: nowrap; font-size: 0.8rem; }
     .footer-bottom { max-width: 1120px; margin: 0 auto; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
     .footer-bottom p { font-size: 0.8rem; color: rgba(255,255,255,0.35); }
     .footer-fun-fact { font-size: 0.78rem; color: rgba(255,255,255,0.35); font-style: italic; max-width: 440px; text-align: right; }
@@ -316,7 +321,10 @@
       .founder-inner { gap: 48px; }
       .hero-image { order: -1; }
       .founder-image { text-align: center; }
-      .services-grid, .values-grid { grid-template-columns: 1fr 1fr; }
+      .service-row, .service-row.reverse { grid-template-columns: 1fr; gap: 40px; }
+      .service-row.reverse .service-row-img { order: -1; }
+      .service-row.reverse .service-row-text { order: 1; }
+      .values-grid { grid-template-columns: 1fr 1fr; }
       .exam-banner-inner { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr 1fr; }
       nav { padding: 0 24px; gap: 20px; }
@@ -325,7 +333,8 @@
       .section { padding: 72px 20px; }
       nav { padding: 0 20px; }
       .hero-inner { padding: 60px 20px; }
-      .services-grid, .values-grid, .founder-principles { grid-template-columns: 1fr; }
+      .values-grid, .founder-principles { grid-template-columns: 1fr; }
+      .service-row { margin-bottom: 56px; padding-bottom: 56px; }
       .footer-grid { grid-template-columns: 1fr; }
       .email-form { flex-direction: column; }
       .nav-links { display: none; }
@@ -365,7 +374,7 @@
       </div>
     </div>
     <a href="contact.html">Contact</a>
-    <a href="https://calendly.com/rachit-chakerwarti/call" target="_blank" class="nav-cta" id="nav-cta-link">Book a Free Call</a>
+    <a href="https://calendly.com/rachit-chakerwarti/call" target="_blank" class="nav-cta" id="nav-cta-link">Book a Consultation</a>
   </div>
   <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
     <span></span><span></span><span></span>
@@ -381,7 +390,7 @@
   <a href="story.html">Our Story</a>
   <a href="tutors.html">Our Tutors</a>
   <a href="contact.html">Contact</a>
-  <a href="https://calendly.com/rachit-chakerwarti/call" target="_blank" class="mobile-cta" id="mobile-cta-link">Book a Free Call</a>
+  <a href="https://calendly.com/rachit-chakerwarti/call" target="_blank" class="mobile-cta" id="mobile-cta-link">Book a Consultation</a>
 </div>
 
 <!-- HERO -->
@@ -397,7 +406,10 @@
       </div>
     </div>
     <div class="hero-image reveal">
-      <img src="images/CLOUDSURFING.png" alt="Student surfing on an A+ paper through clouds" />
+      <div style="width:460px;height:340px;overflow:hidden;">
+        <img src="images/CLOUDSURFING.png" alt="Student surfing on an A+ paper through clouds"
+          style="transform:scale(1);transform-origin:center;object-fit:contain;object-position:50% 50%;border-radius:0;width:100%;height:100%;" />
+      </div>
     </div>
   </div>
 </section>
@@ -411,6 +423,7 @@
     <div class="founder-text reveal">
       <p class="section-label" id="founder-label"></p>
       <h2 class="section-title" id="founder-title"></h2>
+      <p class="founder-pronunciation">(pronounced Rutch-it, like "Dutch" with an R)</p>
       <p id="founder-p1"></p>
       <p id="founder-p2"></p>
       <p id="founder-p3"></p>
@@ -508,13 +521,13 @@
       <h4>About</h4>
       <a href="story.html">Our Story</a>
       <a href="tutors.html">Our Tutors</a>
-      <a href="https://purrfect-single-1d6.notion.site/18bb3ed99418804298c0c90bf3f02862" target="_blank">Join Our Team</a>
+      <a href="contact.html">Join Our Team</a>
     </div>
     <div class="footer-col">
       <h4>Connect</h4>
       <a href="contact.html">Contact</a>
-      <a href="mailto:hello@magnolia-education.com">hello@magnolia-education.com</a>
-      <a href="https://calendly.com/rachit-chakerwarti/call" target="_blank">Book a Call</a>
+      <a href="mailto:hello@magnolia-education.com" style="white-space:nowrap">hello@magnolia-education.com</a>
+      <a href="https://calendly.com/rachit-chakerwarti/call" target="_blank">Book a Consultation</a>
     </div>
   </div>
   <div class="footer-bottom">
@@ -569,20 +582,29 @@
     setText('services-label', H.services.label);
     setText('services-title', H.services.title);
     setText('services-subtitle', H.services.subtitle);
-    // Services grid
+    // Services rows
     const servicesGrid = document.getElementById('services-grid');
     if (servicesGrid) {
-      servicesGrid.innerHTML = H.services.items.map(s =>
-        `<div class="service-card reveal">
-          <div class="service-image"><img src="${s.imgSrc}" alt="${s.imgAlt}" /></div>
-          <div class="service-body">
-            <p class="service-tag">${s.tag}</p>
-            <h3>${s.title}</h3>
+      const SVC_IMG = {
+        'images/BOOKCLIMBING.PNG': { w: 440, h: 730, s: 'transform:scale(2);transform-origin:center;object-fit:contain;object-position:50% 33%;border-radius:0;width:100%;height:100%;' }
+      };
+      servicesGrid.innerHTML = H.services.items.map((s, i) => {
+        const cfg = SVC_IMG[s.imgSrc];
+        const imgHtml = cfg
+          ? `<div style="width:${cfg.w}px;height:${cfg.h}px;overflow:hidden;"><img src="${s.imgSrc}" alt="${s.imgAlt}" style="${cfg.s}" /></div>`
+          : `<img src="${s.imgSrc}" alt="${s.imgAlt}" />`;
+        return `<div class="service-row${i % 2 === 1 ? ' reverse' : ''} reveal">
+          <div class="service-row-img">
+            ${imgHtml}
+          </div>
+          <div class="service-row-text">
+            <p class="service-row-tag">${s.tag}</p>
+            <h3 class="service-row-title">${s.title}</h3>
             <p>${s.body}</p>
             <a href="${s.linkHref}" class="service-link">${s.linkLabel}</a>
           </div>
-        </div>`
-      ).join('');
+        </div>`;
+      }).join('');
     }
 
     // Exam banner
