@@ -352,8 +352,8 @@ window.CONTENT = {
           "number": "03",
           "title": "DIY marking tools",
           "body": "Detailed solutions are provided. Students mark their own work, identify their mistakes, and take home both the exam and the solutions.",
-          "imgSrc": "images/6Mockexampage.png",
-          "imgAlt": "Student marking their own exam with solutions"
+          "imgSrc": "images/9homeworkguideline.png",
+          "imgAlt": "Student using homework guideline to mark their exam"
         },
         {
           "number": "04",
@@ -761,7 +761,7 @@ window.CONTENT = {
       "label": "What We Believe",
       "items": [
         { "icon": "\ud83c\udf38", "title": "Seva \u2014 Service", "body": "An act of selfless service without expectation. We offer pro bono tutoring spots to students who need them, because access to quality education shouldn\u2019t depend on financial privilege." },
-        { "icon": "\ud83e\uddad", "title": "Independence", "body": "We teach students how to learn \u2014 not just what to learn. Every tool we give is designed to make students self-sufficient, long after our sessions end." },
+        { "icon": "🧭", "title": "Independence", "body": "We teach students how to learn \u2014 not just what to learn. Every tool we give is designed to make students self-sufficient, long after our sessions end." },
         { "icon": "\u2728", "title": "The Beauty of Math", "body": "Math isn\u2019t a set of rules to memorize. It\u2019s a language with elegance and logic. When students stop being afraid of it and start seeing its structure, something shifts \u2014 and that shift changes everything." }
       ]
     },

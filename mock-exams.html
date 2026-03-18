@@ -571,13 +571,15 @@
   if (stepsEl) {
     const STEP_IMG = {
       'images/5ExamExhale.png':  { w: 376, h: 300, s: 'transform:scale(1.15);transform-origin:center;object-fit:contain;object-position:50% 50%;border-radius:0;width:100%;height:100%;' },
-      'images/6Mockexampage.png':{ w: 376, h: 300, s: 'transform:scale(1.1);transform-origin:center;object-fit:contain;object-position:47% 60%;border-radius:0;width:100%;height:100%;' },
-      'images/7CookieTrophy.png':{ w: 376, h: 300, s: 'transform:scale(1);transform-origin:center;object-fit:contain;object-position:50% 50%;border-radius:0;width:100%;height:100%;' }
+      'images/6Mockexampage.png':   { w: 376, h: 300, s: 'transform:scale(1.35);transform-origin:center;object-fit:contain;object-position:50% 50%;border-radius:0;width:100%;height:100%;' },
+      'images/9homeworkguideline.png':{ w: 376, h: 300, s: 'transform:scale(1.35);transform-origin:center;object-fit:contain;object-position:50% 50%;border-radius:0;width:100%;height:100%;' },
+      'images/7CookieTrophy.png':   { w: 376, h: 300, s: 'transform:scale(1);transform-origin:center;object-fit:contain;object-position:50% 50%;border-radius:0;width:100%;height:100%;' }
     };
     const STEP_TUNER = {
-      'images/5ExamExhale.png':  'me-step1',
-      'images/6Mockexampage.png':'me-step3',
-      'images/7CookieTrophy.png':'me-step4',
+      'images/5ExamExhale.png':        'me-step1',
+      'images/6Mockexampage.png':      'me-step2',
+      'images/9homeworkguideline.png': 'me-step3',
+      'images/7CookieTrophy.png':      'me-step4',
     };
     stepsEl.innerHTML = ME.what.steps.map((s, i) => {
       const cfg = STEP_IMG[s.imgSrc];
