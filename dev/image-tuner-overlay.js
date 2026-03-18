@@ -33,54 +33,6 @@
     saveConfig(cfg);
   }
 
-  // ── EARLY FLASH PREVENTION ───────────────────────────────────────────────────
-  // Synchronously inject saved CSS into <head> so tuned images render correctly
-  // on first paint — eliminates the flash of unstyled/default values.
-  // Runs at script-parse time (no DOMContentLoaded, no setTimeout).
-  (function injectEarlyStyles() {
-    var cfg;
-    try { cfg = JSON.parse(localStorage.getItem(LS_KEY) || '{}'); } catch (e) { return; }
-    var ids = Object.keys(cfg);
-    if (!ids.length) return;
-
-    var rules = [];
-    ids.forEach(function (id) {
-      var v = cfg[id];
-      if (!v) return;
-
-      // Mirror buildTransform logic (defined further down, so inline it here)
-      var s  = v.scale   !== undefined ? v.scale   : 1;
-      var ox = v.offsetX !== undefined ? v.offsetX : 0;
-      var oy = v.offsetY !== undefined ? v.offsetY : 0;
-      var tf = (ox !== 0 || oy !== 0)
-        ? 'scale(' + s + ') translate(' + ox + '%, ' + oy + '%)'
-        : 'scale(' + s + ')';
-
-      var fit  = v.objectFit    || 'contain';
-      var posX = v.posX         !== undefined ? v.posX         : 50;
-      var posY = v.posY         !== undefined ? v.posY         : 50;
-      var br   = v.borderRadius !== undefined ? v.borderRadius : 0;
-
-      // Both selector forms: direct-on-img and wrapped-in-container
-      var sel = 'img[data-tuner-id="' + id + '"], [data-tuner-id="' + id + '"] img';
-      rules.push(
-        sel + ' {',
-        '  transform: '        + tf                                     + ' !important;',
-        '  transform-origin: center !important;',
-        '  object-fit: '       + fit                                    + ' !important;',
-        '  object-position: '  + posX + '% ' + posY + '%'              + ' !important;',
-        '  border-radius: '    + (br > 0 ? br + 'px' : '0')            + ' !important;',
-        '}'
-      );
-    });
-
-    if (!rules.length) return;
-    var tag = document.createElement('style');
-    tag.id = 'tuner-early-styles';
-    tag.textContent = rules.join('\n');
-    (document.head || document.documentElement).appendChild(tag);
-  })();
-
   // ── APPLY SAVED STYLES ───────────────────────────────────────────────────────
   // Called on every page load so tuned values persist even with tuner off.
   function buildTransform(vals) {
@@ -404,11 +356,11 @@
     var pv = Object.assign({}, vals);
 
     function liveUpdate() {
-      // Drop the early-styles sheet so inline styles from applyToImage take effect.
+      // Drop the preload-styles sheet so inline styles from applyToImage take effect.
       // (Stylesheet !important beats inline styles; remove it the first time a
       // slider fires so live adjustments are not blocked.)
-      var earlyStyle = document.getElementById('tuner-early-styles');
-      if (earlyStyle) earlyStyle.parentNode.removeChild(earlyStyle);
+      var preloadStyle = document.getElementById('tuner-preload-styles');
+      if (preloadStyle) preloadStyle.parentNode.removeChild(preloadStyle);
       applyToImage(activeImg, pv);
       // Save src/page/section alongside tuning vals so export works across pages
       updateConfig(id, Object.assign({}, pv, {
