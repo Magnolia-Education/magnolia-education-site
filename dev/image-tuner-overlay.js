@@ -35,10 +35,18 @@
 
   // ── APPLY SAVED STYLES ───────────────────────────────────────────────────────
   // Called on every page load so tuned values persist even with tuner off.
+  function buildTransform(vals) {
+    var s  = vals.scale   !== undefined ? vals.scale   : 1;
+    var ox = vals.offsetX !== undefined ? vals.offsetX : 0;
+    var oy = vals.offsetY !== undefined ? vals.offsetY : 0;
+    if (ox !== 0 || oy !== 0) return 'scale(' + s + ') translate(' + ox + '%, ' + oy + '%)';
+    return 'scale(' + s + ')';
+  }
+
   function applyToImage(img, vals) {
-    if (vals.scale    !== undefined) img.style.transform      = 'scale(' + vals.scale + ')';
+    img.style.transform      = buildTransform(vals);
     img.style.transformOrigin = 'center';
-    if (vals.objectFit !== undefined) img.style.objectFit      = vals.objectFit;
+    if (vals.objectFit !== undefined) img.style.objectFit     = vals.objectFit;
     if (vals.posX !== undefined && vals.posY !== undefined)
       img.style.objectPosition = vals.posX + '% ' + vals.posY + '%';
     if (vals.borderRadius !== undefined)
@@ -60,9 +68,9 @@
       const id = img.dataset.tunerId;
       if (cfg[id]) {
         var v = cfg[id];
-        if (v.scale    !== undefined) img.style.transform      = 'scale(' + v.scale + ')';
+        img.style.transform      = buildTransform(v);
         img.style.transformOrigin = 'center';
-        if (v.objectFit !== undefined) img.style.objectFit      = v.objectFit;
+        if (v.objectFit !== undefined) img.style.objectFit     = v.objectFit;
         if (v.posX !== undefined && v.posY !== undefined)
           img.style.objectPosition = v.posX + '% ' + v.posY + '%';
         if (v.borderRadius !== undefined)
@@ -192,14 +200,23 @@
   function getImageVals(img) {
     const id  = img.dataset.tunerId;
     const cfg = loadConfig();
-    if (cfg[id]) return Object.assign({}, cfg[id]);
+    if (cfg[id]) {
+      var stored = Object.assign({}, cfg[id]);
+      // Back-compat: ensure offsetX/offsetY always present
+      if (stored.offsetX === undefined) stored.offsetX = 0;
+      if (stored.offsetY === undefined) stored.offsetY = 0;
+      return stored;
+    }
 
     // Fall back to reading inline styles
-    const t   = img.style.transform || '';
-    const m   = t.match(/scale\(([\d.]+)\)/);
-    const scale = m ? parseFloat(m[1]) : 1;
-    const fit = img.style.objectFit || 'contain';
-    const pos = img.style.objectPosition || '50% 50%';
+    const t     = img.style.transform || '';
+    const mScale = t.match(/scale\(([\d.]+)\)/);
+    const scale  = mScale ? parseFloat(mScale[1]) : 1;
+    const mTrans = t.match(/translate\(([-\d.]+)%,\s*([-\d.]+)%\)/);
+    const offsetX = mTrans ? parseFloat(mTrans[1]) : 0;
+    const offsetY = mTrans ? parseFloat(mTrans[2]) : 0;
+    const fit  = img.style.objectFit || 'contain';
+    const pos  = img.style.objectPosition || '50% 50%';
     const parts = pos.split(' ');
     const posX = parseFloat(parts[0]) || 50;
     const posY = parseFloat(parts[1]) || 50;
@@ -207,12 +224,20 @@
     const cont = img.parentElement;
     const cw   = cont ? (parseInt(cont.style.width)  || cont.offsetWidth  || 400) : 400;
     const ch   = cont ? (parseInt(cont.style.height) || cont.offsetHeight || 300) : 300;
-    return { scale, posX, posY, objectFit: fit, borderRadius: br, cw, ch };
+    return { scale, offsetX, offsetY, posX, posY, objectFit: fit, borderRadius: br, cw, ch };
+  }
+
+  function buildTransformCSS(vals) {
+    var s  = parseFloat(vals.scale).toFixed(2);
+    var ox = vals.offsetX || 0;
+    var oy = vals.offsetY || 0;
+    if (ox !== 0 || oy !== 0) return 'scale(' + s + ') translate(' + ox + '%, ' + oy + '%)';
+    return 'scale(' + s + ')';
   }
 
   function buildCSS(vals) {
     var lines = [
-      'transform: scale(' + parseFloat(vals.scale).toFixed(2) + ');',
+      'transform: ' + buildTransformCSS(vals) + ';',
       'transform-origin: center;',
       'object-fit: ' + vals.objectFit + ';',
       'object-position: ' + vals.posX + '% ' + vals.posY + '%;',
@@ -226,7 +251,7 @@
       return '<span style="color:#7ec8e3">' + p + '</span>: <span class="tuner-css-val">' + v + '</span>;';
     }
     var rows = [
-      row('transform', 'scale(' + parseFloat(vals.scale).toFixed(2) + ')'),
+      row('transform', buildTransformCSS(vals)),
       row('transform-origin', 'center'),
       row('object-fit', vals.objectFit),
       row('object-position', vals.posX + '% ' + vals.posY + '%'),
@@ -271,12 +296,22 @@
       '    <span class="tuner-ctrl-val" id="tuner-v-scale">' + parseFloat(vals.scale).toFixed(2) + '</span>',
       '  </div>',
       '  <div class="tuner-ctrl-row">',
-      '    <span class="tuner-ctrl-label">Pos X</span>',
+      '    <span class="tuner-ctrl-label">Offset X</span>',
+      '    <input type="range" min="-50" max="50" step="1" value="' + (vals.offsetX || 0) + '" id="tuner-offsetx">',
+      '    <span class="tuner-ctrl-val" id="tuner-v-offsetx">' + (vals.offsetX || 0) + '%</span>',
+      '  </div>',
+      '  <div class="tuner-ctrl-row">',
+      '    <span class="tuner-ctrl-label">Offset Y</span>',
+      '    <input type="range" min="-50" max="50" step="1" value="' + (vals.offsetY || 0) + '" id="tuner-offsety">',
+      '    <span class="tuner-ctrl-val" id="tuner-v-offsety">' + (vals.offsetY || 0) + '%</span>',
+      '  </div>',
+      '  <div class="tuner-ctrl-row">',
+      '    <span class="tuner-ctrl-label">OBJ-POS X</span>',
       '    <input type="range" min="0" max="100" step="1" value="' + vals.posX + '" id="tuner-posx">',
       '    <span class="tuner-ctrl-val" id="tuner-v-posx">' + vals.posX + '%</span>',
       '  </div>',
       '  <div class="tuner-ctrl-row">',
-      '    <span class="tuner-ctrl-label">Pos Y</span>',
+      '    <span class="tuner-ctrl-label">OBJ-POS Y</span>',
       '    <input type="range" min="0" max="100" step="1" value="' + vals.posY + '" id="tuner-posy">',
       '    <span class="tuner-ctrl-val" id="tuner-v-posy">' + vals.posY + '%</span>',
       '  </div>',
@@ -336,6 +371,16 @@
       panel.querySelector('#tuner-v-scale').textContent = parseFloat(pv.scale).toFixed(2);
       liveUpdate();
     });
+    panel.querySelector('#tuner-offsetx').addEventListener('input', function (e) {
+      pv.offsetX = parseInt(e.target.value);
+      panel.querySelector('#tuner-v-offsetx').textContent = pv.offsetX + '%';
+      liveUpdate();
+    });
+    panel.querySelector('#tuner-offsety').addEventListener('input', function (e) {
+      pv.offsetY = parseInt(e.target.value);
+      panel.querySelector('#tuner-v-offsety').textContent = pv.offsetY + '%';
+      liveUpdate();
+    });
     panel.querySelector('#tuner-posx').addEventListener('input', function (e) {
       pv.posX = parseInt(e.target.value);
       panel.querySelector('#tuner-v-posx').textContent = pv.posX + '%';
@@ -387,6 +432,10 @@
       // Sync sliders back to original vals
       panel.querySelector('#tuner-scale').value = vals.scale;
       panel.querySelector('#tuner-v-scale').textContent = parseFloat(vals.scale).toFixed(2);
+      panel.querySelector('#tuner-offsetx').value = vals.offsetX || 0;
+      panel.querySelector('#tuner-v-offsetx').textContent = (vals.offsetX || 0) + '%';
+      panel.querySelector('#tuner-offsety').value = vals.offsetY || 0;
+      panel.querySelector('#tuner-v-offsety').textContent = (vals.offsetY || 0) + '%';
       panel.querySelector('#tuner-posx').value = vals.posX;
       panel.querySelector('#tuner-v-posx').textContent = vals.posX + '%';
       panel.querySelector('#tuner-posy').value = vals.posY;
@@ -473,8 +522,10 @@
 
       out.images[src] = {
         scale:           parseFloat(parseFloat(stored.scale || 1).toFixed(2)),
-        objectPositionX: stored.posX     !== undefined ? stored.posX     : 50,
-        objectPositionY: stored.posY     !== undefined ? stored.posY     : 50,
+        offsetX:         stored.offsetX !== undefined ? stored.offsetX : 0,
+        offsetY:         stored.offsetY !== undefined ? stored.offsetY : 0,
+        objectPositionX: stored.posX    !== undefined ? stored.posX    : 50,
+        objectPositionY: stored.posY    !== undefined ? stored.posY    : 50,
         objectFit:       stored.objectFit  || 'contain',
         borderRadius:    stored.borderRadius || 0,
         containerWidth:  stored.cw || (domMeta[id] ? parseInt(domMeta[id].cw) : 400) || 400,
@@ -514,6 +565,8 @@
             if (!id) return;
             cfg[id] = {
               scale:        vals.scale,
+              offsetX:      vals.offsetX !== undefined ? vals.offsetX : 0,
+              offsetY:      vals.offsetY !== undefined ? vals.offsetY : 0,
               posX:         vals.objectPositionX,
               posY:         vals.objectPositionY,
               objectFit:    vals.objectFit,
