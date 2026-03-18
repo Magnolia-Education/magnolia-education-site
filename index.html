@@ -588,13 +588,13 @@
     const servicesGrid = document.getElementById('services-grid');
     if (servicesGrid) {
       const SVC_IMG = {
-        'images/BOOKCLIMBING.PNG': { w: 440, h: 730, s: 'transform:scale(2);transform-origin:center;object-fit:contain;object-position:50% 33%;border-radius:0;width:100%;height:100%;' }
+        'images/2Bitpaper.png': { w: 400, h: 300, s: 'transform:scale(1);transform-origin:center;object-fit:contain;object-position:50% 50%;border-radius:0;width:100%;height:100%;' }
       };
       const SVC_TUNER = {
         'images/MAGNOLIATREE.PNG':  'idx-svc-tutoring',
         'images/TIMEMANGEMENT.PNG': 'idx-svc-study',
         'images/4Mockexam.png':     'idx-svc-mock',
-        'images/BOOKCLIMBING.PNG':  'idx-svc-cohorts',
+        'images/2Bitpaper.png':     'idx-svc-cohorts',
       };
       servicesGrid.innerHTML = H.services.items.map((s, i) => {
         const cfg      = SVC_IMG[s.imgSrc];

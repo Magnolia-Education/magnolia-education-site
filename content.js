@@ -11,21 +11,21 @@ window.CONTENT = {
     "emailHref": "mailto:hello@magnolia-education.com",
     "calendlyHref": "https://calendly.com/rachit-chakerwarti/call",
     "logoText": "Magnolia Education",
-    "tagline": "Learn deeply. Grow confidently.",
-    "copyright": "© 2025 Magnolia Education. All rights reserved.",
+    "tagline": "Better grades. And a better way to get them.",
+    "copyright": "© 2026 Magnolia Education. All rights reserved.",
     "funFact": "🌸 Fun fact: The magnolia is one of Earth’s oldest flowering plants — fossils date back 95 million years. Some things are worth preserving.",
-    "footerTagline": "Personalized tutoring and exam prep for high school students in Grades 8–12. Math, English, and the skills to learn anything.",
-    "footerQuote": "“Learn deeply. Grow confidently.”"
+    "footerTagline": "Personalized tutoring and exam prep for high school students in Grades 8–12. Math, science, and the skills to learn anything.",
+    "footerQuote": "“Better grades. And a better way to get them.”"
   },
   "homepage": {
     "meta": {
       "title": "Magnolia Education | Tutoring for Grades 8–12"
     },
     "hero": {
-      "eyebrow": "Toronto · Grades 8–12 · Math & English",
-      "title": "Learn deeply.",
-      "titleItalic": "Grow confidently.",
-      "subtitle": "Magnolia Education offers personalized tutoring and exam prep for high school students — built on mindfulness, genuine care, and a love of learning. TEST",
+      "eyebrow": "Toronto · Grades 8–12 · Math",
+      "title": "Better grades.",
+      "titleItalic": "And a better way to get them.",
+      "subtitle": "Magnolia Education offers personalized tutoring, mock exams, study skills coaching, and prep cohorts for high school students in Toronto — Grades 8–12.",
       "ctaPrimaryLabel": "Book a Consultation",
       "ctaPrimaryHref": "https://calendly.com/rachit-chakerwarti/call",
       "ctaSecondaryLabel": "Explore Tutoring",
@@ -67,8 +67,17 @@ window.CONTENT = {
           "body": "Personalized math and English tutoring for Grades 8–12. Sessions with Bitpaper, our interactive digital whiteboard. Homework help, mindfulness openers, and concept mastery.",
           "linkLabel": "Learn more →",
           "linkHref": "tutoring.html",
-          "imgSrc": "images/BOOKCLIMBING.PNG",
-          "imgAlt": "Student climbing a tower of books"
+          "imgSrc": "images/MAGNOLIATREE.PNG",
+          "imgAlt": "Students studying under a magnolia tree"
+        },
+        {
+          "tag": "Academic Skills",
+          "title": "Study Skills",
+          "body": "The Three Review System, Pomodoro time-blocking, homework guidelines, and goal-setting. The habits that separate students who work hard from students who study smart.",
+          "linkLabel": "Learn more →",
+          "linkHref": "study-skills.html",
+          "imgSrc": "images/TIMEMANGEMENT.PNG",
+          "imgAlt": "Student managing study schedule"
         },
         {
           "tag": "In-Person · Toronto",
@@ -80,13 +89,13 @@ window.CONTENT = {
           "imgAlt": "Mock exam with worked solutions"
         },
         {
-          "tag": "Academic Skills",
-          "title": "Study Skills",
-          "body": "The Three Review System, Pomodoro time-blocking, homework guidelines, and goal-setting. The habits that separate students who work hard from students who study smart.",
+          "tag": "Small Groups · Toronto",
+          "title": "Prep Cohorts",
+          "body": "Small-group prep sessions before each semester. Cover critical concepts, get ahead of the material, and walk into class on day one already confident.",
           "linkLabel": "Learn more →",
-          "linkHref": "study-skills.html",
-          "imgSrc": "images/TIMEMANGEMENT.PNG",
-          "imgAlt": "Student managing study schedule"
+          "linkHref": "prep-cohorts.html",
+          "imgSrc": "images/2Bitpaper.png",
+          "imgAlt": "Student using an interactive whiteboard"
         }
       ]
     },
@@ -109,7 +118,7 @@ window.CONTENT = {
           "body": "We believe in giving back to the communities that shape us. Learning is a gift — and we treat it that way."
         },
         {
-          "icon": "🦭",
+          "icon": "\u2605",
           "title": "Independence",
           "body": "Our end goal is for students to outgrow us. Every session builds habits, frameworks, and self-belief that last beyond high school."
         },
@@ -122,42 +131,37 @@ window.CONTENT = {
     },
     "testimonials": {
       "label": "What Families Say",
-      "title": "60+ students. Real results.",
+      "title": "300+ students taught over the years. Real results.",
       "items": [
         {
-          "quote": "Rachit has been an incredible tutor for our daughter. Her math marks went from the 60s to the 90s in one semester — but more importantly, she actually enjoys math now.",
-          "author": "PARENT OF GRADE 11 STUDENT",
-          "role": "Advanced Functions"
+          "quote": "Rachit sees the whole child, and their unique situation, and works hard to find commonalities to bring out the best in his students. His teaching includes time management skills, discussing healthy life decisions, and uses a kid\u2019s interests to bring math to life. I am very grateful!",
+          "author": "ANNABEL COPE",
+          "role": "Parent"
         },
         {
-          "quote": "The mock exam experience was invaluable. Going into my real exam, I felt calm and prepared. That mindfulness opener at the start of every session really sticks with you.",
-          "author": "GRADE 12 STUDENT",
-          "role": "Calculus & Exam Prep"
+          "quote": "Rachit helped me develop very good learning habits and has allowed me to have more profound understandings of math concepts instead of relying on purely memorization. He is very flexible and is a great guy overall.",
+          "author": "TAL PERRY",
+          "role": "Student"
         },
         {
-          "quote": "We’ve tried three other tutors. Magnolia is the first one where our son actually looks forward to the sessions. The Bitpaper board makes it feel engaging, not like homework.",
-          "author": "PARENT OF GRADE 9 STUDENT",
-          "role": "Math & Study Skills"
+          "quote": "After searching for a few years for the right type of math support for our teenage son, we were so relieved to meet Rachit. His approach to teaching is a perfect combination of accountability, understanding and patience. We have seen our son\u2019s confidence soar over the past two years.",
+          "author": "KRISTY FLETCHER",
+          "role": "Parent"
         },
         {
-          "quote": "My essay writing improved dramatically. The tutor helped me understand structure and voice — not just correct my grammar. I got an A on my university application essay.",
-          "author": "GRADE 12 STUDENT",
-          "role": "English & Essay Writing"
+          "quote": "Not only has my love for subjects grown a lot within the past 3 years, but my grades and understanding have skyrocketed since doing tutoring with Rachit.",
+          "author": "MADELINE GALBRAITH",
+          "role": "Student"
         },
         {
-          "quote": "The study skills program completely changed how our son approaches homework. He’s less stressed, more organised, and his marks across every subject have improved.",
-          "author": "PARENT OF GRADE 10 STUDENT",
-          "role": "Study Skills Program"
+          "quote": "Working with Rachit has helped me build more confidence within the class room, while also building my appreciation for math. Ultimately, resulting in my math mark being over 20% higher.",
+          "author": "JAMES BOLAND",
+          "role": "Student"
         },
         {
-          "quote": "Rachit is patient, knowledgeable, and genuinely invested in each student’s success. He remembered details about my daughter’s learning style from session to session.",
-          "author": "PARENT OF GRADE 11 STUDENT",
-          "role": "Functions & Calculus"
-        },
-        {
-          "quote": "I came in hating math. Now I actually find it interesting. Rachit showed me the logic behind everything instead of just telling me to memorise formulas.",
-          "author": "GRADE 10 STUDENT",
-          "role": "Grade 10 Math"
+          "quote": "Rachit has become a mainstay in our lives. Dylan has built a great deal of confidence with his support. He is both reflective and proactive in his approach; kind and caring in his interactions, and seeks to connect with the underlying work of building patient problem solvers.",
+          "author": "KATE HEBDON",
+          "role": "Parent"
         }
       ]
     },
@@ -176,9 +180,9 @@ window.CONTENT = {
       "button": "Subscribe"
     },
     "footer": {
-      "tagline": "Personalized tutoring and exam prep for high school students in Grades 8–12. Math, English, and the skills to learn anything.",
-      "quote": "“Learn deeply. Grow confidently.”",
-      "copyright": "© 2025 Magnolia Education. All rights reserved.",
+      "tagline": "Personalized tutoring and exam prep for high school students in Grades 8–12. Math, science, and the skills to learn anything.",
+      "quote": "“Better grades. And a better way to get them.”",
+      "copyright": "© 2026 Magnolia Education. All rights reserved.",
       "funFact": "🌸 Fun fact: The magnolia is one of Earth’s oldest flowering plants — fossils date back 95 million years. Some things are worth preserving."
     }
   },
@@ -231,27 +235,28 @@ window.CONTENT = {
       ]
     },
     "howItWorks": {
-      "label": "How It Works",
-      "title": "Tutoring and what comes with it.",
-      "body1": "We believe that the process of learning is just that—a process.",
-      "body2": "On top of conceptual thinking and problem solving, we train students to assess their methods, mark their own work, and understand their own strengths and challenges.",
+      "label": "How Tutoring Works",
+      "title": "Every session is a system.",
+      "body1": "We believe that the process of learning is just that — a process. Every session follows the same four-step cycle, building momentum and optimizing results over time.",
+      "body2": "",
       "ctaLabel": "Book a Consultation",
       "ctaHref": "https://calendly.com/rachit-chakerwarti/call",
-      "sessions": [
+      "steps": [
         {
-          "title": "1:1 individual sessions",
-          "body1": "Personalized instruction tailored to your child’s unique needs and pace, plus unlimited text support for quick questions throughout the week.",
-          "body2": "For consistent progress, we recommend meeting once or twice weekly."
+          "title": "Prepare",
+          "body": "Students mark their homework and send it before the session. We teach resource education: how do you optimize a resource like tutoring?"
         },
         {
-          "title": "1:3 small group sessions",
-          "body1": "Intimate group sizes (1:2 or 1:3 ratio) to ensure each student gets the personalized attention and support they need to progress at their own pace, while encouraging peer collaboration and shared problem solving in a supportive environment.",
-          "body2": "Students can request their own peer groups, or may be matched by our team based on skill level and goals."
+          "title": "Tailored Session",
+          "body": "We answer questions and uncover the core concepts behind them. Every question is an opportunity to build deeper understanding."
         },
         {
-          "title": "Multi-faceted sessions",
-          "body1": "Think your child could benefit from both styles of tutoring? We offer a combination approach, giving you the flexibility to combine small group sessions with 1:1 tutoring.",
-          "body2": "This approach is ideal for exam preparation or new units, where your student may benefit from additional points of view and peer support."
+          "title": "Get Ahead",
+          "body": "If all questions are covered, we move ahead of the material so students stay confident going into new topics."
+        },
+        {
+          "title": "Repeat",
+          "body": "More homework is sent after the session. The cycle continues, building momentum and optimizing every session."
         }
       ]
     },
@@ -332,22 +337,30 @@ window.CONTENT = {
         {
           "number": "01",
           "title": "Mindfulness opening",
-          "body": "A short breathing exercise to calm exam anxiety and bring students into a focused, regulated state before the exam begins."
+          "body": "A short breathing exercise to calm exam anxiety and bring students into a focused, regulated state before the exam begins.",
+          "imgSrc": "images/5ExamExhale.png",
+          "imgAlt": "Student doing a mindfulness breathing exercise"
         },
         {
           "number": "02",
           "title": "Full-length exam",
-          "body": "Real timed conditions, full exam length. Same pressure as the real thing — but in a supportive, familiar environment."
+          "body": "Real timed conditions, full exam length. Same pressure as the real thing — but in a supportive, familiar environment.",
+          "imgSrc": "images/6Mockexampage.png",
+          "imgAlt": "Full-length exam under timed conditions"
         },
         {
           "number": "03",
-          "title": "Mark your own exam",
-          "body": "Detailed solutions are provided. Students mark their own work and take home both the exam and the solutions."
+          "title": "DIY marking tools",
+          "body": "Detailed solutions are provided. Students mark their own work, identify their mistakes, and take home both the exam and the solutions.",
+          "imgSrc": "images/6Mockexampage.png",
+          "imgAlt": "Student marking their own exam with solutions"
         },
         {
           "number": "04",
-          "title": "Celebration cookie",
-          "body": "Because Process Grade matters most. Every student who shows up and does their best earns a cookie."
+          "title": "Celebrate success",
+          "body": "Because Process Grade matters most. Every student who shows up and does their best earns a cookie — the best kind of reward.",
+          "imgSrc": "images/7CookieTrophy.png",
+          "imgAlt": "Cookie trophy celebrating a student's effort"
         }
       ]
     },
@@ -774,7 +787,7 @@ window.CONTENT = {
       "subtitle": "Book a consultation call and we\u2019ll find the right fit for your student."
     },
     "cta": {
-      "label": "Book a Free Call",
+      "label": "Book a Consultation",
       "href": "https://calendly.com/rachit-chakerwarti/call"
     }
   }
