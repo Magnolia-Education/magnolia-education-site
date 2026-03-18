@@ -178,13 +178,13 @@
     }
     .founder-inner {
       max-width: 1120px; margin: 0 auto;
-      display: grid; grid-template-columns: 29% 71%; gap: 72px; align-items: start;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: stretch;
     }
     .founder-image {
-      display: flex; align-items: start;
+      display: flex; align-items: center; justify-content: center;
     }
     .founder-image img {
-      width: 100%; height: auto;
+      width: 100%; height: 100%;
       border-radius: 16px; object-fit: contain; object-position: top center;
       filter: drop-shadow(0 24px 48px rgba(0,0,0,0.3));
     }
@@ -406,10 +406,10 @@
       </div>
     </div>
     <div class="hero-image reveal">
-      <div style="width:590px;height:430px;overflow:hidden;">
+      <div style="width:470px;height:680px;overflow:hidden;">
         <img src="images/CLOUDSURFING.png" alt="Student surfing on an A+ paper through clouds"
           data-tuner-id="idx-hero" data-tuner-page="index.html" data-tuner-section="Hero Section"
-          style="transform:scale(1.55);transform-origin:center;object-fit:contain;object-position:50% 50%;border-radius:0;width:100%;height:100%;" />
+          style="transform:scale(1.05);transform-origin:center;object-fit:contain;object-position:100% 57%;border-radius:0;width:100%;height:100%;" />
       </div>
     </div>
   </div>
@@ -419,7 +419,8 @@
 <section class="founder-section">
   <div class="founder-inner">
     <div class="founder-image reveal">
-      <img src="images/13portrait.png" alt="Rachit Chakerwarti, founder of Magnolia Education" />
+      <img src="images/13portrait.png" alt="Rachit Chakerwarti, founder of Magnolia Education"
+        data-tuner-id="idx-founder" data-tuner-page="index.html" data-tuner-section="Founder Section" />
     </div>
     <div class="founder-text reveal">
       <p class="section-label" id="founder-label"></p>
