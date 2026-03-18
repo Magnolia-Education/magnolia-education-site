@@ -406,9 +406,10 @@
       </div>
     </div>
     <div class="hero-image reveal">
-      <div style="width:460px;height:340px;overflow:hidden;">
+      <div style="width:590px;height:430px;overflow:hidden;">
         <img src="images/CLOUDSURFING.png" alt="Student surfing on an A+ paper through clouds"
-          style="transform:scale(1);transform-origin:center;object-fit:contain;object-position:50% 50%;border-radius:0;width:100%;height:100%;" />
+          data-tuner-id="idx-hero" data-tuner-page="index.html" data-tuner-section="Hero Section"
+          style="transform:scale(1.55);transform-origin:center;object-fit:contain;object-position:50% 50%;border-radius:0;width:100%;height:100%;" />
       </div>
     </div>
   </div>
@@ -588,11 +589,19 @@
       const SVC_IMG = {
         'images/BOOKCLIMBING.PNG': { w: 440, h: 730, s: 'transform:scale(2);transform-origin:center;object-fit:contain;object-position:50% 33%;border-radius:0;width:100%;height:100%;' }
       };
+      const SVC_TUNER = {
+        'images/MAGNOLIATREE.PNG':  'idx-svc-tutoring',
+        'images/TIMEMANGEMENT.PNG': 'idx-svc-study',
+        'images/4Mockexam.png':     'idx-svc-mock',
+        'images/BOOKCLIMBING.PNG':  'idx-svc-cohorts',
+      };
       servicesGrid.innerHTML = H.services.items.map((s, i) => {
-        const cfg = SVC_IMG[s.imgSrc];
+        const cfg      = SVC_IMG[s.imgSrc];
+        const tunerId  = SVC_TUNER[s.imgSrc] || '';
+        const tunerAttrs = tunerId ? ` data-tuner-id="${tunerId}" data-tuner-page="index.html" data-tuner-section="Services Grid"` : '';
         const imgHtml = cfg
-          ? `<div style="width:${cfg.w}px;height:${cfg.h}px;overflow:hidden;"><img src="${s.imgSrc}" alt="${s.imgAlt}" style="${cfg.s}" /></div>`
-          : `<img src="${s.imgSrc}" alt="${s.imgAlt}" />`;
+          ? `<div style="width:${cfg.w}px;height:${cfg.h}px;overflow:hidden;"><img src="${s.imgSrc}" alt="${s.imgAlt}"${tunerAttrs} style="${cfg.s}" /></div>`
+          : `<img src="${s.imgSrc}" alt="${s.imgAlt}"${tunerAttrs} />`;
         return `<div class="service-row${i % 2 === 1 ? ' reverse' : ''} reveal">
           <div class="service-row-img">
             ${imgHtml}
@@ -733,5 +742,7 @@
     }, { passive: true });
   }
 </script>
+<!-- DEV TOOL: Image tuner overlay (local only, inactive in production) -->
+<script src="dev/image-tuner-overlay.js"></script>
 </body>
 </html>

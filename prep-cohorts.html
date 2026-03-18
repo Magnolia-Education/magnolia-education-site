@@ -131,8 +131,9 @@
     .hero-inner {
       max-width: 1120px; margin: 0 auto; width: 100%;
       padding: 80px 48px;
-      display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 64px;
+      display: grid; grid-template-columns: 1fr; align-items: center; gap: 64px;
     }
+    .hero-text { max-width: 640px; }
     .hero-eyebrow {
       font-size: 0.82rem; font-weight: 600; letter-spacing: 0.1em;
       text-transform: uppercase; color: var(--coral); margin-bottom: 20px;
@@ -160,8 +161,9 @@
     }
     .jump-inner {
       max-width: 1120px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+      display: grid; grid-template-columns: 1fr; gap: 80px; align-items: start;
     }
+    .jump-text { max-width: 680px; }
     .jump-text .section-label { display: block; }
     .jump-title {
       font-family: var(--font-display); font-size: 2.8rem; font-weight: 600;
@@ -262,8 +264,9 @@
     .how-section { padding: 100px 48px; }
     .how-inner {
       max-width: 1120px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+      display: grid; grid-template-columns: 1fr; gap: 80px; align-items: start;
     }
+    .how-inner > .reveal { max-width: 680px; }
     .how-header .section-label { display: block; }
     .how-title {
       font-family: var(--font-display); font-size: 2.6rem; font-weight: 600;
@@ -376,7 +379,7 @@
       </div>
     </div>
     <a href="contact.html">Contact</a>
-    <a href="https://calendly.com/rachit-chakerwarti/call" target="_blank" class="nav-cta">Book a Free Call</a>
+    <a href="https://calendly.com/rachit-chakerwarti/call" target="_blank" class="nav-cta">Book a Consultation</a>
   </div>
   <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
     <span></span><span></span><span></span>
@@ -392,7 +395,7 @@
   <a href="story.html">Our Story</a>
   <a href="tutors.html">Our Tutors</a>
   <a href="contact.html">Contact</a>
-  <a href="https://calendly.com/rachit-chakerwarti/call" target="_blank" class="mobile-cta">Book a Free Call</a>
+  <a href="https://calendly.com/rachit-chakerwarti/call" target="_blank" class="mobile-cta">Book a Consultation</a>
 </div>
 
 <!-- HERO -->
@@ -404,9 +407,11 @@
       <p class="hero-subtitle" id="pc-hero-subtitle"></p>
       <a href="#" class="btn-primary" id="pc-hero-cta"></a>
     </div>
+    <!-- ILLUSTRATION PLACEHOLDER — re-enable when ready
     <div class="hero-placeholder reveal">
       <span>Illustration coming soon</span>
     </div>
+    -->
   </div>
 </section>
 
@@ -420,9 +425,11 @@
       <p class="jump-body" id="pc-jump-body2"></p>
       <div class="jump-note" id="pc-jump-note"></div>
     </div>
+    <!-- ILLUSTRATION PLACEHOLDER — re-enable when ready
     <div class="jump-placeholder reveal">
       <span>Illustration coming soon</span>
     </div>
+    -->
   </div>
 </section>
 
@@ -450,9 +457,11 @@
 <!-- HOW A SESSION WORKS -->
 <section class="how-section">
   <div class="how-inner">
+    <!-- ILLUSTRATION PLACEHOLDER — re-enable when ready
     <div class="how-placeholder reveal">
       <span>Illustration coming soon</span>
     </div>
+    -->
     <div class="reveal">
       <div class="how-header">
         <p class="section-label" id="pc-how-label"></p>
@@ -494,7 +503,7 @@
       <h4>About</h4>
       <a href="story.html">Our Story</a>
       <a href="tutors.html">Our Tutors</a>
-      <a href="https://purrfect-single-1d6.notion.site/18bb3ed99418804298c0c90bf3f02862" target="_blank">Join Our Team</a>
+      <a href="contact.html">Join Our Team</a>
     </div>
     <div class="footer-col">
       <h4>Connect</h4>
@@ -630,5 +639,7 @@
   }));
 })();
 </script>
+<!-- DEV TOOL: Image tuner overlay (local only, inactive in production) -->
+<script src="dev/image-tuner-overlay.js"></script>
 </body>
 </html>

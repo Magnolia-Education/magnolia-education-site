@@ -421,8 +421,9 @@
       const subtitle = tutor.subtitle || (tutor.subjects.join(' and ').toUpperCase() + ' TUTOR');
 
       // Photo frame — img with object-position from tutor data
+      const tunerId = `tutors-${tutor.id}`;
       const frameContent = tutor.photo
-        ? `<img src="${tutor.photo}" alt="${tutor.name}" loading="lazy" style="object-position:${photoPos}" />`
+        ? `<img src="${tutor.photo}" alt="${tutor.name}" loading="lazy" data-tuner-id="${tunerId}" data-tuner-page="tutors.html" data-tuner-section="Tutor Profiles" style="object-position:${photoPos}" />`
         : '';
 
       // Founder badge
@@ -487,5 +488,7 @@
   }));
 })();
 </script>
+<!-- DEV TOOL: Image tuner overlay (local only, inactive in production) -->
+<script src="dev/image-tuner-overlay.js"></script>
 </body>
 </html>
