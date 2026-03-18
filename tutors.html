@@ -115,100 +115,94 @@
     }
     .hero-subtitle { font-size: 1.05rem; line-height: 1.75; color: var(--text-light); max-width: 600px; }
 
-    /* ── TUTORS SECTION ── */
-    .tutors-section { padding: 96px 48px; background: #fff; }
-    .tutors-inner { max-width: 1120px; margin: 0 auto; }
+    /* ── TUTORS — ALTERNATING ROWS ── */
 
-    /* Founder card — full width, navy, horizontal layout */
-    .tutor-founder {
+    /* Section background */
+    #tu-list { background: var(--beige); }
+
+    /* Founder row — navy background, always photo-left, slightly wider photo */
+    .tutor-row--founder {
       display: grid;
-      grid-template-columns: 340px 1fr;
-      gap: 64px;
-      align-items: center;
+      grid-template-columns: 43% 57%;
       background: var(--navy);
-      border-radius: 20px;
-      overflow: hidden;
-      margin-bottom: 64px;
-      box-shadow: 0 8px 40px rgba(61,68,102,0.18);
     }
-    .tutor-founder-photo {
-      height: 100%;
-      min-height: 420px;
-      overflow: hidden;
+
+    /* Regular rows */
+    .tutor-row {
+      display: grid;
+      grid-template-columns: 42% 58%;
+      background: var(--beige);
+      border-bottom: 1px solid rgba(61,68,102,0.07);
     }
-    .tutor-founder-photo img {
+
+    /* Reverse: text left, photo right */
+    .tutor-row--reverse {
+      grid-template-columns: 58% 42%;
+    }
+    .tutor-row--reverse .tutor-row-photo { order: 2; }
+    .tutor-row--reverse .tutor-row-body  { order: 1; }
+
+    /* Photo pane — grid cell, photo fills it naturally */
+    .tutor-row-photo {
+      overflow: hidden;
+      min-height: 350px;
+      background: #d4cfc8;
+    }
+    .tutor-row-photo img {
       width: 100%; height: 100%;
-      object-fit: cover; object-position: center top;
+      object-fit: cover;
+      object-position: top center;
       display: block;
     }
-    .tutor-founder-body {
-      padding: 52px 52px 52px 0;
+
+    /* Text pane */
+    .tutor-row-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 64px 72px 64px 56px;
     }
+    .tutor-row--founder .tutor-row-body {
+      padding: 64px 72px 64px 56px;
+    }
+    .tutor-row--reverse .tutor-row-body {
+      padding: 64px 56px 64px 72px;
+    }
+
+    /* Founder badge */
     .founder-badge {
       display: inline-block;
-      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em;
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em;
       text-transform: uppercase; color: var(--coral);
       border: 1px solid var(--coral); border-radius: 4px;
-      padding: 4px 10px; margin-bottom: 20px;
-    }
-    .tutor-founder-body h2 {
-      font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 2.8rem);
-      font-weight: 500; color: #fff; line-height: 1.15; margin-bottom: 16px;
-    }
-    .tutor-subjects-founder { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
-    .subject-chip-founder {
-      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em;
-      text-transform: uppercase; color: rgba(255,255,255,0.7);
-      background: rgba(255,255,255,0.1); border-radius: 4px; padding: 4px 10px;
-    }
-    .tutor-founder-body p {
-      color: rgba(255,255,255,0.8); font-size: 1rem; line-height: 1.8;
+      padding: 4px 10px; margin-bottom: 20px; align-self: flex-start;
     }
 
-    /* Tutor grid — 2 columns */
-    .tutors-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 32px;
-    }
-
-    /* Regular tutor card */
-    .tutor-card {
-      background: #fff;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid rgba(61,68,102,0.08);
-      box-shadow: 0 4px 24px rgba(61,68,102,0.06);
-      transition: transform .2s, box-shadow .2s;
-    }
-    .tutor-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(61,68,102,0.12);
-    }
-    .tutor-photo {
-      width: 100%; height: 280px; overflow: hidden;
-      background: var(--beige);
-    }
-    .tutor-photo img {
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: center top;
-      display: block;
-    }
-    .tutor-body { padding: 28px 28px 32px; }
-    .tutor-subjects { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
-    .subject-chip {
-      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.07em;
-      text-transform: uppercase; color: var(--coral);
-      background: var(--coral-pale); border-radius: 4px; padding: 3px 9px;
-    }
+    /* Name */
     .tutor-name {
-      font-family: var(--font-display); font-size: 1.6rem;
-      font-weight: 500; color: var(--navy); line-height: 1.15;
-      margin-bottom: 12px;
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3vw, 2.8rem);
+      font-weight: 500; line-height: 1.1;
+      color: var(--navy); margin-bottom: 10px;
     }
+    .tutor-row--founder .tutor-name { color: #fff; }
+
+    /* Subtitle — subjects as uppercase tracking line */
+    .tutor-subtitle {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.13em;
+      text-transform: uppercase; color: var(--coral);
+      margin-bottom: 20px;
+    }
+    .tutor-row--founder .tutor-subtitle {
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* Bio */
     .tutor-bio {
-      font-size: 0.9rem; line-height: 1.75; color: var(--text-light);
+      font-size: 1rem; line-height: 1.85; color: var(--text-light);
+      max-width: 520px;
     }
+    .tutor-row--founder .tutor-bio { color: rgba(255,255,255,0.8); }
 
     /* ── CTA ── */
     .cta-section { background: var(--navy); padding: 96px 48px; text-align: center; }
@@ -233,13 +227,16 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 960px) {
       nav { padding: 0 24px; gap: 20px; }
-      .tutors-section { padding: 72px 32px; }
-      .tutor-founder {
-        grid-template-columns: 260px 1fr;
-        gap: 40px;
-      }
-      .tutor-founder-body { padding: 40px 40px 40px 0; }
+      .tutor-row-body,
+      .tutor-row--founder .tutor-row-body,
+      .tutor-row--reverse .tutor-row-body { padding: 48px 40px; }
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+
+    @media (max-width: 700px) {
+      .tutor-row-body,
+      .tutor-row--founder .tutor-row-body,
+      .tutor-row--reverse .tutor-row-body { padding: 36px 28px; }
     }
 
     @media (max-width: 600px) {
@@ -250,24 +247,25 @@
       .hero-inner { padding: 60px 20px 48px; }
       .hero-title { font-size: 2.8rem; }
 
-      .tutors-section { padding: 56px 20px; }
-
-      /* Founder card stacks vertically on mobile */
-      .tutor-founder {
+      /* All rows stack: photo top, text below */
+      .tutor-row,
+      .tutor-row--founder {
         grid-template-columns: 1fr;
-        gap: 0;
-        margin-bottom: 40px;
       }
-      .tutor-founder-photo {
-        min-height: 280px;
-        height: 280px;
-      }
-      .tutor-founder-body {
-        padding: 28px 24px 32px;
+      /* Reset reverse ordering on mobile — always photo on top */
+      .tutor-row--reverse .tutor-row-photo { order: 0; }
+      .tutor-row--reverse .tutor-row-body  { order: 0; }
+
+      /* Fixed height for mobile photo — landscape feel */
+      .tutor-row-photo { min-height: 280px; height: 60vw; max-height: 360px; }
+
+      .tutor-row-body,
+      .tutor-row--founder .tutor-row-body,
+      .tutor-row--reverse .tutor-row-body {
+        padding: 32px 24px 40px;
       }
 
-      /* Single column grid on mobile */
-      .tutors-grid { grid-template-columns: 1fr; gap: 24px; }
+      .tutor-bio { max-width: none; }
 
       .cta-section { padding: 72px 20px; }
 
@@ -332,14 +330,7 @@
 </section>
 
 <!-- TUTORS -->
-<section class="tutors-section">
-  <div class="tutors-inner">
-    <!-- Founder card (rendered by JS) -->
-    <div id="tu-founder-card"></div>
-    <!-- Grid of remaining tutors (rendered by JS) -->
-    <div class="tutors-grid" id="tu-grid"></div>
-  </div>
-</section>
+<div id="tu-list"></div>
 
 <!-- CTA -->
 <section class="cta-section">
@@ -408,46 +399,44 @@
   setText('tu-hero-title', T.hero.title);
   setText('tu-hero-subtitle', T.hero.subtitle);
 
-  // Separate founder from rest
-  const founder = T.team.find(t => t.founder);
-  const rest = T.team.filter(t => !t.founder);
+  // Render all tutors as full-width alternating rows
+  const list = document.getElementById('tu-list');
+  if (list) {
+    let altIndex = 0; // counts non-founder rows to drive alternation
 
-  // Founder card
-  const founderEl = document.getElementById('tu-founder-card');
-  if (founder && founderEl) {
-    const chips = founder.subjects.map(s =>
-      `<span class="subject-chip-founder">${s}</span>`
-    ).join('');
-    founderEl.innerHTML = `
-      <div class="tutor-founder reveal">
-        <div class="tutor-founder-photo">
-          <img src="${founder.photo}" alt="${founder.name}" loading="lazy" />
-        </div>
-        <div class="tutor-founder-body">
-          <span class="founder-badge">Founder &amp; Lead Tutor</span>
-          <h2>${founder.name}</h2>
-          <div class="tutor-subjects-founder">${chips}</div>
-          <p>${founder.bio}</p>
-        </div>
-      </div>`;
-  }
+    list.innerHTML = T.team.map(tutor => {
+      const isFounder = tutor.founder;
+      const photoPos = tutor.photoPosition || 'center top';
 
-  // Tutor grid
-  const grid = document.getElementById('tu-grid');
-  if (grid) {
-    grid.innerHTML = rest.map(t => {
-      const chips = t.subjects.map(s =>
-        `<span class="subject-chip">${s}</span>`
-      ).join('');
+      // Determine row direction:
+      // Rachit (founder): always photo left / text right — no reverse class
+      // Non-founders: even altIndex (1st, 3rd, 5th) = text left / photo right → reverse
+      //               odd altIndex (2nd, 4th, 6th) = photo left / text right → normal
+      let rowClass = isFounder ? 'tutor-row--founder' : 'tutor-row';
+      if (!isFounder && altIndex % 2 === 0) rowClass += ' tutor-row--reverse';
+      if (!isFounder) altIndex++;
+
+      // Subtitle — use explicit subtitle field if present, otherwise build from subjects
+      const subtitle = tutor.subtitle || (tutor.subjects.join(' and ').toUpperCase() + ' TUTOR');
+
+      // Photo frame — img with object-position from tutor data
+      const frameContent = tutor.photo
+        ? `<img src="${tutor.photo}" alt="${tutor.name}" loading="lazy" style="object-position:${photoPos}" />`
+        : '';
+
+      // Founder badge
+      const founderBadge = isFounder
+        ? `<span class="founder-badge">Founder &amp; Lead Tutor</span>`
+        : '';
+
       return `
-        <div class="tutor-card reveal">
-          <div class="tutor-photo">
-            <img src="${t.photo}" alt="${t.name}" loading="lazy" />
-          </div>
-          <div class="tutor-body">
-            <div class="tutor-subjects">${chips}</div>
-            <h2 class="tutor-name">${t.name}</h2>
-            <p class="tutor-bio">${t.bio}</p>
+        <div class="${rowClass} reveal">
+          <div class="tutor-row-photo">${frameContent}</div>
+          <div class="tutor-row-body">
+            ${founderBadge}
+            <h2 class="tutor-name">${tutor.name}</h2>
+            <p class="tutor-subtitle">${subtitle}</p>
+            <p class="tutor-bio">${tutor.bio}</p>
           </div>
         </div>`;
     }).join('');

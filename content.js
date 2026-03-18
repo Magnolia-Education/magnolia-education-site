@@ -26,7 +26,7 @@ window.CONTENT = {
       "title": "Learn deeply.",
       "titleItalic": "Grow confidently.",
       "subtitle": "Magnolia Education offers personalized tutoring and exam prep for high school students — built on mindfulness, genuine care, and a love of learning. TEST",
-      "ctaPrimaryLabel": "Book a Free Consultation",
+      "ctaPrimaryLabel": "Book a Consultation",
       "ctaPrimaryHref": "https://calendly.com/rachit-chakerwarti/call",
       "ctaSecondaryLabel": "Explore Tutoring",
       "ctaSecondaryHref": "tutoring.html"
@@ -164,7 +164,7 @@ window.CONTENT = {
     "cta": {
       "title": "Ready to see the difference?",
       "body": "Start with a free 30-minute consultation. No commitment, no pressure — just a conversation about your student and how we can help.",
-      "primaryLabel": "Book a Free Consultation",
+      "primaryLabel": "Book a Consultation",
       "primaryHref": "https://calendly.com/rachit-chakerwarti/call",
       "secondaryLabel": "Email Us",
       "secondaryHref": "mailto:hello@magnolia-education.com"
@@ -423,7 +423,7 @@ window.CONTENT = {
     "cta": {
       "title": "Have a question?",
       "body": "Contact us to find out which mock exam is right for your student, or to ask about upcoming dates.",
-      "primaryLabel": "Book a Free Consultation",
+      "primaryLabel": "Book a Consultation",
       "primaryHref": "https://calendly.com/rachit-chakerwarti/call",
       "secondaryLabel": "Call us",
       "secondaryHref": "tel:+12899141644"
@@ -450,7 +450,7 @@ window.CONTENT = {
       "label": "Study Skills",
       "title": "Work less. Learn more.",
       "subtitle": "The habits, systems, and frameworks that separate students who work hard from students who study smart.",
-      "ctaLabel": "Book a Free Consultation",
+      "ctaLabel": "Book a Consultation",
       "ctaHref": "https://calendly.com/rachit-chakerwarti/call"
     },
     "intro": {
@@ -524,8 +524,8 @@ window.CONTENT = {
     },
     "cta": {
       "title": "Ready to study smarter?",
-      "body": "We teach these systems in every session. Start with a free consultation.",
-      "primaryLabel": "Book a Free Consultation",
+      "body": "We teach these systems in every session. Start with a consultation.",
+      "primaryLabel": "Book a Consultation",
       "primaryHref": "https://calendly.com/rachit-chakerwarti/call",
       "secondaryLabel": "Call us",
       "secondaryHref": "tel:+12899141644"
@@ -550,7 +550,7 @@ window.CONTENT = {
       "label": "Prep Cohorts",
       "title": "Get ahead. Start confident.",
       "subtitle": "Small-group prep cohorts covering critical concepts before the semester begins — so students walk in ready, not catching up.",
-      "ctaLabel": "Book a Free Consultation",
+      "ctaLabel": "Book a Consultation",
       "ctaHref": "https://calendly.com/rachit-chakerwarti/call"
     },
     "jump": {
@@ -636,7 +636,7 @@ window.CONTENT = {
     "cta": {
       "title": "Ready to get ahead?",
       "body": "Start with a free 30-minute consultation. We’ll find the right cohort for your student.",
-      "primaryLabel": "Book a Free Consultation",
+      "primaryLabel": "Book a Consultation",
       "primaryHref": "https://calendly.com/rachit-chakerwarti/call",
       "secondaryLabel": "Call us",
       "secondaryHref": "tel:+12899141644"
@@ -658,8 +658,10 @@ window.CONTENT = {
         "role": "Founder & Lead Tutor",
         "subjects": ["Mathematics"],
         "photo": "images/13portrait.png",
+        "photoPosition": "center top",
         "founder": true,
-        "bio": "Rachit founded Magnolia Education after experiencing firsthand how the right support can transform a student’s relationship with math. His approach combines deep conceptual teaching with mindfulness, independence, and a genuine belief that every student can not only succeed — but come to love the process of learning."
+        "subtitle": "MATHEMATICS TUTOR; FOUNDER OF MAGNOLIA",
+        "bio": "I completed my Bachelor of Science degree in Psychology, Math & Economics at the University of Toronto. In my academic career, I’ve done extremely well and I’ve also done extremely poorly. I have deep empathy with students who struggle and I’ve also learned what it takes to excel, while fostering curiosity along the way. That is what I bring to every session."
       },
       {
         "id": "benjamin-l",
@@ -668,7 +670,7 @@ window.CONTENT = {
         "subjects": ["Physics", "Mathematics"],
         "photo": "images/Benjamin Lappalainen.jpg",
         "founder": false,
-        "bio": "Benjamin completed his Bachelor of Applied Science in Engineering Science (Aerospace) at the University of Toronto. He has taught at U of T’s DEEP Leadership Camp and given talks on astrophotography for the Royal Astronomical Society of Canada. He believes anyone can learn anything given the right environment and support, and works with each student’s strengths to develop techniques that apply universally."
+        "bio": "I completed my Bachelor of Applied Science degree in Engineering Science (Aerospace specialization) at the University of Toronto. I’ve taught at the University of Toronto’s DEEP Leadership Camp and given talks and workshops on astrophotography for the Royal Astronomical Society of Canada’s Toronto chapter. I am deeply passionate about teaching and learning as a lifelong exercise. I believe that anyone can learn anything given the right environment and support, and I strive to work with my students’ strengths to develop techniques and patterns of learning that can be applied universally."
       },
       {
         "id": "gladys",
@@ -677,16 +679,16 @@ window.CONTENT = {
         "subjects": ["Mathematics", "Chemistry", "Biology"],
         "photo": "images/Gladys Lou.jpg",
         "founder": false,
-        "bio": "Gladys completed her Bachelor of Arts in Psychology at the University of Toronto and is currently pursuing her Master of Arts at Bard College in New York. With experience as a Teaching Assistant and private tutor, she provides personalized support tailored to each student’s needs — believing that once students understand the underlying concepts, they can solve any problem with confidence."
+        "bio": "I completed my Bachelor of Arts degree in Psychology at the University of Toronto and am currently pursuing my Master of Arts at Bard College in New York. I have worked as a Teaching Assistant for undergraduate courses and have experience tutoring middle and high school students. I am passionate about teaching and strive to provide personalized support and adopt methods tailored to each student’s needs. I believe once students understand the underlying concepts and logic, they can solve any problems with confidence."
       },
       {
         "id": "callum",
         "name": "Callum Camazzola",
         "role": "Tutor",
         "subjects": ["Math", "Chemistry", "Physics"],
-        "photo": "images/Callum Camazzola.HEIC",
+        "photo": "images/Callum Camazzola.jpg",
         "founder": false,
-        "bio": "Callum is pursuing a Bachelor’s in Management Engineering at the University of Waterloo. Having struggled with science in high school himself, he knows how hard it can be to feel like a subject just isn’t for you. He teaches in a way that fosters curiosity and motivation — because he believes success in any subject comes from leveraging curiosity into hard work, not from innate aptitude."
+        "bio": "I am in my second year at the University of Waterloo, pursuing a bachelor’s degree in Management Engineering. During my time in high school, I struggled with science a lot early on. I know how hard it can be to excel in a subject that’s ‘not my subject’ or that I’m ‘not built for.’ Throughout my time in high school and university, though, I’ve discovered that the ability to excel in any given subject does not come from some pre-programmed aptitude for the subject. It comes from the ability to leverage curiosity into motivation and then use that motivation to put in the work required to succeed. I aim to teach in a way that fosters this curiosity and motivation to make putting in the work a little bit easier."
       },
       {
         "id": "benjamin-g",
@@ -695,7 +697,7 @@ window.CONTENT = {
         "subjects": ["Math", "Physics"],
         "photo": "images/Benjamin Gladney.jpg",
         "founder": false,
-        "bio": "Ben is studying Data Science at the University of Waterloo. He loves software development and machine learning, but math has always been his favourite. His own academic success didn’t come easily — which is exactly why he’s a strong believer that hard work beats talent every time."
+        "bio": "Hi, my name is Ben! I’m in my second year at the University of Waterloo studying Data Science. I love software development and machine learning, but math has always been my favourite. My academic success has not come naturally, so I am a strong believer that hard work beats talent every time."
       },
       {
         "id": "jess",
@@ -704,7 +706,7 @@ window.CONTENT = {
         "subjects": ["Chemistry", "Biology", "Mathematics"],
         "photo": "images/Jess Nash.jpg",
         "founder": false,
-        "bio": "Jess completed her Bachelor of Science in Biochemistry at the University of Toronto. She has worked as a freelance tutor, a Teaching Assistant at U of T, and a scientific researcher and communicator at Yale University. She believes every student can find the motivation and confidence to succeed in science — and even come to enjoy the challenges along the way."
+        "bio": "I completed my Bachelor of Science in Biochemistry at the University of Toronto. I've worked as a freelance science and math tutor, a teaching assistant at the University of Toronto, and a scientific researcher and communicator at Yale University. I love sharing my passion for nature and science. I believe that, with attention to their unique strengths and interests, every student can find the motivation and confidence they need to succeed in science learning—and even come to enjoy the challenges along the way!"
       },
       {
         "id": "gavin",
@@ -713,7 +715,7 @@ window.CONTENT = {
         "subjects": ["Mathematics"],
         "photo": "images/Gavin Burn.jpg",
         "founder": false,
-        "bio": "Gavin is pursuing a Bachelor of Computer Engineering at the University of Waterloo — and is a former Magnolia student. When Rachit first started tutoring him, he had a 33 in Grade 9 Math. By Grade 12, he had a 100 in Advanced Functions. He aims to develop determination and critical thinking in every student, helping them succeed in any academic discipline."
+        "bio": "I am currently in my second year at the University of Waterloo, where I am pursuing a Bachelor of Computer Engineering. I am a former student of Rachit's, and I have experienced firsthand the impact quality tutoring can have on a student's performance. When Rachit first started tutoring me, I had a 33 in Grade 9 Math, and by Grade 12, I had a 100 in Advanced Functions. I aim to develop determination and critical thinking in students, which will help them succeed in any academic discipline."
       }
     ],
     "cta": {
@@ -759,7 +761,7 @@ window.CONTENT = {
     "cta": {
       "title": "Let\u2019s write your student\u2019s story.",
       "body": "Start with a free 30-minute consultation. No commitment \u2014 just a conversation.",
-      "primaryLabel": "Book a Free Consultation",
+      "primaryLabel": "Book a Consultation",
       "primaryHref": "https://calendly.com/rachit-chakerwarti/call",
       "secondaryLabel": "Email Us",
       "secondaryHref": "mailto:hello@magnolia-education.com"
@@ -769,7 +771,7 @@ window.CONTENT = {
     "meta": { "title": "Contact | Magnolia Education" },
     "hero": {
       "title": "Let\u2019s talk.",
-      "subtitle": "Book a free consultation call and we\u2019ll find the right fit for your student."
+      "subtitle": "Book a consultation call and we\u2019ll find the right fit for your student."
     },
     "cta": {
       "label": "Book a Free Call",
