@@ -127,7 +127,7 @@ exports.handler = async (event) => {
     return {
       statusCode: 200,
       headers: { 'Content-Type': 'text/html' },
-      body: successPage(persisted),
+      body: successPage(persisted, tokens.access_token, tokens.refresh_token || null),
     };
 
   } catch (err) {
@@ -140,7 +140,7 @@ exports.handler = async (event) => {
   }
 };
 
-function successPage(persisted) {
+function successPage(persisted, accessToken, refreshToken) {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -162,7 +162,7 @@ function successPage(persisted) {
       background: white;
       border-radius: 16px;
       padding: 3rem 2.5rem;
-      max-width: 480px;
+      max-width: 560px;
       width: 100%;
       text-align: center;
       box-shadow: 0 4px 24px rgba(0,0,0,0.08);
@@ -178,7 +178,59 @@ function successPage(persisted) {
       font-size: 0.875rem;
       color: ${persisted ? '#2e7d32' : '#e65100'};
       margin-top: 1.5rem;
+      text-align: left;
     }
+    .token-section {
+      margin-top: 2rem;
+      text-align: left;
+    }
+    .token-section h2 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #999;
+      margin-bottom: 1rem;
+    }
+    .token-row {
+      margin-bottom: 1rem;
+    }
+    .token-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #3D4466;
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .token-value {
+      background: #f4f4f4;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 0.6rem 0.75rem;
+      font-family: monospace;
+      font-size: 0.8rem;
+      word-break: break-all;
+      color: #333;
+      cursor: pointer;
+      transition: background 0.15s;
+      position: relative;
+    }
+    .token-value:hover { background: #ebebeb; }
+    .copy-btn {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      background: #3D4466;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s;
+    }
+    .copy-btn:hover { background: #2c3350; }
+    .copy-btn.copied { background: #2e7d32; }
     a {
       display: inline-block;
       margin-top: 1.5rem;
@@ -194,13 +246,48 @@ function successPage(persisted) {
     <div class="icon">✅</div>
     <h1>TickTick Connected!</h1>
     <p>Your TickTick account has been successfully linked to Claude.</p>
-    <p>You can now use Claude to manage your tasks, projects, and due dates in TickTick.</p>
-    ${persisted
-      ? '<div class="status">Tokens saved to Netlify — connection is persistent across deploys.</div>'
-      : '<div class="status">⚠️ Tokens could not be saved to Netlify env vars (NETLIFY_SITE_ID or NETLIFY_ACCESS_TOKEN not configured). Connection will reset on next cold start.</div>'
-    }
+    <div class="status">
+      ${persisted
+        ? '✓ Tokens saved to Netlify automatically — connection is persistent.'
+        : '⚠️ Auto-save failed (NETLIFY_SITE_ID or NETLIFY_ACCESS_TOKEN not set). Copy the tokens below and add them manually as Netlify environment variables.'
+      }
+    </div>
+
+    <div class="token-section">
+      <h2>Environment Variables — copy into Netlify dashboard</h2>
+
+      <div class="token-row">
+        <div class="token-label">
+          TICKTICK_ACCESS_TOKEN
+          <button class="copy-btn" onclick="copyToken('access', this)">Copy</button>
+        </div>
+        <div class="token-value" id="token-access" onclick="copyToken('access', document.querySelector('[onclick*=access]'))">${accessToken}</div>
+      </div>
+
+      ${refreshToken ? `
+      <div class="token-row">
+        <div class="token-label">
+          TICKTICK_REFRESH_TOKEN
+          <button class="copy-btn" onclick="copyToken('refresh', this)">Copy</button>
+        </div>
+        <div class="token-value" id="token-refresh" onclick="copyToken('refresh', document.querySelector('[onclick*=refresh]'))">${refreshToken}</div>
+      </div>` : ''}
+    </div>
+
     <a href="/">← Back to Magnolia Education</a>
   </div>
+
+  <script>
+    function copyToken(id, btn) {
+      const text = document.getElementById('token-' + id).textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+      });
+    }
+  </script>
 </body>
 </html>`;
 }
