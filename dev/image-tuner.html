@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Magnolia Image Tuner — Dev Tool</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+      background: #eef0f4;
+      color: #1a1a2e;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* ── TOOLBAR ── */
+    .toolbar {
+      position: sticky; top: 0; z-index: 100;
+      background: #3D4466; color: #fff;
+      padding: 0 24px; height: 52px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .toolbar-title { font-size: 0.875rem; font-weight: 700; letter-spacing: 0.08em; flex: 1; }
+    .toolbar-title span { opacity: 0.45; font-weight: 400; font-style: italic; font-size: 0.78rem; margin-left: 12px; }
+    .btn {
+      padding: 7px 16px; border-radius: 6px; border: none; cursor: pointer;
+      font-size: 0.78rem; font-weight: 600; transition: background 0.15s, transform 0.1s;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-export { background: #E8836A; color: #fff; }
+    .btn-export:hover { background: #d96e54; }
+    .btn-export.saved { background: #4a9e6b; }
+    .btn-export.saved:hover { background: #3d8a5b; }
+    .btn-import { background: rgba(255,255,255,0.13); color: #fff; border: 1px solid rgba(255,255,255,0.28); }
+    .btn-import:hover { background: rgba(255,255,255,0.22); }
+
+    /* ── DEV BANNER ── */
+    .dev-banner {
+      background: #fff8e6; border-bottom: 1px solid #f0d060;
+      padding: 8px 24px; font-size: 0.78rem; color: #7a6000;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .dev-banner::before { content: '⚠'; font-size: 0.9rem; }
+
+    /* ── PAGE GROUPS ── */
+    .page-group { max-width: 1440px; margin: 0 auto; padding: 0 24px 8px; }
+    .page-header {
+      padding: 28px 0 12px; border-bottom: 2px solid #3D4466;
+      margin-bottom: 20px; display: flex; align-items: center; gap: 12px;
+    }
+    .page-header h2 { font-size: 1rem; font-weight: 700; color: #3D4466; font-family: monospace; }
+    .page-header .page-count { font-size: 0.72rem; color: #999; }
+
+    .section-divider {
+      font-size: 0.7rem; font-weight: 700; color: #aaa;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      margin: 20px 0 12px;
+    }
+
+    /* ── CARDS GRID ── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
+      gap: 16px; margin-bottom: 8px;
+    }
+
+    /* ── IMAGE CARD ── */
+    .img-card {
+      background: #fff; border-radius: 10px;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.07), 0 0 0 1px rgba(0,0,0,0.04);
+      overflow: hidden;
+    }
+    .img-card-header {
+      padding: 10px 14px; background: #f6f7fa;
+      border-bottom: 1px solid #e8eaee;
+      display: flex; justify-content: space-between; align-items: center; gap: 8px;
+    }
+    .img-card-label { font-weight: 700; font-size: 0.82rem; color: #3D4466; }
+    .img-card-src { font-size: 0.67rem; color: #999; font-family: monospace; margin-top: 1px; }
+    .btn-reset {
+      background: none; border: 1px solid #ddd; color: #777;
+      padding: 3px 10px; border-radius: 4px; cursor: pointer;
+      font-size: 0.72rem; white-space: nowrap; flex-shrink: 0;
+    }
+    .btn-reset:hover { border-color: #bbb; color: #333; background: #f8f8f8; }
+
+    /* ── CARD BODY ── */
+    .img-card-body { padding: 14px; display: flex; gap: 16px; align-items: flex-start; flex-wrap: wrap; }
+
+    /* ── PREVIEW ── */
+    .preview-wrap { flex-shrink: 0; max-width: 100%; }
+    .preview-container {
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      transition: width 0.15s, height 0.15s;
+    }
+    .preview-container img { display: block; width: 100%; height: 100%; }
+
+    /* ── DIM INPUTS (below preview) ── */
+    .dim-row {
+      display: flex; align-items: center; gap: 6px;
+      margin-top: 7px;
+    }
+    .dim-label {
+      font-size: 0.68rem; color: #888; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .dim-input {
+      width: 54px; padding: 3px 6px;
+      border: 1px solid #ddd; border-radius: 4px;
+      font-size: 0.72rem; font-family: monospace;
+      text-align: right; color: #333;
+      background: #fafafa;
+    }
+    .dim-input:focus { outline: none; border-color: #E8836A; background: #fff; }
+    .dim-sep { color: #ccc; font-size: 0.8rem; }
+
+    /* ── CONTROLS ── */
+    .controls { flex: 1; display: flex; flex-direction: column; gap: 10px; min-width: 250px; }
+
+    /* ── IMAGE SOURCE ROW ── */
+    .src-row { display: flex; align-items: center; gap: 6px; }
+    .src-select {
+      flex: 1; min-width: 0; font-size: 0.72rem;
+      border: 1px solid #ddd; border-radius: 4px; padding: 4px 6px;
+      color: #333; background: #fff; cursor: pointer;
+    }
+    .src-select:focus { outline: none; border-color: #E8836A; }
+    .btn-browse {
+      background: #f0f2f5; color: #555;
+      border: 1px solid #ddd; border-radius: 4px;
+      padding: 4px 10px; font-size: 0.72rem; cursor: pointer;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .btn-browse:hover { background: #e5e7eb; border-color: #bbb; }
+
+    .control-row { display: flex; align-items: center; gap: 8px; }
+    .control-label {
+      width: 48px; font-size: 0.72rem; color: #666; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.04em; flex-shrink: 0;
+    }
+    .control-row input[type="range"] {
+      flex: 1; min-width: 0; height: 3px; accent-color: #E8836A; cursor: pointer;
+    }
+    .control-val {
+      width: 40px; font-size: 0.72rem; font-family: monospace;
+      color: #333; text-align: right; flex-shrink: 0;
+    }
+
+    /* ── OBJECT-FIT TOGGLE ── */
+    .fit-toggle {
+      display: flex; border-radius: 5px; overflow: hidden;
+      border: 1px solid #ddd; flex-shrink: 0;
+    }
+    .fit-btn {
+      padding: 4px 10px; font-size: 0.72rem; font-weight: 600;
+      border: none; background: #f5f5f5; color: #aaa; cursor: pointer;
+      transition: background 0.12s, color 0.12s;
+    }
+    .fit-btn + .fit-btn { border-left: 1px solid #ddd; }
+    .fit-btn.active { background: #3D4466; color: #fff; }
+
+    /* ── CSS OUTPUT ── */
+    .css-output {
+      margin: 0 14px 14px; background: #1e2235;
+      border-radius: 7px; padding: 10px 12px 10px 14px;
+      position: relative;
+    }
+    .css-output pre {
+      font-size: 0.7rem; line-height: 1.7; color: #a8c4e0;
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      white-space: pre; padding-right: 56px;
+    }
+    .css-prop { color: #7ec8e3; }
+    .css-val  { color: #b8f0a0; }
+    .btn-copy {
+      position: absolute; top: 8px; right: 8px;
+      background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7);
+      border: 1px solid rgba(255,255,255,0.18); border-radius: 4px;
+      padding: 3px 10px; font-size: 0.68rem; cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-copy:hover { background: rgba(255,255,255,0.16); }
+    .btn-copy.copied { background: #4ade80; color: #000; border-color: #4ade80; }
+
+    /* ── IMPORT MODAL ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55); z-index: 500;
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: #fff; border-radius: 12px; padding: 24px;
+      width: 560px; max-width: 94vw;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+    }
+    .modal h3 { font-size: 1rem; color: #3D4466; margin-bottom: 14px; }
+    .modal textarea {
+      width: 100%; height: 220px;
+      font-family: 'Cascadia Code', 'Fira Code', monospace; font-size: 0.78rem;
+      border: 1px solid #ddd; border-radius: 6px; padding: 10px; resize: vertical;
+      color: #333; background: #f8f9fb;
+    }
+    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 14px; }
+    .btn-modal-apply {
+      background: #3D4466; color: #fff; padding: 8px 20px;
+      border-radius: 6px; border: none; cursor: pointer; font-size: 0.85rem; font-weight: 600;
+    }
+    .btn-modal-cancel {
+      background: #f0f2f5; color: #555; padding: 8px 20px;
+      border-radius: 6px; border: none; cursor: pointer; font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <span class="toolbar-title">
+    MAGNOLIA IMAGE TUNER
+    <span>dev tool — not part of the live site</span>
+  </span>
+  <button class="btn btn-export" id="btn-export">Save Config</button>
+  <button class="btn btn-import" id="btn-import-open">Import JSON</button>
+</div>
+
+<div class="dev-banner">
+  Dev tool — open locally, not linked from the live site. Dial in values visually, then Export JSON and share with Claude Code.
+</div>
+
+<!-- IMPORT MODAL -->
+<div class="modal-overlay" id="import-modal">
+  <div class="modal">
+    <h3>Import JSON Config</h3>
+    <textarea id="import-textarea" placeholder='Paste exported JSON here…'></textarea>
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" id="btn-modal-cancel">Cancel</button>
+      <button class="btn-modal-apply" id="btn-modal-apply">Apply</button>
+    </div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════════════════
+// KNOWN IMAGES  (all files in /images/ folder)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+const KNOWN_IMAGES = [
+  '10workinprogress.png',
+  '11Ourstory.png',
+  '13portrait.png',
+  '1Booktower.png',
+  '2Bitpaper.png',
+  '3bmeditation.png',
+  '3meditation.png',
+  '4Mockexam.png',
+  '5ExamExhale.png',
+  '6Mockexampage.png',
+  '7CookieTrophy.png',
+  '8firstreview.png',
+  '8secondreview.png',
+  '8thirdreview.png',
+  '9homeworkguideline.png',
+  'a plus.png',
+  'beauty.png',
+  'Benjamin Gladney.jpg',
+  'Benjamin Lappalainen.jpg',
+  'BOOKCLIMBING.PNG',
+  'Callum Camazzola.jpg',
+  'CLOUDSURFING.png',
+  'computer.png',
+  'Gavin Burn.jpg',
+  'Gladys Lou.jpg',
+  'IMG_0394.PNG',
+  'IMG_0396.PNG',
+  'Jess Nash.jpg',
+  'lightbulb.png',
+  'lighteningbolt.png',
+  'MAGNOLIA.PNG',
+  'MAGNOLIATREE.PNG',
+  'pencil.png',
+  'rocket.png',
+  'seva.png',
+  'speech bubbles.png',
+  'strength.png',
+  'TIMEMANGEMENT.PNG',
+].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// IMAGE DATA
+// container: { w, h, bg, borderRadius, overflow }
+// defaults:  { scale, posX, posY, objectFit, borderRadius }
+// ═══════════════════════════════════════════════════════════════════════════════
+
+const IMAGES = [
+
+  // ── index.html ──────────────────────────────────────────────────────────────
+
+  {
+    id: 'idx-hero',
+    label: 'Hero Illustration',
+    page: 'index.html', section: 'Hero Section',
+    src: '../images/CLOUDSURFING.png',
+    container: { w: 460, h: 340, bg: 'linear-gradient(135deg,#E2EAF2,#D4E5EE)', borderRadius: 0, overflow: 'visible' },
+    defaults: { scale: 1.0, posX: 50, posY: 50, objectFit: 'contain', borderRadius: 0 },
+  },
+  {
+    id: 'idx-founder',
+    label: 'Founder Photo',
+    page: 'index.html', section: 'Founder Section',
+    src: '../images/13portrait.png',
+    container: { w: 240, h: 360, bg: '#3D4466', borderRadius: 16, overflow: 'hidden' },
+    defaults: { scale: 1.0, posX: 50, posY: 0, objectFit: 'contain', borderRadius: 0 },
+  },
+  {
+    id: 'idx-svc-tutoring',
+    label: 'Service Row — Tutoring',
+    page: 'index.html', section: 'Services Grid',
+    src: '../images/MAGNOLIATREE.PNG',
+    container: { w: 376, h: 300, bg: 'linear-gradient(135deg,#E2EAF2,#D4E5EE)', borderRadius: 20, overflow: 'hidden' },
+    defaults: { scale: 1.6, posX: 50, posY: 50, objectFit: 'contain', borderRadius: 0 },
+  },
+  {
+    id: 'idx-svc-study',
+    label: 'Service Row — Study Skills',
+    page: 'index.html', section: 'Services Grid',
+    src: '../images/TIMEMANGEMENT.PNG',
+    container: { w: 376, h: 300, bg: 'linear-gradient(135deg,#E2EAF2,#D4E5EE)', borderRadius: 20, overflow: 'hidden' },
+    defaults: { scale: 1.6, posX: 50, posY: 50, objectFit: 'contain', borderRadius: 0 },
+  },
+  {
+    id: 'idx-svc-mock',
+    label: 'Service Row — Mock Exams',
+    page: 'index.html', section: 'Services Grid',
+    src: '../images/4Mockexam.png',
+    container: { w: 376, h: 300, bg: 'linear-gradient(135deg,#E2EAF2,#D4E5EE)', borderRadius: 20, overflow: 'hidden' },
+    defaults: { scale: 1.6, posX: 50, posY: 50, objectFit: 'contain', borderRadius: 0 },
+  },
+  {
+    id: 'idx-svc-cohorts',
+    label: 'Service Row — Prep Cohorts',
+    page: 'index.html', section: 'Services Grid',
+    src: '../images/BOOKCLIMBING.PNG',
+    container: { w: 376, h: 300, bg: 'linear-gradient(135deg,#E2EAF2,#D4E5EE)', borderRadius: 20, overflow: 'hidden' },
+    defaults: { scale: 1.6, posX: 50, posY: 50, objectFit: 'contain', borderRadius: 0 },
+  },
+
+  // ── tutoring.html ────────────────────────────────────────────────────────────
+
+  {
+    id: 'tut-hero',
+    label: 'Hero Illustration',
+    page: 'tutoring.html', section: 'Hero Section',
+    src: '../images/MAGNOLIATREE.PNG',
+    container: { w: 460, h: 460, bg: 'linear-gradient(135deg,#E2EAF2,#D4E5EE)', borderRadius: 0, overflow: 'visible' },
+    defaults: { scale: 1.0, posX: 100, posY: 100, objectFit: 'contain', borderRadius: 0 },
+  },
+  {
+    id: 'tut-booktower',
+    label: 'Book Tower (How It Works)',
+    page: 'tutoring.html', section: 'How It Works',
+    src: '../images/1Booktower.png',
+    container: { w: 340, h: 480, bg: '#f0f4f8', borderRadius: 0, overflow: 'visible' },
+    defaults: { scale: 1.0, posX: 50, posY: 100, objectFit: 'contain', borderRadius: 0 },
+  },
+  {
+    id: 'tut-technology',
+    label: 'Technology — Bitpaper',
+    page: 'tutoring.html', section: 'Success Blocks',
+    src: '../images/2Bitpaper.png',
+    container: { w: 400, h: 300, bg: '#EDE8E0', borderRadius: 12, overflow: 'hidden' },
+    defaults: { scale: 1.0, posX: 50, posY: 50, objectFit: 'contain', borderRadius: 0 },
+  },
+  {
+    id: 'tut-mindfulness',
+    label: 'Mindfulness / Meditation',
+    page: 'tutoring.html', section: 'Success Blocks',
+    src: '../images/3meditation.png',
+    container: { w: 400, h: 300, bg: '#EDE8E0', borderRadius: 12, overflow: 'hidden' },
+    defaults: { scale: 1.0, posX: 50, posY: 50, objectFit: 'contain', borderRadius: 0 },
+  },
+
+  // ── mock-exams.html ──────────────────────────────────────────────────────────
+
+  {
+    id: 'me-hero',
+    label: 'Hero Illustration',
+    page: 'mock-exams.html', section: 'Hero Section',
+    src: '../images/4Mockexam.png',
+    container: { w: 460, h: 380, bg: 'linear-gradient(135deg,#E2EAF2,#D4E5EE)', borderRadius: 0, overflow: 'hidden' },
+    defaults: { scale: 1.0, posX: 50, posY: 50, objectFit: 'contain', borderRadius: 0 },
+  },
+  {
+    id: 'me-step1',
+    label: 'Step 1 — Mindfulness Opening',
+    page: 'mock-exams.html', section: 'What Happens (Mock Rows)',
+    src: '../images/5ExamExhale.png',
+    container: { w: 376, h: 300, bg: 'linear-gradient(135deg,#E2EAF2,#D4E5EE)', borderRadius: 20, overflow: 'hidden' },
+    defaults: { scale: 1.0, posX: 50, posY: 50, objectFit: 'contain', borderRadius: 0 },
+  },
+  {
+    id: 'me-step2',
+    label: 'Step 2 — Full-length Exam',
+    page: 'mock-exams.html', section: 'What Happens (Mock Rows)',
+    src: '../images/6Mockexampage.png',
+    container: { w: 376, h: 300, bg: 'linear-gradient(135deg,#E2EAF2,#D4E5EE)', borderRadius: 20, overflow: 'hidden' },
+    defaults: { scale: 1.0, posX: 50, posY: 50, objectFit: 'contain', borderRadius: 0 },
+  },
+  {
+    id: 'me-step3',
+    label: 'Step 3 — DIY Marking Tools',
+    page: 'mock-exams.html', section: 'What Happens (Mock Rows)',
+    src: '../images/6Mockexampage.png',
+    container: { w: 376, h: 300, bg: 'linear-gradient(135deg,#E2EAF2,#D4E5EE)', borderRadius: 20, overflow: 'hidden' },
+    defaults: { scale: 1.0, posX: 50, posY: 50, objectFit: 'contain', borderRadius: 0 },
+  },
+  {
+    id: 'me-step4',
+    label: 'Step 4 — Celebrate Success',
+    page: 'mock-exams.html', section: 'What Happens (Mock Rows)',
+    src: '../images/7CookieTrophy.png',
+    container: { w: 376, h: 300, bg: 'linear-gradient(135deg,#E2EAF2,#D4E5EE)', borderRadius: 20, overflow: 'hidden' },
+    defaults: { scale: 1.0, posX: 50, posY: 50, objectFit: 'contain', borderRadius: 0 },
+  },
+
+  // ── study-skills.html ────────────────────────────────────────────────────────
+
+  {
+    id: 'ss-hero',
+    label: 'Hero Illustration',
+    page: 'study-skills.html', section: 'Hero Section',
+    src: '../images/TIMEMANGEMENT.PNG',
+    container: { w: 460, h: 380, bg: 'linear-gradient(135deg,#E2EAF2,#D4E5EE)', borderRadius: 0, overflow: 'hidden' },
+    defaults: { scale: 1.0, posX: 50, posY: 50, objectFit: 'contain', borderRadius: 0 },
+  },
+  {
+    id: 'ss-inc-perseverance',
+    label: "Included — Perseverance",
+    page: 'study-skills.html', section: "What's Included",
+    src: '../images/strength.png',
+    container: { w: 72, h: 72, bg: '#FDF0EC', borderRadius: 12, overflow: 'hidden' },
+    defaults: { scale: 1.3, posX: 50, posY: 50, objectFit: 'contain', borderRadius: 0 },
+  },
+  {
+    id: 'ss-inc-routine',
+    label: "Included — Routine Building",
+    page: 'study-skills.html', section: "What's Included",
+    src: '../images/pencil.png',
+    container: { w: 72, h: 72, bg: '#FDF0EC', borderRadius: 12, overflow: 'hidden' },
+    defaults: { scale: 1.3, posX: 50, posY: 50, objectFit: 'contain', borderRadius: 0 },
+  },
+  {
+    id: 'ss-inc-stress',
+    label: "Included — Stress Reduction",
+    page: 'study-skills.html', section: "What's Included",
+    src: '../images/lighteningbolt.png',
+    container: { w: 72, h: 72, bg: '#FDF0EC', borderRadius: 12, overflow: 'hidden' },
+    defaults: { scale: 1.3, posX: 50, posY: 50, objectFit: 'contain', borderRadius: 0 },
+  },
+  {
+    id: 'ss-inc-independence',
+    label: "Included — Independence",
+    page: 'study-skills.html', section: "What's Included",
+    src: '../images/lightbulb.png',
+    container: { w: 72, h: 72, bg: '#FDF0EC', borderRadius: 12, overflow: 'hidden' },
+    defaults: { scale: 1.3, posX: 50, posY: 50, objectFit: 'contain', borderRadius: 0 },
+  },
+  {
+    id: 'ss-inc-acceptance',
+    label: "Included — Acceptance & Reframing",
+    page: 'study-skills.html', section: "What's Included",
+    src: '../images/beauty.png',
+    container: { w: 72, h: 72, bg: '#FDF0EC', borderRadius: 12, overflow: 'hidden' },
+    defaults: { scale: 1.3, posX: 50, posY: 50, objectFit: 'contain', borderRadius: 0 },
+  },
+  {
+    id: 'ss-inc-support',
+    label: "Included — System of Support",
+    page: 'study-skills.html', section: "What's Included",
+    src: '../images/speech bubbles.png',
+    container: { w: 72, h: 72, bg: '#FDF0EC', borderRadius: 12, overflow: 'hidden' },
+    defaults: { scale: 1.3, posX: 50, posY: 50, objectFit: 'contain', borderRadius: 0 },
+  },
+  {
+    id: 'ss-review1',
+    label: 'Three Reviews — Immediate',
+    page: 'study-skills.html', section: 'Three Review System',
+    src: '../images/8firstreview.png',
+    container: { w: 280, h: 210, bg: 'rgba(61,68,102,0.08)', borderRadius: 10, overflow: 'hidden' },
+    defaults: { scale: 1.0, posX: 50, posY: 50, objectFit: 'cover', borderRadius: 0 },
+  },
+  {
+    id: 'ss-review2',
+    label: 'Three Reviews — Morning After',
+    page: 'study-skills.html', section: 'Three Review System',
+    src: '../images/8secondreview.png',
+    container: { w: 280, h: 210, bg: 'rgba(61,68,102,0.08)', borderRadius: 10, overflow: 'hidden' },
+    defaults: { scale: 1.0, posX: 50, posY: 50, objectFit: 'cover', borderRadius: 0 },
+  },
+  {
+    id: 'ss-review3',
+    label: 'Three Reviews — One Week Later',
+    page: 'study-skills.html', section: 'Three Review System',
+    src: '../images/8thirdreview.png',
+    container: { w: 280, h: 210, bg: 'rgba(61,68,102,0.08)', borderRadius: 10, overflow: 'hidden' },
+    defaults: { scale: 1.0, posX: 50, posY: 50, objectFit: 'cover', borderRadius: 0 },
+  },
+  {
+    id: 'ss-pomodoro',
+    label: 'Pomodoro Illustration',
+    page: 'study-skills.html', section: 'Pomodoro Section',
+    src: '../images/10workinprogress.png',
+    container: { w: 400, h: 360, bg: '#FDF0EC', borderRadius: 0, overflow: 'hidden' },
+    defaults: { scale: 1.0, posX: 50, posY: 50, objectFit: 'contain', borderRadius: 0 },
+  },
+  {
+    id: 'ss-homework',
+    label: 'Homework Strategy',
+    page: 'study-skills.html', section: 'Homework Section',
+    src: '../images/9homeworkguideline.png',
+    container: { w: 400, h: 360, bg: '#fff', borderRadius: 0, overflow: 'hidden' },
+    defaults: { scale: 1.0, posX: 50, posY: 50, objectFit: 'contain', borderRadius: 0 },
+  },
+
+  // ── tutors.html ──────────────────────────────────────────────────────────────
+
+  {
+    id: 'tutors-rachit',
+    label: 'Rachit — Founder',
+    page: 'tutors.html', section: 'Tutor Profiles',
+    src: '../images/13portrait.png',
+    container: { w: 350, h: 350, bg: '#d4cfc8', borderRadius: 0, overflow: 'hidden' },
+    defaults: { scale: 1.0, posX: 50, posY: 0, objectFit: 'cover', borderRadius: 0 },
+  },
+  {
+    id: 'tutors-benjamin-l',
+    label: 'Benjamin Lappalainen',
+    page: 'tutors.html', section: 'Tutor Profiles',
+    src: '../images/Benjamin Lappalainen.jpg',
+    container: { w: 350, h: 350, bg: '#d4cfc8', borderRadius: 0, overflow: 'hidden' },
+    defaults: { scale: 1.0, posX: 50, posY: 0, objectFit: 'cover', borderRadius: 0 },
+  },
+  {
+    id: 'tutors-gladys',
+    label: 'Gladys Lou',
+    page: 'tutors.html', section: 'Tutor Profiles',
+    src: '../images/Gladys Lou.jpg',
+    container: { w: 350, h: 350, bg: '#d4cfc8', borderRadius: 0, overflow: 'hidden' },
+    defaults: { scale: 1.0, posX: 50, posY: 0, objectFit: 'cover', borderRadius: 0 },
+  },
+  {
+    id: 'tutors-callum',
+    label: 'Callum Camazzola',
+    page: 'tutors.html', section: 'Tutor Profiles',
+    src: '../images/Callum Camazzola.jpg',
+    container: { w: 350, h: 350, bg: '#d4cfc8', borderRadius: 0, overflow: 'hidden' },
+    defaults: { scale: 1.0, posX: 50, posY: 0, objectFit: 'cover', borderRadius: 0 },
+  },
+  {
+    id: 'tutors-benjamin-g',
+    label: 'Benjamin Gladney',
+    page: 'tutors.html', section: 'Tutor Profiles',
+    src: '../images/Benjamin Gladney.jpg',
+    container: { w: 350, h: 350, bg: '#d4cfc8', borderRadius: 0, overflow: 'hidden' },
+    defaults: { scale: 1.0, posX: 50, posY: 0, objectFit: 'cover', borderRadius: 0 },
+  },
+  {
+    id: 'tutors-jess',
+    label: 'Jess Nash',
+    page: 'tutors.html', section: 'Tutor Profiles',
+    src: '../images/Jess Nash.jpg',
+    container: { w: 350, h: 350, bg: '#d4cfc8', borderRadius: 0, overflow: 'hidden' },
+    defaults: { scale: 1.0, posX: 50, posY: 0, objectFit: 'cover', borderRadius: 0 },
+  },
+  {
+    id: 'tutors-gavin',
+    label: 'Gavin Burn',
+    page: 'tutors.html', section: 'Tutor Profiles',
+    src: '../images/Gavin Burn.jpg',
+    container: { w: 350, h: 350, bg: '#d4cfc8', borderRadius: 0, overflow: 'hidden' },
+    defaults: { scale: 1.0, posX: 50, posY: 0, objectFit: 'cover', borderRadius: 0 },
+  },
+
+  // ── story.html ───────────────────────────────────────────────────────────────
+
+  {
+    id: 'story-hero',
+    label: 'Our Story Hero',
+    page: 'story.html', section: 'Hero Section',
+    src: '../images/11Ourstory.png',
+    container: { w: 460, h: 400, bg: 'linear-gradient(135deg,#E2EAF2,#D4E5EE)', borderRadius: 0, overflow: 'hidden' },
+    defaults: { scale: 1.0, posX: 50, posY: 50, objectFit: 'contain', borderRadius: 0 },
+  },
+  {
+    id: 'story-rachit',
+    label: 'Rachit Portrait (Story)',
+    page: 'story.html', section: 'Rachit Story',
+    src: '../images/13portrait.png',
+    container: { w: 420, h: 420, bg: '#EDE8E0', borderRadius: 16, overflow: 'hidden' },
+    defaults: { scale: 1.0, posX: 50, posY: 0, objectFit: 'contain', borderRadius: 0 },
+  },
+];
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// STATE
+// Each entry: { scale, posX, posY, objectFit, borderRadius, src, blobUrl, cw, ch }
+// ═══════════════════════════════════════════════════════════════════════════════
+
+const state = {};
+IMAGES.forEach(img => {
+  state[img.id] = {
+    ...img.defaults,
+    src: img.src,         // current selected src path (always ../images/...)
+    blobUrl: null,        // set when Browse loads a local file
+    cw: img.container.w, // current container width
+    ch: img.container.h, // current container height
+  };
+});
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function encodeSrc(src) {
+  const parts = src.split('/');
+  parts[parts.length - 1] = encodeURIComponent(parts[parts.length - 1]);
+  return parts.join('/');
+}
+
+function getSrcForElement(id) {
+  // Use blobUrl if a local file was loaded, otherwise encode the path
+  return state[id].blobUrl || encodeSrc(state[id].src);
+}
+
+function getSrcForExport(id) {
+  // Always export the path (not blob), stripped of '../'
+  return state[id].src.replace('../', '');
+}
+
+function getFilenameFromSrc(src) {
+  return src.split('/').pop();
+}
+
+function buildCSS(id) {
+  const s = state[id];
+  const lines = [
+    `transform: scale(${parseFloat(s.scale).toFixed(2)});`,
+    `transform-origin: center;`,
+    `object-fit: ${s.objectFit};`,
+    `object-position: ${s.posX}% ${s.posY}%;`,
+  ];
+  if (s.borderRadius > 0) lines.push(`border-radius: ${s.borderRadius}px;`);
+  return lines.join('\n');
+}
+
+function buildCSSHighlighted(id) {
+  const s = state[id];
+  const row = (p, v) =>
+    `<span class="css-prop">${p}</span>: <span class="css-val">${v}</span>;`;
+  const rows = [
+    row('transform', `scale(${parseFloat(s.scale).toFixed(2)})`),
+    row('transform-origin', 'center'),
+    row('object-fit', s.objectFit),
+    row('object-position', `${s.posX}% ${s.posY}%`),
+  ];
+  if (s.borderRadius > 0) rows.push(row('border-radius', `${s.borderRadius}px`));
+  return rows.join('\n');
+}
+
+function buildSelectOptions(currentSrc) {
+  const currentFile = getFilenameFromSrc(currentSrc);
+  return KNOWN_IMAGES.map(f => {
+    const sel = f === currentFile ? ' selected' : '';
+    return `<option value="${f}"${sel}>${f}</option>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// CARD BUILDER
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function buildCard(img) {
+  const c = img.container;
+  const s = state[img.id];
+  const id = img.id;
+
+  const containerCSS = [
+    `width:${s.cw}px`,
+    `height:${s.ch}px`,
+    `background:${c.bg}`,
+    `border-radius:${c.borderRadius}px`,
+    'overflow:hidden',
+    'position:relative',
+    'flex-shrink:0',
+    'display:flex',
+    'align-items:center',
+    'justify-content:center',
+  ].join(';');
+
+  const imgCSS = [
+    'width:100%',
+    'height:100%',
+    'display:block',
+    `object-fit:${s.objectFit}`,
+    `object-position:${s.posX}% ${s.posY}%`,
+    `transform:scale(${s.scale})`,
+    'transform-origin:center',
+    s.borderRadius > 0 ? `border-radius:${s.borderRadius}px` : '',
+  ].filter(Boolean).join(';');
+
+  const displaySrc = s.blobUrl
+    ? `local: ${getFilenameFromSrc(s.src)}`
+    : s.src.replace('../', '');
+
+  return `
+<div class="img-card" id="card-${id}">
+  <div class="img-card-header">
+    <div>
+      <div class="img-card-label">${img.label}</div>
+      <div class="img-card-src" id="src-display-${id}">${displaySrc}</div>
+    </div>
+    <button class="btn-reset" data-reset="${id}">Reset</button>
+  </div>
+
+  <div class="img-card-body">
+    <div class="preview-wrap">
+      <div class="preview-container" id="container-${id}" style="${containerCSS}">
+        <img id="img-${id}" src="${getSrcForElement(id)}" alt="${img.label}" style="${imgCSS}" />
+      </div>
+      <!-- Container dimension inputs -->
+      <div class="dim-row">
+        <span class="dim-label">W</span>
+        <input class="dim-input" type="number" min="10" max="1200" step="10"
+          value="${s.cw}" data-dim="${id}" data-axis="w" />
+        <span class="dim-sep">×</span>
+        <span class="dim-label">H</span>
+        <input class="dim-input" type="number" min="10" max="1200" step="10"
+          value="${s.ch}" data-dim="${id}" data-axis="h" />
+        <span class="dim-label" style="margin-left:2px">px</span>
+      </div>
+    </div>
+
+    <div class="controls">
+      <!-- Image source row -->
+      <div class="src-row">
+        <select class="src-select" data-src-sel="${id}">
+          ${buildSelectOptions(s.src)}
+        </select>
+        <button class="btn-browse" data-browse="${id}">Browse…</button>
+        <input type="file" accept="image/*" id="file-${id}" style="display:none" />
+      </div>
+
+      <!-- Tuning controls -->
+      <div class="control-row">
+        <span class="control-label">Scale</span>
+        <input type="range" min="0.5" max="3.0" step="0.05" value="${s.scale}"
+          data-id="${id}" data-prop="scale" />
+        <span class="control-val" id="v-scale-${id}">${parseFloat(s.scale).toFixed(2)}</span>
+      </div>
+      <div class="control-row">
+        <span class="control-label">Pos X</span>
+        <input type="range" min="0" max="100" step="1" value="${s.posX}"
+          data-id="${id}" data-prop="posX" />
+        <span class="control-val" id="v-posx-${id}">${s.posX}%</span>
+      </div>
+      <div class="control-row">
+        <span class="control-label">Pos Y</span>
+        <input type="range" min="0" max="100" step="1" value="${s.posY}"
+          data-id="${id}" data-prop="posY" />
+        <span class="control-val" id="v-posy-${id}">${s.posY}%</span>
+      </div>
+      <div class="control-row">
+        <span class="control-label">Fit</span>
+        <div class="fit-toggle">
+          <button class="fit-btn${s.objectFit === 'contain' ? ' active' : ''}"
+            data-fit="${id}" data-val="contain">contain</button>
+          <button class="fit-btn${s.objectFit === 'cover' ? ' active' : ''}"
+            data-fit="${id}" data-val="cover">cover</button>
+        </div>
+      </div>
+      <div class="control-row">
+        <span class="control-label">Radius</span>
+        <input type="range" min="0" max="50" step="1" value="${s.borderRadius}"
+          data-id="${id}" data-prop="borderRadius" />
+        <span class="control-val" id="v-br-${id}">${s.borderRadius}px</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="css-output">
+    <pre id="css-${id}">${buildCSSHighlighted(id)}</pre>
+    <button class="btn-copy" data-copy="${id}">Copy</button>
+  </div>
+</div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function render() {
+  const pages = new Map();
+  IMAGES.forEach(img => {
+    if (!pages.has(img.page)) pages.set(img.page, new Map());
+    const sections = pages.get(img.page);
+    if (!sections.has(img.section)) sections.set(img.section, []);
+    sections.get(img.section).push(img);
+  });
+
+  let html = '';
+  pages.forEach((sections, page) => {
+    const total = [...sections.values()].reduce((n, arr) => n + arr.length, 0);
+    html += `<div class="page-group">
+      <div class="page-header">
+        <h2>${page}</h2>
+        <span class="page-count">${total} image${total !== 1 ? 's' : ''}</span>
+      </div>`;
+    sections.forEach((images, section) => {
+      html += `<div class="section-divider">${section}</div>`;
+      html += `<div class="cards-grid">`;
+      images.forEach(img => { html += buildCard(img); });
+      html += `</div>`;
+    });
+    html += `</div>`;
+  });
+
+  document.getElementById('app').innerHTML = html;
+  attachEvents();
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// LIVE UPDATE — patch DOM without re-rendering
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function update(id) {
+  const s = state[id];
+
+  const imgEl = document.getElementById(`img-${id}`);
+  if (imgEl) {
+    imgEl.style.transform = `scale(${s.scale})`;
+    imgEl.style.objectFit = s.objectFit;
+    imgEl.style.objectPosition = `${s.posX}% ${s.posY}%`;
+    imgEl.style.borderRadius = s.borderRadius > 0 ? `${s.borderRadius}px` : '';
+  }
+
+  const vs = document.getElementById(`v-scale-${id}`);
+  const vx = document.getElementById(`v-posx-${id}`);
+  const vy = document.getElementById(`v-posy-${id}`);
+  const vb = document.getElementById(`v-br-${id}`);
+  if (vs) vs.textContent = parseFloat(s.scale).toFixed(2);
+  if (vx) vx.textContent = s.posX + '%';
+  if (vy) vy.textContent = s.posY + '%';
+  if (vb) vb.textContent = s.borderRadius + 'px';
+
+  document.querySelectorAll(`[data-fit="${id}"]`).forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.val === s.objectFit);
+  });
+
+  const cssEl = document.getElementById(`css-${id}`);
+  if (cssEl) cssEl.innerHTML = buildCSSHighlighted(id);
+}
+
+function updateSrc(id) {
+  // Swap the img element's src and update header display
+  const s = state[id];
+  const imgEl = document.getElementById(`img-${id}`);
+  if (imgEl) imgEl.src = getSrcForElement(id);
+
+  const disp = document.getElementById(`src-display-${id}`);
+  if (disp) {
+    disp.textContent = s.blobUrl
+      ? `local: ${getFilenameFromSrc(s.src)}`
+      : s.src.replace('../', '');
+  }
+
+  // Update select to reflect current file (only when not a blob)
+  if (!s.blobUrl) {
+    const sel = document.querySelector(`[data-src-sel="${id}"]`);
+    if (sel) sel.value = getFilenameFromSrc(s.src);
+  }
+}
+
+function updateContainer(id) {
+  const s = state[id];
+  const containerEl = document.getElementById(`container-${id}`);
+  if (containerEl) {
+    containerEl.style.width = s.cw + 'px';
+    containerEl.style.height = s.ch + 'px';
+  }
+  // Sync number inputs
+  document.querySelectorAll(`[data-dim="${id}"]`).forEach(inp => {
+    inp.value = inp.dataset.axis === 'w' ? s.cw : s.ch;
+  });
+}
+
+function syncSliders(id) {
+  // Sync all range slider values to current state (after reset or import)
+  document.querySelectorAll(`input[type="range"][data-id="${id}"]`).forEach(slider => {
+    slider.value = state[id][slider.dataset.prop];
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// EVENTS
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function attachEvents() {
+
+  // ── Sliders ──
+  document.querySelectorAll('input[type="range"][data-id]').forEach(slider => {
+    slider.addEventListener('input', e => {
+      const { id, prop } = e.target.dataset;
+      state[id][prop] = parseFloat(e.target.value);
+      update(id);
+      saveToLocalStorage();
+    });
+  });
+
+  // ── Fit toggles ──
+  document.querySelectorAll('[data-fit]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      const id = e.target.dataset.fit;
+      state[id].objectFit = e.target.dataset.val;
+      update(id);
+      saveToLocalStorage();
+    });
+  });
+
+  // ── Reset buttons ──
+  document.querySelectorAll('[data-reset]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      const id = e.target.dataset.reset;
+      const img = IMAGES.find(i => i.id === id);
+
+      // Revoke any existing blob URL
+      if (state[id].blobUrl) {
+        URL.revokeObjectURL(state[id].blobUrl);
+      }
+
+      state[id] = {
+        ...img.defaults,
+        src: img.src,
+        blobUrl: null,
+        cw: img.container.w,
+        ch: img.container.h,
+      };
+
+      syncSliders(id);
+      update(id);
+      updateSrc(id);
+      updateContainer(id);
+      saveToLocalStorage();
+    });
+  });
+
+  // ── Copy buttons ──
+  document.querySelectorAll('[data-copy]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      const id = e.target.dataset.copy;
+      navigator.clipboard.writeText(buildCSS(id)).then(() => {
+        e.target.textContent = 'Copied!';
+        e.target.classList.add('copied');
+        setTimeout(() => {
+          e.target.textContent = 'Copy';
+          e.target.classList.remove('copied');
+        }, 1600);
+      });
+    });
+  });
+
+  // ── Image source dropdown ──
+  document.querySelectorAll('[data-src-sel]').forEach(sel => {
+    sel.addEventListener('change', e => {
+      const id = e.target.dataset.srcSel;
+      const filename = e.target.value;
+      const img = IMAGES.find(i => i.id === id);
+
+      // Revoke any existing blob URL
+      if (state[id].blobUrl) {
+        URL.revokeObjectURL(state[id].blobUrl);
+      }
+
+      // Update src, clear blob, reset controls to defaults
+      state[id].src = `../images/${filename}`;
+      state[id].blobUrl = null;
+      state[id].scale        = img.defaults.scale;
+      state[id].posX         = img.defaults.posX;
+      state[id].posY         = img.defaults.posY;
+      state[id].objectFit    = img.defaults.objectFit;
+      state[id].borderRadius = img.defaults.borderRadius;
+
+      syncSliders(id);
+      update(id);
+      updateSrc(id);
+      saveToLocalStorage();
+    });
+  });
+
+  // ── Browse button ──
+  document.querySelectorAll('[data-browse]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      const id = e.target.dataset.browse;
+      document.getElementById(`file-${id}`).click();
+    });
+  });
+
+  // ── File picker ──
+  document.querySelectorAll('input[type="file"]').forEach(fileInput => {
+    fileInput.addEventListener('change', e => {
+      const id = e.target.id.replace('file-', '');
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const img = IMAGES.find(i => i.id === id);
+
+      // Revoke previous blob
+      if (state[id].blobUrl) URL.revokeObjectURL(state[id].blobUrl);
+
+      const blobUrl = URL.createObjectURL(file);
+
+      // Update src to reflect best-guess canonical path, set blob for display
+      state[id].src    = `../images/${file.name}`;
+      state[id].blobUrl = blobUrl;
+
+      // Reset tuning controls to defaults
+      state[id].scale        = img.defaults.scale;
+      state[id].posX         = img.defaults.posX;
+      state[id].posY         = img.defaults.posY;
+      state[id].objectFit    = img.defaults.objectFit;
+      state[id].borderRadius = img.defaults.borderRadius;
+
+      syncSliders(id);
+      update(id);
+      updateSrc(id);
+      saveToLocalStorage();
+
+      // Update dropdown to match if the file is in the known list
+      const sel = document.querySelector(`[data-src-sel="${id}"]`);
+      if (sel) {
+        const match = KNOWN_IMAGES.find(f => f === file.name);
+        if (match) sel.value = match;
+        // If not in list, dropdown just stays at previous value (that's fine)
+      }
+
+      // Reset file input so the same file can be re-selected
+      e.target.value = '';
+    });
+  });
+
+  // ── Container dimension inputs ──
+  document.querySelectorAll('[data-dim]').forEach(inp => {
+    inp.addEventListener('input', e => {
+      const id = e.target.dataset.dim;
+      const axis = e.target.dataset.axis;
+      const val = Math.max(10, Math.min(1200, parseInt(e.target.value) || 10));
+      if (axis === 'w') state[id].cw = val;
+      else              state[id].ch = val;
+      updateContainer(id);
+      saveToLocalStorage();
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// LOCALSTORAGE PERSISTENCE
+// ═══════════════════════════════════════════════════════════════════════════════
+
+const LS_KEY = 'magnolia-tuner-state-v1';
+
+function saveToLocalStorage() {
+  const toSave = {};
+  IMAGES.forEach(img => {
+    const s = state[img.id];
+    toSave[img.id] = {
+      scale: s.scale, posX: s.posX, posY: s.posY,
+      objectFit: s.objectFit, borderRadius: s.borderRadius,
+      src: s.src, cw: s.cw, ch: s.ch,
+      // blobUrl intentionally excluded — not serializable across reloads
+    };
+  });
+  try { localStorage.setItem(LS_KEY, JSON.stringify(toSave)); } catch(e) {}
+}
+
+function loadFromLocalStorage() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    IMAGES.forEach(img => {
+      const s = saved[img.id];
+      if (!s) return;
+      if (s.scale        !== undefined) state[img.id].scale        = s.scale;
+      if (s.posX         !== undefined) state[img.id].posX         = s.posX;
+      if (s.posY         !== undefined) state[img.id].posY         = s.posY;
+      if (s.objectFit    !== undefined) state[img.id].objectFit    = s.objectFit;
+      if (s.borderRadius !== undefined) state[img.id].borderRadius = s.borderRadius;
+      if (s.src          !== undefined) state[img.id].src          = s.src;
+      if (s.cw           !== undefined) state[img.id].cw           = s.cw;
+      if (s.ch           !== undefined) state[img.id].ch           = s.ch;
+    });
+  } catch(e) {}
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// EXPORT / IMPORT
+// ═══════════════════════════════════════════════════════════════════════════════
+
+let _saveHandle = null;
+
+function buildConfigJSON() {
+  const out = { images: {} };
+  IMAGES.forEach(img => {
+    const s = state[img.id];
+    const key = getSrcForExport(img.id);
+    out.images[key] = {
+      scale:            parseFloat(parseFloat(s.scale).toFixed(2)),
+      objectPositionX:  s.posX,
+      objectPositionY:  s.posY,
+      objectFit:        s.objectFit,
+      borderRadius:     s.borderRadius,
+      containerWidth:   s.cw,
+      containerHeight:  s.ch,
+      page:             img.page,
+      section:          img.section,
+      id:               img.id,
+    };
+  });
+  return JSON.stringify(out, null, 2);
+}
+
+function flashSaved() {
+  const btn = document.getElementById('btn-export');
+  btn.textContent = 'Saved ✓';
+  btn.classList.add('saved');
+  setTimeout(() => {
+    btn.textContent = 'Save Config';
+    btn.classList.remove('saved');
+  }, 1800);
+}
+
+function downloadFallback(json) {
+  const url = URL.createObjectURL(new Blob([json], { type: 'application/json' }));
+  Object.assign(document.createElement('a'), {
+    href: url, download: 'magnolia-image-config.json'
+  }).click();
+  URL.revokeObjectURL(url);
+}
+
+document.getElementById('btn-export').addEventListener('click', async () => {
+  const json = buildConfigJSON();
+
+  if (!window.showSaveFilePicker) {
+    downloadFallback(json);
+    return;
+  }
+
+  try {
+    if (!_saveHandle) {
+      _saveHandle = await window.showSaveFilePicker({
+        suggestedName: 'magnolia-image-config.json',
+        startIn: 'desktop',
+        types: [{ description: 'JSON Config', accept: { 'application/json': ['.json'] } }]
+      });
+    }
+    const writable = await _saveHandle.createWritable();
+    await writable.write(json);
+    await writable.close();
+    flashSaved();
+  } catch (e) {
+    if (e.name === 'AbortError') return; // user cancelled picker — do nothing
+    _saveHandle = null;                  // handle gone, reset for next time
+    downloadFallback(json);
+  }
+});
+
+document.getElementById('btn-import-open').addEventListener('click', () => {
+  document.getElementById('import-modal').classList.add('open');
+});
+
+document.getElementById('btn-modal-cancel').addEventListener('click', () => {
+  document.getElementById('import-modal').classList.remove('open');
+});
+
+document.getElementById('btn-modal-apply').addEventListener('click', () => {
+  try {
+    const json = JSON.parse(document.getElementById('import-textarea').value);
+    if (!json.images) throw new Error('Missing "images" key');
+
+    Object.entries(json.images).forEach(([src, vals]) => {
+      // Match by id first (most reliable), then by path
+      const img = IMAGES.find(i =>
+        i.id === vals.id || i.src.replace('../', '') === src
+      );
+      if (!img) return;
+      const id = img.id;
+
+      if (vals.scale           !== undefined) state[id].scale        = vals.scale;
+      if (vals.objectPositionX !== undefined) state[id].posX         = vals.objectPositionX;
+      if (vals.objectPositionY !== undefined) state[id].posY         = vals.objectPositionY;
+      if (vals.objectFit       !== undefined) state[id].objectFit    = vals.objectFit;
+      if (vals.borderRadius    !== undefined) state[id].borderRadius = vals.borderRadius;
+      if (vals.containerWidth  !== undefined) state[id].cw           = vals.containerWidth;
+      if (vals.containerHeight !== undefined) state[id].ch           = vals.containerHeight;
+
+      // Restore image path if different from default
+      if (src && src !== img.src.replace('../', '')) {
+        if (state[id].blobUrl) URL.revokeObjectURL(state[id].blobUrl);
+        state[id].src    = '../' + src;
+        state[id].blobUrl = null;
+      }
+    });
+
+    document.getElementById('import-modal').classList.remove('open');
+    saveToLocalStorage();
+    render(); // full re-render to sync all sliders, selects, and dim inputs
+  } catch (err) {
+    alert('Invalid JSON: ' + err.message);
+  }
+});
+
+document.getElementById('import-modal').addEventListener('click', e => {
+  if (e.target.id === 'import-modal')
+    document.getElementById('import-modal').classList.remove('open');
+});
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════════════════════
+loadFromLocalStorage();
+render();
+</script>
+</body>
+</html>
