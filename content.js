@@ -24,7 +24,7 @@ window.CONTENT = {
     "hero": {
       "title": "Better grades.",
       "titleItalic": "And a better way to get them.",
-      "subtitle": "Magnolia Education offers personalized tutoring, mock exams, study skills coaching, and prep cohorts for high school students in Toronto — Grades 8–12.",
+      "subtitle": "Magnolia Education offers personalized math tutoring, mock exams, study skills coaching, and prep cohorts for high school students Grades 8–12.",
       "ctaPrimaryLabel": "Book a Consultation",
       "ctaPrimaryHref": "https://calendly.com/rachit-chakerwarti/call",
       "ctaSecondaryLabel": "Explore Tutoring",
@@ -33,9 +33,9 @@ window.CONTENT = {
     "founder": {
       "label": "From the Founder",
       "title": "Hi, I'm Rachit.",
-      "para1": "I started Magnolia Education because I believe every student deserves a tutor who genuinely loves their subject and cares about the whole person — not just the grade.",
-      "para2": "I grew up struggling with math anxiety, and eventually found that learning only clicked when I felt calm, curious, and truly supported. That insight shapes everything we do here.",
-      "para3": "Our tutors are handpicked for their warmth, patience, and deep subject knowledge. We don’t just explain concepts — we build the confidence and study skills students carry for life.",
+      "para1": "I started Magnolia Education because I believe that with the right tools every student can learn math, and more importantly what math teaches you: learning how to learn, and how to do hard things in life.",
+      "para2": "I've struggled and I've triumphed. I know the gap and what it takes to get from one place to another. ",
+      "para3": "Our tutors are handpicked for their warmth, patience, and deep subject knowledge. We don’t just explain concepts, we build the confidence and study skills students carry for life.",
       "principles": [
         {
           "title": "Seva",
@@ -58,19 +58,19 @@ window.CONTENT = {
     "services": {
       "label": "What We Offer",
       "title": "Everything a student needs to thrive.",
-      "subtitle": "From foundational math to essay writing to exam-day nerves — we’ve got it covered.",
+      "subtitle": "From tutoring, to exam prep, study systems, and getting ahead of the next course, we've got something to bridge the gaps along the math journey.",
       "items": [
         {
-          "tag": "1-on-1 Sessions",
+          "tag": "",
           "title": "Tutoring",
-          "body": "Personalized math and English tutoring for Grades 8–12. Sessions with Bitpaper, our interactive digital whiteboard. Homework help, mindfulness openers, and concept mastery.",
+          "body": "Personalized math tutoring for Grades 8–12. Homework help, mindfulness openers, and concept mastery, integrated with study systems.",
           "linkLabel": "Learn more →",
           "linkHref": "tutoring.html",
           "imgSrc": "images/MAGNOLIATREE.PNG",
           "imgAlt": "Students studying under a magnolia tree"
         },
         {
-          "tag": "Academic Skills",
+          "tag": "",
           "title": "Study Skills",
           "body": "The Three Review System, Pomodoro time-blocking, homework guidelines, and goal-setting. The habits that separate students who work hard from students who study smart.",
           "linkLabel": "Learn more →",
@@ -79,7 +79,7 @@ window.CONTENT = {
           "imgAlt": "Student managing study schedule"
         },
         {
-          "tag": "In-Person · Toronto",
+          "tag": "",
           "title": "Mock Exams",
           "body": "Full-length mock exams under real conditions. Two locations across Toronto. Detailed worked solutions, a mindfulness opening, and a celebration cookie for every student.",
           "linkLabel": "Learn more →",
@@ -88,9 +88,9 @@ window.CONTENT = {
           "imgAlt": "Mock exam with worked solutions"
         },
         {
-          "tag": "Small Groups · Toronto",
+          "tag": "",
           "title": "Prep Cohorts",
-          "body": "Small-group prep sessions before each semester. Cover critical concepts, get ahead of the material, and walk into class on day one already confident.",
+          "body": "Small-group prep sessions before each semester. Cover critical concepts from last year, get ahead of upcoming material, get access to beautiful study notes and walk into class on day one already confident.",
           "linkLabel": "Learn more →",
           "linkHref": "prep-cohorts.html",
           "imgSrc": "images/2Bitpaper.png",
@@ -117,7 +117,7 @@ window.CONTENT = {
           "body": "We believe in giving back to the communities that shape us. Learning is a gift — and we treat it that way."
         },
         {
-          "icon": "\u2605",
+          "icon": "★",
           "title": "Independence",
           "body": "Our end goal is for students to outgrow us. Every session builds habits, frameworks, and self-belief that last beyond high school."
         },
@@ -133,7 +133,7 @@ window.CONTENT = {
       "title": "300+ students taught over the years. Real results.",
       "items": [
         {
-          "quote": "Rachit sees the whole child, and their unique situation, and works hard to find commonalities to bring out the best in his students. His teaching includes time management skills, discussing healthy life decisions, and uses a kid\u2019s interests to bring math to life. I am very grateful!",
+          "quote": "Rachit sees the whole child, and their unique situation, and works hard to find commonalities to bring out the best in his students. His teaching includes time management skills, discussing healthy life decisions, and uses a kid’s interests to bring math to life. I am very grateful!",
           "author": "ANNABEL COPE",
           "role": "Parent"
         },
@@ -143,7 +143,7 @@ window.CONTENT = {
           "role": "Student"
         },
         {
-          "quote": "After searching for a few years for the right type of math support for our teenage son, we were so relieved to meet Rachit. His approach to teaching is a perfect combination of accountability, understanding and patience. We have seen our son\u2019s confidence soar over the past two years.",
+          "quote": "After searching for a few years for the right type of math support for our teenage son, we were so relieved to meet Rachit. His approach to teaching is a perfect combination of accountability, understanding and patience. We have seen our son’s confidence soar over the past two years.",
           "author": "KRISTY FLETCHER",
           "role": "Parent"
         },
@@ -190,7 +190,7 @@ window.CONTENT = {
     "hero": {
       "eyebrow": "Grades 8–12 · Math & More",
       "title": "Weekly tutoring for lifelong learning.",
-      "subtitle": "One-on-one or small groups of 1:3, our tutoring teaches students how to learn, so they can move through life with confidence and independence.",
+      "subtitle": "One-on-one or small groups, our tutoring teaches students how to learn, so they can move through life with confidence and independence.",
       "ctaLabel": "Book a Consultation",
       "ctaHref": "https://calendly.com/rachit-chakerwarti/call"
     },
@@ -268,7 +268,7 @@ window.CONTENT = {
       "mindfulness": {
         "title": "Mindfulness",
         "body1": "Exams, a tough math problem, or just opening up their algebra book—for some kids, it doesn’t take much to create unwanted, unmanageable, and stressful feelings.",
-        "body2": "We use an approach focused on mindfulness and full-body calm to transform anxious feelings into curious ones, so students can move from a reactive state of stress to a regulated, problem-solving approach."
+        "body2": "We use an approach focused on mindfulness to transform anxious feelings into curious ones, so students can move from a reactive state of stress to a regulated, problem-solving approach."
       }
     },
     "reviews": {
@@ -305,14 +305,46 @@ window.CONTENT = {
       "label": "What Students & Parents Say",
       "title": "Real results, real voices.",
       "items": [
-        { "quote": "Working with Rachit for ~6 years. He\u2019s helped me succeed in middle and high school math. Previously difficult topics seem easy.", "author": "Simon Burn", "role": "Student" },
-        { "quote": "Rachit has a way of breaking down complex concepts into simpler, more digestible parts, making math feel accessible and even enjoyable. He is patient, approachable, and genuinely cares about his students\u2019 progress.", "author": "Priti Jain", "role": "Parent" },
-        { "quote": "I truly understand concepts in math to the best degree, compared to other tutors I have tried in the past.", "author": "Nova Carver-Cook", "role": "Student" },
-        { "quote": "One of my favourite things is how Rachit is able to adapt to my learning style. He never made me feel rushed to understand anything.", "author": "Will Crosland", "role": "Student" },
-        { "quote": "I can\u2019t say enough good things. One of my sons went from an 80% average to 98% on his final Grade 12 Advanced Functions exam.", "author": "Sylvia Apostolidis", "role": "Parent" },
-        { "quote": "Rachit is so kind and patient. He goes at the pace of his students and really helps with math anxiety.", "author": "Sarah-Jane", "role": "Parent" },
-        { "quote": "The one-on-one style eliminates any pressure from other students. It creates a safe environment where learning has never been easier.", "author": "Joshua Sutton", "role": "Student" },
-        { "quote": "Rachit has helped build confidence and independence while providing a supportive environment that pushes my kids beyond what they thought they were capable of.", "author": "Sarah Green", "role": "Parent" }
+        {
+          "quote": "Working with Rachit for ~6 years. He’s helped me succeed in middle and high school math. Previously difficult topics seem easy.",
+          "author": "Simon Burn",
+          "role": "Student"
+        },
+        {
+          "quote": "Rachit has a way of breaking down complex concepts into simpler, more digestible parts, making math feel accessible and even enjoyable. He is patient, approachable, and genuinely cares about his students’ progress.",
+          "author": "Priti Jain",
+          "role": "Parent"
+        },
+        {
+          "quote": "I truly understand concepts in math to the best degree, compared to other tutors I have tried in the past.",
+          "author": "Nova Carver-Cook",
+          "role": "Student"
+        },
+        {
+          "quote": "One of my favourite things is how Rachit is able to adapt to my learning style. He never made me feel rushed to understand anything.",
+          "author": "Will Crosland",
+          "role": "Student"
+        },
+        {
+          "quote": "I can’t say enough good things. One of my sons went from an 80% average to 98% on his final Grade 12 Advanced Functions exam.",
+          "author": "Sylvia Apostolidis",
+          "role": "Parent"
+        },
+        {
+          "quote": "Rachit is so kind and patient. He goes at the pace of his students and really helps with math anxiety.",
+          "author": "Sarah-Jane",
+          "role": "Parent"
+        },
+        {
+          "quote": "The one-on-one style eliminates any pressure from other students. It creates a safe environment where learning has never been easier.",
+          "author": "Joshua Sutton",
+          "role": "Student"
+        },
+        {
+          "quote": "Rachit has helped build confidence and independence while providing a supportive environment that pushes my kids beyond what they thought they were capable of.",
+          "author": "Sarah Green",
+          "role": "Parent"
+        }
       ]
     }
   },
@@ -442,13 +474,41 @@ window.CONTENT = {
       "label": "What Families Say",
       "title": "The difference it makes.",
       "items": [
-        { "quote": "The mock exam helped me understand where I needed to study more, while also helping my confidence going into the exam.", "author": "Simon Burn", "role": "Student" },
-        { "quote": "A very good reflection of the actual exam \u2014 my kids increased their confidence and focused their studying on specific topics.", "author": "Sylvia Apostolidis", "role": "Parent" },
-        { "quote": "The mock exam is really useful to evaluate what skills you are comfortable with and what skills you need work on.", "author": "Marco Chirigoni", "role": "Student" },
-        { "quote": "I especially appreciate the breathing exercise at the start of the exam.", "author": "Fatema Khan", "role": "Parent" },
-        { "quote": "It took a lot of the nervousness away from exam day. The mock exams are extremely valuable \u2014 I believe they are essential.", "author": "Joshua Sutton", "role": "Student" },
-        { "quote": "The mock exam is a wonderful way to understand readiness levels and is a very unique offering from a tutoring partner.", "author": "Sarah Green", "role": "Parent" },
-        { "quote": "It helped relieve some anxiety around the main event.", "author": "Melissa Bubb-Clarke", "role": "Parent" }
+        {
+          "quote": "The mock exam helped me understand where I needed to study more, while also helping my confidence going into the exam.",
+          "author": "Simon Burn",
+          "role": "Student"
+        },
+        {
+          "quote": "A very good reflection of the actual exam — my kids increased their confidence and focused their studying on specific topics.",
+          "author": "Sylvia Apostolidis",
+          "role": "Parent"
+        },
+        {
+          "quote": "The mock exam is really useful to evaluate what skills you are comfortable with and what skills you need work on.",
+          "author": "Marco Chirigoni",
+          "role": "Student"
+        },
+        {
+          "quote": "I especially appreciate the breathing exercise at the start of the exam.",
+          "author": "Fatema Khan",
+          "role": "Parent"
+        },
+        {
+          "quote": "It took a lot of the nervousness away from exam day. The mock exams are extremely valuable — I believe they are essential.",
+          "author": "Joshua Sutton",
+          "role": "Student"
+        },
+        {
+          "quote": "The mock exam is a wonderful way to understand readiness levels and is a very unique offering from a tutoring partner.",
+          "author": "Sarah Green",
+          "role": "Parent"
+        },
+        {
+          "quote": "It helped relieve some anxiety around the main event.",
+          "author": "Melissa Bubb-Clarke",
+          "role": "Parent"
+        }
       ]
     }
   },
@@ -504,7 +564,7 @@ window.CONTENT = {
       "title": "The Pomodoro Method.",
       "body1": "Work for 25 focused minutes. Take a 5-minute break. Repeat 4 times, then take a longer break.",
       "body2": "This isn’t just a productivity trick — it’s how your brain consolidates learning. Short, intense bursts with recovery time outperform marathon cramming sessions every time.",
-      "tip": "Assign specific subjects to specific blocks. “I’m studying math from 7–8 pm” is far more effective than “I’m studying tonight.”"
+      "tip": "Assign specific subjects to specific blocks. “I’m doing two 25 min study blocks in math from 7–8 pm” is far more effective than “I’m studying tonight.”"
     },
     "homework": {
       "label": "Homework Strategy",
@@ -544,11 +604,31 @@ window.CONTENT = {
       "label": "What Families Say",
       "title": "The systems that stick.",
       "items": [
-        { "quote": "The three review system helped me a lot once I implemented. It is much more efficient and effective than only reviewing before a test.", "author": "Simon Burn", "role": "Student" },
-        { "quote": "The 3 Review System has been a huge success for our daughter. It has really helped her learn better and develop study notes as the semester progressed.", "author": "Dave Cook", "role": "Parent" },
-        { "quote": "Marking his own homework has encouraged independence and an appreciation for process.", "author": "Fatema Khan", "role": "Parent" },
-        { "quote": "I find I enjoy math so much more since I started tutoring. I can look at it as having fun and solving problems versus the mark.", "author": "Jocelyn Landry", "role": "Student" },
-        { "quote": "Thanks to Rachit\u2019s system and coaching, our son\u2019s study habits continue to improve.", "author": "Melissa Bubb-Clarke", "role": "Parent" }
+        {
+          "quote": "The three review system helped me a lot once I implemented. It is much more efficient and effective than only reviewing before a test.",
+          "author": "Simon Burn",
+          "role": "Student"
+        },
+        {
+          "quote": "The 3 Review System has been a huge success for our daughter. It has really helped her learn better and develop study notes as the semester progressed.",
+          "author": "Dave Cook",
+          "role": "Parent"
+        },
+        {
+          "quote": "Marking his own homework has encouraged independence and an appreciation for process.",
+          "author": "Fatema Khan",
+          "role": "Parent"
+        },
+        {
+          "quote": "I find I enjoy math so much more since I started tutoring. I can look at it as having fun and solving problems versus the mark.",
+          "author": "Jocelyn Landry",
+          "role": "Student"
+        },
+        {
+          "quote": "Thanks to Rachit’s system and coaching, our son’s study habits continue to improve.",
+          "author": "Melissa Bubb-Clarke",
+          "role": "Parent"
+        }
       ]
     }
   },
@@ -666,7 +746,9 @@ window.CONTENT = {
         "id": "rachit",
         "name": "Rachit Chakerwarti",
         "role": "Founder & Lead Tutor",
-        "subjects": ["Mathematics"],
+        "subjects": [
+          "Mathematics"
+        ],
         "photo": "images/13portrait.png",
         "photoPosition": "center top",
         "founder": true,
@@ -677,7 +759,10 @@ window.CONTENT = {
         "id": "benjamin-l",
         "name": "Benjamin Lappalainen",
         "role": "Tutor",
-        "subjects": ["Physics", "Mathematics"],
+        "subjects": [
+          "Physics",
+          "Mathematics"
+        ],
         "photo": "images/Benjamin Lappalainen.jpg",
         "founder": false,
         "bio": "I completed my Bachelor of Applied Science degree in Engineering Science (Aerospace specialization) at the University of Toronto. I’ve taught at the University of Toronto’s DEEP Leadership Camp and given talks and workshops on astrophotography for the Royal Astronomical Society of Canada’s Toronto chapter. I am deeply passionate about teaching and learning as a lifelong exercise. I believe that anyone can learn anything given the right environment and support, and I strive to work with my students’ strengths to develop techniques and patterns of learning that can be applied universally."
@@ -686,7 +771,11 @@ window.CONTENT = {
         "id": "gladys",
         "name": "Gladys Lou",
         "role": "Tutor",
-        "subjects": ["Mathematics", "Chemistry", "Biology"],
+        "subjects": [
+          "Mathematics",
+          "Chemistry",
+          "Biology"
+        ],
         "photo": "images/Gladys Lou.jpg",
         "founder": false,
         "bio": "I completed my Bachelor of Arts degree in Psychology at the University of Toronto and am currently pursuing my Master of Arts at Bard College in New York. I have worked as a Teaching Assistant for undergraduate courses and have experience tutoring middle and high school students. I am passionate about teaching and strive to provide personalized support and adopt methods tailored to each student’s needs. I believe once students understand the underlying concepts and logic, they can solve any problems with confidence."
@@ -695,7 +784,11 @@ window.CONTENT = {
         "id": "callum",
         "name": "Callum Camazzola",
         "role": "Tutor",
-        "subjects": ["Math", "Chemistry", "Physics"],
+        "subjects": [
+          "Math",
+          "Chemistry",
+          "Physics"
+        ],
         "photo": "images/Callum Camazzola.jpg",
         "founder": false,
         "bio": "I am in my second year at the University of Waterloo, pursuing a bachelor’s degree in Management Engineering. During my time in high school, I struggled with science a lot early on. I know how hard it can be to excel in a subject that’s ‘not my subject’ or that I’m ‘not built for.’ Throughout my time in high school and university, though, I’ve discovered that the ability to excel in any given subject does not come from some pre-programmed aptitude for the subject. It comes from the ability to leverage curiosity into motivation and then use that motivation to put in the work required to succeed. I aim to teach in a way that fosters this curiosity and motivation to make putting in the work a little bit easier."
@@ -704,7 +797,10 @@ window.CONTENT = {
         "id": "benjamin-g",
         "name": "Benjamin Gladney",
         "role": "Tutor",
-        "subjects": ["Math", "Physics"],
+        "subjects": [
+          "Math",
+          "Physics"
+        ],
         "photo": "images/Benjamin Gladney.jpg",
         "founder": false,
         "bio": "Hi, my name is Ben! I’m in my second year at the University of Waterloo studying Data Science. I love software development and machine learning, but math has always been my favourite. My academic success has not come naturally, so I am a strong believer that hard work beats talent every time."
@@ -713,7 +809,11 @@ window.CONTENT = {
         "id": "jess",
         "name": "Jess Nash",
         "role": "Tutor",
-        "subjects": ["Chemistry", "Biology", "Mathematics"],
+        "subjects": [
+          "Chemistry",
+          "Biology",
+          "Mathematics"
+        ],
         "photo": "images/Jess Nash.jpg",
         "founder": false,
         "bio": "I completed my Bachelor of Science in Biochemistry at the University of Toronto. I've worked as a freelance science and math tutor, a teaching assistant at the University of Toronto, and a scientific researcher and communicator at Yale University. I love sharing my passion for nature and science. I believe that, with attention to their unique strengths and interests, every student can find the motivation and confidence they need to succeed in science learning—and even come to enjoy the challenges along the way!"
@@ -722,7 +822,9 @@ window.CONTENT = {
         "id": "gavin",
         "name": "Gavin Burn",
         "role": "Tutor",
-        "subjects": ["Mathematics"],
+        "subjects": [
+          "Mathematics"
+        ],
         "photo": "images/Gavin Burn.jpg",
         "founder": false,
         "bio": "I am currently in my second year at the University of Waterloo, where I am pursuing a Bachelor of Computer Engineering. I am a former student of Rachit's, and I have experienced firsthand the impact quality tutoring can have on a student's performance. When Rachit first started tutoring me, I had a 33 in Grade 9 Math, and by Grade 12, I had a 100 in Advanced Functions. I aim to develop determination and critical thinking in students, which will help them succeed in any academic discipline."
@@ -736,41 +838,55 @@ window.CONTENT = {
     }
   },
   "story": {
-    "meta": { "title": "Our Story | Magnolia Education" },
+    "meta": {
+      "title": "Our Story | Magnolia Education"
+    },
     "hero": {
       "eyebrow": "Our Story",
       "title": "Learning from both sides.",
-      "subtitle": "Magnolia was built by people who know what it means to struggle \u2014 and what it takes to turn that around."
+      "subtitle": "Magnolia was built by people who know what it means to struggle — and what it takes to turn that around."
     },
     "rachit": {
       "label": "The Founder",
       "title": "Not always the student I wanted to be.",
-      "para1": "I wasn\u2019t always the confident, capable student I became. Early on, I struggled \u2014 with math, with anxiety, with the feeling that school was happening to me rather than for me.",
-      "para2": "What changed wasn\u2019t my intelligence. It was finding a way to learn that actually worked for my brain \u2014 building habits, slowing down, and discovering that math has a real beauty to it once you stop being afraid of it.",
-      "para3": "That experience \u2014 of struggling and then thriving \u2014 is the core of everything Magnolia does. I built this because I genuinely believe every student can find their version of that click. They just need the right support."
+      "para1": "I wasn’t always the confident, capable student I became. Early on, I struggled — with math, with anxiety, with the feeling that school was happening to me rather than for me.",
+      "para2": "What changed wasn’t my intelligence. It was finding a way to learn that actually worked for my brain — building habits, slowing down, and discovering that math has a real beauty to it once you stop being afraid of it.",
+      "para3": "That experience — of struggling and then thriving — is the core of everything Magnolia does. I built this because I genuinely believe every student can find their version of that click. They just need the right support."
     },
     "philosophy": {
       "label": "Our Philosophy",
       "title": "Tutors should become useless.",
-      "body": "That sounds counterintuitive, but it\u2019s the truest thing I can say about what we do. Our goal is always independence. Every technique we teach, every habit we build, every moment of insight \u2014 it all points toward a student who doesn\u2019t need us anymore. That\u2019s the win."
+      "body": "That sounds counterintuitive, but it’s the truest thing I can say about what we do. Our goal is always independence. Every technique we teach, every habit we build, every moment of insight — it all points toward a student who doesn’t need us anymore. That’s the win."
     },
     "values": {
       "label": "What We Believe",
       "items": [
-        { "icon": "\ud83c\udf38", "title": "Seva \u2014 Service", "body": "An act of selfless service without expectation. We offer pro bono tutoring spots to students who need them, because access to quality education shouldn\u2019t depend on financial privilege." },
-        { "icon": "🧭", "title": "Independence", "body": "We teach students how to learn \u2014 not just what to learn. Every tool we give is designed to make students self-sufficient, long after our sessions end." },
-        { "icon": "\u2728", "title": "The Beauty of Math", "body": "Math isn\u2019t a set of rules to memorize. It\u2019s a language with elegance and logic. When students stop being afraid of it and start seeing its structure, something shifts \u2014 and that shift changes everything." }
+        {
+          "icon": "🌸",
+          "title": "Seva — Service",
+          "body": "An act of selfless service without expectation. We offer pro bono tutoring spots to students who need them, because access to quality education shouldn’t depend on financial privilege."
+        },
+        {
+          "icon": "🧭",
+          "title": "Independence",
+          "body": "We teach students how to learn — not just what to learn. Every tool we give is designed to make students self-sufficient, long after our sessions end."
+        },
+        {
+          "icon": "✨",
+          "title": "The Beauty of Math",
+          "body": "Math isn’t a set of rules to memorize. It’s a language with elegance and logic. When students stop being afraid of it and start seeing its structure, something shifts — and that shift changes everything."
+        }
       ]
     },
     "gavin": {
       "label": "Proof It Works",
       "title": "From 33% to 100%.",
-      "body1": "Gavin Burn was once a Magnolia student. He came in struggling with Grade 9 Math \u2014 a 33%. Through tutoring, the Three Review System, and a lot of hard work, he ended his high school career with 100% in Grade 12 Advanced Functions.",
-      "body2": "He\u2019s now a Computer Engineering student at the University of Waterloo, and a Magnolia tutor himself. His story isn\u2019t an exception \u2014 it\u2019s what we work toward with every student we teach."
+      "body1": "Gavin Burn was once a Magnolia student. He came in struggling with Grade 9 Math — a 33%. Through tutoring, the Three Review System, and a lot of hard work, he ended his high school career with 100% in Grade 12 Advanced Functions.",
+      "body2": "He’s now a Computer Engineering student at the University of Waterloo, and a Magnolia tutor himself. His story isn’t an exception — it’s what we work toward with every student we teach."
     },
     "cta": {
-      "title": "Let\u2019s write your student\u2019s story.",
-      "body": "Start with a free 30-minute consultation. No commitment \u2014 just a conversation.",
+      "title": "Let’s write your student’s story.",
+      "body": "Start with a free 30-minute consultation. No commitment — just a conversation.",
       "primaryLabel": "Book a Consultation",
       "primaryHref": "https://calendly.com/rachit-chakerwarti/call",
       "secondaryLabel": "Email Us",
@@ -778,10 +894,12 @@ window.CONTENT = {
     }
   },
   "contact": {
-    "meta": { "title": "Contact | Magnolia Education" },
+    "meta": {
+      "title": "Contact | Magnolia Education"
+    },
     "hero": {
-      "title": "Let\u2019s talk.",
-      "subtitle": "Book a consultation call and we\u2019ll find the right fit for your student."
+      "title": "Let’s talk.",
+      "subtitle": "Book a consultation call and we’ll find the right fit for your student."
     },
     "cta": {
       "label": "Book a Consultation",
