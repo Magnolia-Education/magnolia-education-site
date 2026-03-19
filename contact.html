@@ -313,7 +313,7 @@
   <div class="contact-form-inner reveal">
     <h2>Send us a message</h2>
     <p class="form-subtitle">Have a question? We'll get back to you within one business day.</p>
-    <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+    <form class="contact-form" action="/contact.html" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
       <input type="hidden" name="form-name" value="contact" />
       <p style="display:none"><label>Don't fill this out: <input name="bot-field" /></label></p>
       <div class="form-field">
@@ -487,19 +487,20 @@
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     const formData = new FormData(form);
-    fetch('/', {
+    const postUrl = form.getAttribute('action') || window.location.pathname;
+    fetch(postUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams(formData).toString()
-    }).then(function () {
+    }).then(function (response) {
+      if (!response.ok) { throw new Error('Submission failed'); }
       const wrapper = form.closest('.contact-form-inner');
       wrapper.innerHTML = '<div class="form-confirmation">' +
         '<h3>Message sent!</h3>' +
         '<p>Thanks for reaching out. We\'ll be in touch within one business day.</p>' +
         '</div>';
     }).catch(function () {
-      // Fall back to native submit if fetch fails
-      form.submit();
+      alert('Something went wrong. Please email us at hello@magnolia-education.com');
     });
   });
 })();
