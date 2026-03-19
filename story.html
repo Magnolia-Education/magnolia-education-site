@@ -2,6 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Meet Rachit Chakerwarti, founder of Magnolia Education. Learn about our tutoring philosophy and why personalized, mindful learning works for Toronto students." />
   <meta name="keywords" content="about Magnolia Education, Rachit Chakerwarti, tutoring philosophy, math education Toronto, mindful learning, high school tutoring story" />
@@ -319,7 +324,6 @@
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-text reveal">
-      <p class="hero-eyebrow" id="st-hero-eyebrow"></p>
       <h1 class="hero-title" id="st-hero-title"></h1>
       <p class="hero-subtitle" id="st-hero-subtitle"></p>
     </div>
@@ -344,7 +348,6 @@
       </div>
     </div>
     <div class="story-text reveal">
-      <p class="section-label" id="st-rachit-label"></p>
       <h2 class="section-title" id="st-rachit-title"></h2>
       <p id="st-rachit-p1"></p>
       <p id="st-rachit-p2"></p>
@@ -450,12 +453,10 @@
   document.title = S.meta.title;
 
   // Hero
-  setText('st-hero-eyebrow', S.hero.eyebrow);
   setText('st-hero-title', S.hero.title);
   setText('st-hero-subtitle', S.hero.subtitle);
 
   // Rachit
-  setText('st-rachit-label', S.rachit.label);
   setText('st-rachit-title', S.rachit.title);
   setText('st-rachit-p1', S.rachit.para1);
   setText('st-rachit-p2', S.rachit.para2);
