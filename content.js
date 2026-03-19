@@ -35,7 +35,25 @@ window.CONTENT = {
       "title": "Hi, I'm Rachit.",
       "para1": "I started Magnolia Education because I believe every student deserves a tutor who genuinely loves their subject and cares about the whole person — not just the grade.",
       "para2": "I grew up struggling with math anxiety, and eventually found that learning only clicked when I felt calm, curious, and truly supported. That insight shapes everything we do here.",
-      "para3": "Our tutors are handpicked for their warmth, patience, and deep subject knowledge. We don’t just explain concepts — we build the confidence and study skills students carry for life."
+      "para3": "Our tutors are handpicked for their warmth, patience, and deep subject knowledge. We don’t just explain concepts — we build the confidence and study skills students carry for life.",
+      "principles": [
+        {
+          "title": "Seva",
+          "body": "Service without expectation. We believe in giving back to the communities that shape us."
+        },
+        {
+          "title": "Independence",
+          "body": "Our goal is to make ourselves unnecessary. Students learn to learn."
+        },
+        {
+          "title": "Mindfulness",
+          "body": "Every session includes a calming technique alongside the curriculum."
+        },
+        {
+          "title": "Beauty",
+          "body": "We find elegance in math and craft in writing — learning as joy."
+        }
+      ]
     },
     "services": {
       "label": "What We Offer",
@@ -152,6 +170,12 @@ window.CONTENT = {
       "primaryLabel": "Book a Consultation",
       "primaryHref": "https://calendly.com/rachit-chakerwarti/call"
     },
+    "email": {
+      "title": "Study tips & resources, monthly.",
+      "body": "Join 200+ families receiving our newsletter — math strategies, essay frameworks, mindfulness techniques, and early access to mock exam spots.",
+      "placeholder": "Your email address",
+      "button": "Subscribe"
+    },
     "footer": {
       "tagline": "Personalized tutoring and exam prep for high school students in Grades 8–12. Math, science, and the skills to learn anything.",
       "quote": "“Better grades. And a better way to get them.”",
@@ -246,6 +270,30 @@ window.CONTENT = {
         "body1": "Exams, a tough math problem, or just opening up their algebra book—for some kids, it doesn’t take much to create unwanted, unmanageable, and stressful feelings.",
         "body2": "We use an approach focused on mindfulness and full-body calm to transform anxious feelings into curious ones, so students can move from a reactive state of stress to a regulated, problem-solving approach."
       }
+    },
+    "reviews": {
+      "label": "Straight-A Reviews",
+      "title": "Here’s what parents and students have to say about learning with Magnolia Education.",
+      "items": [
+        {
+          "heading": "“Completely judgement-free zone”",
+          "quote": "My experience with one-on-one tutoring through Magnolia Tutoring has been excellent! I feel extremely comfortable every session and have absolutely no second thoughts about asking questions because of the open environment during these sessions. The tutoring is emphasized for my benefit and is a completely judgement-free zone, allowing me to learn well. I am taught mathematical concepts in an easy way to understand and apply.",
+          "author": "Charlotte Bolan",
+          "role": "Student"
+        },
+        {
+          "heading": "“Helps with math anxiety”",
+          "quote": "Rachit is so kind and patient. He goes at his students’ pace and helps with math anxiety. I’ve seen such an improvement in my daughter’s math grade and her anxiety around math.",
+          "author": "Sarah-Jane",
+          "role": "Parent"
+        },
+        {
+          "heading": "“Can’t say enough good things”",
+          "quote": "I can’t say enough good things about the quality of the one-on-one math tutoring at Magnolia Education. Rachit knows how to teach, deeply respects where each student is, and provides what they need. As a parent, I appreciated the updates and invitation to reach out anytime. His response was always timely and professional. Both my boys enjoy the lessons with Rachit and are so pleased with their success with his teaching.",
+          "author": "Sylvia Apostolidis",
+          "role": "Parent"
+        }
+      ]
     },
     "cta": {
       "title": "Get in touch.",
