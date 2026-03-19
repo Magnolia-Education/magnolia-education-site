@@ -123,11 +123,6 @@
       display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
     }
     .hero-text {}
-    .hero-eyebrow {
-      font-family: var(--font-body); font-size: 0.8rem; font-weight: 600;
-      letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--coral); margin-bottom: 20px;
-    }
     .hero-title {
       font-family: var(--font-display); font-size: clamp(2.8rem, 5vw, 4.2rem);
       font-weight: 500; line-height: 1.1; color: var(--navy);
@@ -396,7 +391,6 @@
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-text reveal">
-      <p class="hero-eyebrow" id="hero-eyebrow"></p>
       <h1 class="hero-title" id="hero-title"></h1>
       <p class="hero-subtitle" id="hero-subtitle"></p>
       <div class="hero-buttons">
@@ -546,7 +540,6 @@
     }
 
     // Hero
-    setText('hero-eyebrow', H.hero.eyebrow);
     setHTML('hero-title', H.hero.title + '<br /><em>' + H.hero.titleItalic + '</em>');
     setText('hero-subtitle', H.hero.subtitle);
     setText('hero-cta-primary', H.hero.ctaPrimaryLabel);

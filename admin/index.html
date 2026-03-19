@@ -169,7 +169,6 @@
       <button class="sidebar-btn" data-panel="t-benefits">Benefits</button>
       <button class="sidebar-btn" data-panel="t-how">How It Works</button>
       <button class="sidebar-btn" data-panel="t-success">Tech &amp; Mindfulness</button>
-      <button class="sidebar-btn" data-panel="t-reviews">Reviews</button>
     </div>
     <div class="sidebar-group">
       <div class="sidebar-group-label">Mock Exams</div>
@@ -205,10 +204,9 @@
     <!-- HERO -->
     <div class="panel active" id="panel-hero">
       <h2 class="panel-title">Homepage — Hero</h2>
-      <p class="panel-desc">The first section. Eyebrow is the small label above the heading.</p>
+      <p class="panel-desc">The first section — heading, subtitle, and CTA buttons.</p>
       <div class="card">
         <div class="card-title">Copy</div>
-        <div class="fr"><label>Eyebrow</label><input type="text" data-path="homepage.hero.eyebrow" /></div>
         <div class="fr"><label>Title (first line)</label><input type="text" data-path="homepage.hero.title" /></div>
         <div class="fr"><label>Italic title (second line, coral)</label><input type="text" data-path="homepage.hero.titleItalic" /></div>
         <div class="fr"><label>Subtitle</label><textarea data-path="homepage.hero.subtitle"></textarea></div>
@@ -225,7 +223,7 @@
     <!-- FOUNDER -->
     <div class="panel" id="panel-founder">
       <h2 class="panel-title">Homepage — Founder Section</h2>
-      <p class="panel-desc">Dark navy section with Rachit's story and four principle cards.</p>
+      <p class="panel-desc">Dark navy section with Rachit's story.</p>
       <div class="card">
         <div class="card-title">Copy</div>
         <div class="fr"><label>Label</label><input type="text" data-path="homepage.founder.label" /></div>
@@ -233,10 +231,6 @@
         <div class="fr"><label>Paragraph 1</label><textarea data-path="homepage.founder.para1"></textarea></div>
         <div class="fr"><label>Paragraph 2</label><textarea data-path="homepage.founder.para2"></textarea></div>
         <div class="fr"><label>Paragraph 3</label><textarea data-path="homepage.founder.para3"></textarea></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Principle Cards</div>
-        <div id="principles-editor"></div>
       </div>
     </div>
 
@@ -302,15 +296,6 @@
         <div class="fr"><label>Body</label><textarea data-path="homepage.cta.body"></textarea></div>
         <div class="fr"><label>Primary label</label><input type="text" data-path="homepage.cta.primaryLabel" /></div>
         <div class="fr"><label>Primary URL</label><input type="url" data-path="homepage.cta.primaryHref" /></div>
-        <div class="fr"><label>Secondary label</label><input type="text" data-path="homepage.cta.secondaryLabel" /></div>
-        <div class="fr"><label>Secondary URL</label><input type="text" data-path="homepage.cta.secondaryHref" /></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Email Signup Strip</div>
-        <div class="fr"><label>Heading</label><input type="text" data-path="homepage.email.title" /></div>
-        <div class="fr"><label>Body</label><textarea data-path="homepage.email.body"></textarea></div>
-        <div class="fr"><label>Input placeholder</label><input type="text" data-path="homepage.email.placeholder" /></div>
-        <div class="fr"><label>Button label</label><input type="text" data-path="homepage.email.button" /></div>
       </div>
     </div>
 
@@ -375,17 +360,6 @@
         <div class="fr"><label>Paragraph 1</label><textarea data-path="tutoring.success.mindfulness.body1"></textarea></div>
         <div class="fr"><label>Paragraph 2</label><textarea data-path="tutoring.success.mindfulness.body2"></textarea></div>
       </div>
-    </div>
-
-    <!-- TUTORING REVIEWS -->
-    <div class="panel" id="panel-t-reviews">
-      <h2 class="panel-title">Tutoring — Reviews</h2>
-      <div class="card">
-        <div class="card-title">Header</div>
-        <div class="fr"><label>Label</label><input type="text" data-path="tutoring.reviews.label" /></div>
-        <div class="fr"><label>Title</label><textarea data-path="tutoring.reviews.title"></textarea></div>
-      </div>
-      <div id="t-reviews-editor"></div>
     </div>
 
     <!-- MOCK EXAMS HERO -->
@@ -661,22 +635,6 @@ function buildStepList(containerId, items, fields) {
 }
 
 // ── DYNAMIC EDITORS ──
-function buildPrinciples() {
-  const items = data.homepage.founder.principles;
-  const c = document.getElementById('principles-editor');
-  c.innerHTML = '';
-  items.forEach((item, i) => {
-    const div = document.createElement('div');
-    div.className = 'inline-item';
-    div.innerHTML = `<div class="inline-item-header"><span class="inline-item-label">Card ${i+1}</span></div>
-      <div class="fr"><label>Title</label><input type="text" value="${esc(item.title)}" /></div>
-      <div class="fr"><label>Body</label><textarea>${esc(item.body)}</textarea></div>`;
-    div.querySelectorAll('input')[0].addEventListener('input', e => { items[i].title = e.target.value; });
-    div.querySelector('textarea').addEventListener('input', e => { items[i].body = e.target.value; });
-    c.appendChild(div);
-  });
-}
-
 function buildServices() {
   const items = data.homepage.services.items;
   const c = document.getElementById('services-editor');
@@ -766,29 +724,6 @@ function buildTSessions() {
     { key: 'body1', label: 'Paragraph 1', tall: true },
     { key: 'body2', label: 'Paragraph 2', tall: true },
   ]);
-}
-
-function buildTReviews() {
-  const items = data.tutoring.reviews.items;
-  const c = document.getElementById('t-reviews-editor');
-  c.innerHTML = '';
-  items.forEach((item, i) => {
-    const div = document.createElement('div');
-    div.className = 'inline-item';
-    div.innerHTML = `<div class="inline-item-header">
-      <span class="inline-item-label">Review ${i+1}</span>
-      <button class="btn-remove">Remove</button></div>
-      <div class="fr"><label>Heading (italic title)</label><input type="text" value="${esc(item.heading)}" /></div>
-      <div class="fr"><label>Quote</label><textarea class="tall">${esc(item.quote)}</textarea></div>
-      <div class="fr"><label>Author</label><input type="text" value="${esc(item.author)}" /></div>
-      <div class="fr"><label>Role</label><input type="text" value="${esc(item.role)}" /></div>`;
-    div.querySelector('.btn-remove').addEventListener('click', () => { items.splice(i, 1); buildTReviews(); });
-    div.querySelectorAll('input')[0].addEventListener('input', e => { items[i].heading = e.target.value; });
-    div.querySelector('textarea').addEventListener('input', e => { items[i].quote = e.target.value; });
-    div.querySelectorAll('input')[1].addEventListener('input', e => { items[i].author = e.target.value; });
-    div.querySelectorAll('input')[2].addEventListener('input', e => { items[i].role = e.target.value; });
-    c.appendChild(div);
-  });
 }
 
 function buildMeSteps() {
@@ -1005,13 +940,11 @@ async function initApp() {
   }
 
   bindFields();
-  buildPrinciples();
   buildServices();
   buildValues();
   buildTestimonials();
   buildTBenefits();
   buildTSessions();
-  buildTReviews();
   buildMeSteps();
   buildMeUpcoming();
   buildSSReviews();

@@ -192,6 +192,29 @@
       word-break: break-word;
     }
 
+    /* ── CLIPBOARD TOAST ── */
+    .clipboard-toast {
+      position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%);
+      background: #1a1c2e; color: #fff; padding: 12px 24px;
+      border-radius: 8px; font-size: 0.88rem; font-weight: 500;
+      z-index: 9999; opacity: 0; transition: opacity .3s ease;
+      pointer-events: none; white-space: nowrap;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    }
+    .clipboard-toast.show { opacity: 1; }
+
+    /* ── FORM CONFIRMATION ── */
+    .form-confirmation {
+      text-align: center; padding: 48px 24px;
+    }
+    .form-confirmation h3 {
+      font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.2rem);
+      color: var(--navy); font-weight: 500; margin-bottom: 16px;
+    }
+    .form-confirmation p {
+      color: var(--text-light); font-size: 1rem; line-height: 1.7;
+    }
+
     /* ── FOOTER ── */
     footer { background: #2a2d40; color: rgba(255,255,255,0.7); padding: 64px 48px 32px; }
     .footer-grid { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
@@ -318,7 +341,7 @@
       <p>30 minutes, no commitment. We'll talk about your student, find the right fit, and answer any questions you have.</p>
     </div>
     <div class="contact-details reveal">
-      <a href="mailto:hello@magnolia-education.com" class="contact-detail-card">
+      <a href="mailto:hello@magnolia-education.com" class="contact-detail-card" id="email-copy-card">
         <div class="contact-detail-icon">✉</div>
         <div class="contact-detail-text">
           <p class="contact-detail-label">Email</p>
@@ -434,6 +457,54 @@
   }));
 })();
 </script>
+<!-- CLIPBOARD TOAST -->
+<div class="clipboard-toast" id="clipboard-toast">Email copied to clipboard!</div>
+
+<script>
+// ── CLIPBOARD COPY ──
+(function () {
+  const emailCard = document.getElementById('email-copy-card');
+  const toast = document.getElementById('clipboard-toast');
+  let toastTimer;
+
+  if (emailCard && navigator.clipboard) {
+    emailCard.addEventListener('click', function (e) {
+      e.preventDefault();
+      navigator.clipboard.writeText('hello@magnolia-education.com').then(function () {
+        clearTimeout(toastTimer);
+        toast.classList.add('show');
+        toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 2500);
+      });
+    });
+  }
+})();
+
+// ── FORM AJAX SUBMISSION ──
+(function () {
+  const form = document.querySelector('.contact-form');
+  if (!form) return;
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const formData = new FormData(form);
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(formData).toString()
+    }).then(function () {
+      const wrapper = form.closest('.contact-form-inner');
+      wrapper.innerHTML = '<div class="form-confirmation">' +
+        '<h3>Message sent!</h3>' +
+        '<p>Thanks for reaching out. We\'ll be in touch within one business day.</p>' +
+        '</div>';
+    }).catch(function () {
+      // Fall back to native submit if fetch fails
+      form.submit();
+    });
+  });
+})();
+</script>
+
 <!-- DEV TOOL: Image tuner overlay (local only, inactive in production) -->
 <script src="dev/image-tuner-overlay.js"></script>
 </body>
