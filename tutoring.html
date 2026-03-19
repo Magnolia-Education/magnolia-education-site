@@ -326,8 +326,13 @@
        Fix fixed-pixel image containers from config
     ═══════════════════════════════ */
     @media (max-width: 768px) {
+      /* Hero: let container expand to show full image, no clipping */
       .hero-image > div {
-        width: 100% !important; max-width: 100% !important; height: 300px !important;
+        width: 100% !important; max-width: 100% !important; height: auto !important;
+      }
+      .hero-image > div img {
+        height: auto !important; object-fit: contain !important;
+        transform: scale(1) !important;
       }
       .how-image > div {
         width: 100% !important; max-width: 100% !important; height: 360px !important;

@@ -316,6 +316,11 @@
       /* Fix fixed-pixel image containers from config that overflow mobile viewport */
       .hero-image > div {
         width: 100% !important; max-width: 100% !important; height: 320px !important;
+        margin: 0 auto;
+      }
+      /* Center hero image — reset rightward object-position from desktop config */
+      .hero-image > div img {
+        object-position: 50% 57% !important;
       }
       .service-row-img > div {
         width: 100% !important; max-width: 100% !important; height: 260px !important;
@@ -470,7 +475,6 @@
   <p class="reveal" id="cta-body"></p>
   <div class="cta-buttons reveal">
     <a href="#" id="cta-primary" target="_blank" class="btn-white"></a>
-    <a href="#" id="cta-secondary" class="btn-outline-white"></a>
   </div>
 </section>
 
@@ -626,8 +630,6 @@
     setText('cta-body', H.cta.body);
     setText('cta-primary', H.cta.primaryLabel);
     setAttr('cta-primary', 'href', H.cta.primaryHref);
-    setText('cta-secondary', H.cta.secondaryLabel);
-    setAttr('cta-secondary', 'href', H.cta.secondaryHref);
 
     // Email signup
     setText('email-title', H.email.title);
