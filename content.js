@@ -536,26 +536,26 @@ window.CONTENT = {
         {
           "number": "01",
           "title": "First Review",
-          "timing": "Same night",
-          "body": "Work through the day’s material immediately — while it’s still fresh. Don’t look at your notes first. Just attempt the questions. This is the most important review.",
+          "timing": "In class",
+          "body": "Pay attention in class. Star important concepts that your teacher has flagged. Put question marks on concepts that feel confusing.",
           "imgSrc": "images/8firstreview.png",
-          "imgAlt": "Student doing first review"
+          "imgAlt": "Student doing first review in class"
         },
         {
           "number": "02",
           "title": "Second Review",
           "timing": "Within 48 hours",
-          "body": "Go back before the memory fades. This catches what didn’t stick the first time and locks in the concepts that did. Takes 10–15 minutes.",
+          "body": "Review your notes for five minutes before starting your homework. Do your homework. Mark your homework. This is a complete cycle: Study. Do. Evaluate.",
           "imgSrc": "images/8secondreview.png",
-          "imgAlt": "Student doing second review"
+          "imgAlt": "Student doing second review within 48 hours"
         },
         {
           "number": "03",
           "title": "Third Review",
-          "timing": "Before the test",
-          "body": "Consolidate everything. Work through all material one more time — focused on your weak spots. This review shows you exactly what you still don’t know. Close those gaps.",
+          "timing": "Weekend",
+          "body": "Consolidate everything. Spend a pomodoro (25 min) or two to work on a study guide to synthesize the week\u2019s concepts. Focus on habit more than quality.",
           "imgSrc": "images/8thirdreview.png",
-          "imgAlt": "Student doing third review"
+          "imgAlt": "Student doing third review on the weekend"
         }
       ]
     },
@@ -849,9 +849,9 @@ window.CONTENT = {
     "rachit": {
       "label": "The Founder",
       "title": "Not always the student I wanted to be.",
-      "para1": "I wasn’t always the confident, capable student I became. Early on, I struggled — with math, with anxiety, with the feeling that school was happening to me rather than for me.",
-      "para2": "What changed wasn’t my intelligence. It was finding a way to learn that actually worked for my brain — building habits, slowing down, and discovering that math has a real beauty to it once you stop being afraid of it.",
-      "para3": "That experience — of struggling and then thriving — is the core of everything Magnolia does. I built this because I genuinely believe every student can find their version of that click. They just need the right support."
+      "para1": "I did really well in high school math. With horrible study habits. I struggled early on in university. I found a way to triumph again.",
+      "para2": "What changed wasn\u2019t my intelligence. It was finding a way to learn that actually worked for my brain and the growing workload: building good study habits, learning to feel confident saying I don\u2019t know, and asking questions relentlessly.",
+      "para3": "That experience of struggling and then thriving is the core of everything Magnolia does. I built this because I genuinely believe every student can find their version of that click. They just need the right support."
     },
     "philosophy": {
       "label": "Our Philosophy",
@@ -888,9 +888,7 @@ window.CONTENT = {
       "title": "Let’s write your student’s story.",
       "body": "Start with a free 30-minute consultation. No commitment — just a conversation.",
       "primaryLabel": "Book a Consultation",
-      "primaryHref": "https://calendly.com/rachit-chakerwarti/call",
-      "secondaryLabel": "Email Us",
-      "secondaryHref": "mailto:hello@magnolia-education.com"
+      "primaryHref": "https://calendly.com/rachit-chakerwarti/call"
     }
   },
   "contact": {
