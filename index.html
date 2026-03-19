@@ -27,8 +27,8 @@
       --font-body: 'DM Sans', system-ui, sans-serif;
     }
 
-    html { scroll-behavior: smooth; }
-    body { font-family: var(--font-body); color: var(--text); background: #fff; overflow-x: hidden; }
+    html { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
+    body { font-family: var(--font-body); color: var(--text); background: #fff; overflow-x: hidden; max-width: 100%; }
 
     /* ── NAV ── */
     nav {
@@ -311,6 +311,18 @@
       .exam-banner-inner { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr 1fr; }
       nav { padding: 0 24px; gap: 20px; }
+    }
+    @media (max-width: 768px) {
+      /* Fix fixed-pixel image containers from config that overflow mobile viewport */
+      .hero-image > div {
+        width: 100% !important; max-width: 100% !important; height: 320px !important;
+      }
+      .service-row-img > div {
+        width: 100% !important; max-width: 100% !important; height: 260px !important;
+      }
+      .testimonials-header { padding: 0 20px 32px; }
+      .testimonials-scroll { padding: 12px 20px 24px; }
+      .testimonial-card { min-width: 280px; max-width: 280px; }
     }
     @media (max-width: 600px) {
       .section { padding: 72px 20px; }

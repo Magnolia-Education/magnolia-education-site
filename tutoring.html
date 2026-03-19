@@ -28,8 +28,8 @@
       --font-body: 'DM Sans', system-ui, sans-serif;
     }
 
-    html { scroll-behavior: smooth; }
-    body { font-family: var(--font-body); color: var(--text); background: #fff; overflow-x: hidden; }
+    html { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
+    body { font-family: var(--font-body); color: var(--text); background: #fff; overflow-x: hidden; max-width: 100%; }
 
     /* ─── NAV ─── */
     nav {
@@ -319,6 +319,22 @@
       .success-block.reverse .success-block-img { order: 1; }
       .cta-inner { grid-template-columns: 1fr; gap: 40px; }
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+
+    /* ═══════════════════════════════
+       RESPONSIVE — mobile 768px
+       Fix fixed-pixel image containers from config
+    ═══════════════════════════════ */
+    @media (max-width: 768px) {
+      .hero-image > div {
+        width: 100% !important; max-width: 100% !important; height: 300px !important;
+      }
+      .how-image > div {
+        width: 100% !important; max-width: 100% !important; height: 360px !important;
+      }
+      .success-block-img > div {
+        width: 100% !important; max-width: 100% !important; height: 260px !important;
+      }
     }
 
     /* ═══════════════════════════════

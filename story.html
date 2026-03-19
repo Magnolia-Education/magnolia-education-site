@@ -28,8 +28,8 @@
       --font-body: 'DM Sans', system-ui, sans-serif;
     }
 
-    html { scroll-behavior: smooth; }
-    body { font-family: var(--font-body); color: var(--text); background: #fff; overflow-x: hidden; }
+    html { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
+    body { font-family: var(--font-body); color: var(--text); background: #fff; overflow-x: hidden; max-width: 100%; }
 
     /* ── NAV ── */
     nav {
@@ -224,6 +224,16 @@
       .values-grid { grid-template-columns: 1fr 1fr; }
       .gavin-inner { grid-template-columns: 1fr; gap: 40px; text-align: center; }
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+
+    @media (max-width: 768px) {
+      /* Fix fixed-pixel image containers from config that overflow mobile viewport */
+      .hero-img > div {
+        width: 100% !important; max-width: 100% !important; height: 300px !important;
+      }
+      .story-img > div {
+        width: 100% !important; max-width: 100% !important; height: 340px !important;
+      }
     }
 
     @media (max-width: 600px) {
