@@ -9,7 +9,7 @@ window.CONTENT = {
     "phoneHref": "tel:+12899141644",
     "email": "hello@magnolia-education.com",
     "emailHref": "mailto:hello@magnolia-education.com",
-    "calendlyHref": "https://calendly.com/rachit-chakerwarti/call",
+    "calendlyHref": "https://calendly.com/hello-magnolia-education/30min",
     "logoText": "Magnolia Education",
     "tagline": "Better grades. And a better way to get them.",
     "copyright": "© 2026 Magnolia Education. All rights reserved.",
@@ -26,7 +26,7 @@ window.CONTENT = {
       "titleItalic": "And a better way to get them.",
       "subtitle": "Magnolia Education offers personalized math tutoring, mock exams, study skills coaching, and prep cohorts for high school students Grades 8–12.",
       "ctaPrimaryLabel": "Book a Consultation",
-      "ctaPrimaryHref": "https://calendly.com/rachit-chakerwarti/call",
+      "ctaPrimaryHref": "https://calendly.com/hello-magnolia-education/30min",
       "ctaSecondaryLabel": "Explore Tutoring",
       "ctaSecondaryHref": "tutoring.html"
     },
@@ -168,7 +168,7 @@ window.CONTENT = {
       "title": "Ready to see the difference?",
       "body": "Start with a free 30-minute consultation. No commitment, no pressure — just a conversation about your student and how we can help.",
       "primaryLabel": "Book a Consultation",
-      "primaryHref": "https://calendly.com/rachit-chakerwarti/call"
+      "primaryHref": "https://calendly.com/hello-magnolia-education/30min"
     },
     "email": {
       "title": "Study tips & resources, monthly.",
@@ -192,7 +192,7 @@ window.CONTENT = {
       "title": "Weekly tutoring for lifelong learning.",
       "subtitle": "One-on-one or small groups, our tutoring teaches students how to learn, so they can move through life with confidence and independence.",
       "ctaLabel": "Book a Consultation",
-      "ctaHref": "https://calendly.com/rachit-chakerwarti/call"
+      "ctaHref": "https://calendly.com/hello-magnolia-education/30min"
     },
     "benefits": {
       "label": "Why It Works",
@@ -237,7 +237,7 @@ window.CONTENT = {
       "body1": "We believe that the process of learning is just that — a process. Every session follows the same four-step cycle, building momentum and optimizing results over time.",
       "body2": "",
       "ctaLabel": "Book a Consultation",
-      "ctaHref": "https://calendly.com/rachit-chakerwarti/call",
+      "ctaHref": "https://calendly.com/hello-magnolia-education/30min",
       "steps": [
         {
           "title": "Prepare",
@@ -299,7 +299,7 @@ window.CONTENT = {
       "title": "Get in touch.",
       "body": "Ready to prioritize personalized learning? Let’s talk.",
       "ctaLabel": "Book a Consultation",
-      "ctaHref": "https://calendly.com/rachit-chakerwarti/call"
+      "ctaHref": "https://calendly.com/hello-magnolia-education/30min"
     },
     "testimonials": {
       "label": "What Students & Parents Say",
@@ -466,7 +466,7 @@ window.CONTENT = {
       "title": "Have a question?",
       "body": "Contact us to find out which mock exam is right for your student, or to ask about upcoming dates.",
       "primaryLabel": "Book a Consultation",
-      "primaryHref": "https://calendly.com/rachit-chakerwarti/call",
+      "primaryHref": "https://calendly.com/hello-magnolia-education/30min",
       "secondaryLabel": "Call us",
       "secondaryHref": "tel:+12899141644"
     },
@@ -521,7 +521,7 @@ window.CONTENT = {
       "title": "Work less. Learn more.",
       "subtitle": "The habits, systems, and frameworks that separate students who work hard from students who study smart.",
       "ctaLabel": "Book a Consultation",
-      "ctaHref": "https://calendly.com/rachit-chakerwarti/call"
+      "ctaHref": "https://calendly.com/hello-magnolia-education/30min"
     },
     "intro": {
       "label": "The Magnolia Method",
@@ -596,7 +596,7 @@ window.CONTENT = {
       "title": "Ready to study smarter?",
       "body": "We teach these systems in every session. Start with a consultation.",
       "primaryLabel": "Book a Consultation",
-      "primaryHref": "https://calendly.com/rachit-chakerwarti/call",
+      "primaryHref": "https://calendly.com/hello-magnolia-education/30min",
       "secondaryLabel": "Call us",
       "secondaryHref": "tel:+12899141644"
     },
@@ -641,7 +641,7 @@ window.CONTENT = {
       "title": "Get ahead. Start confident.",
       "subtitle": "Small-group prep cohorts covering critical concepts before the semester begins — so students walk in ready, not catching up.",
       "ctaLabel": "Book a Consultation",
-      "ctaHref": "https://calendly.com/rachit-chakerwarti/call"
+      "ctaHref": "https://calendly.com/hello-magnolia-education/30min"
     },
     "jump": {
       "label": "Why It Matters",
@@ -727,7 +727,7 @@ window.CONTENT = {
       "title": "Ready to get ahead?",
       "body": "Start with a free 30-minute consultation. We’ll find the right cohort for your student.",
       "primaryLabel": "Book a Consultation",
-      "primaryHref": "https://calendly.com/rachit-chakerwarti/call",
+      "primaryHref": "https://calendly.com/hello-magnolia-education/30min",
       "secondaryLabel": "Call us",
       "secondaryHref": "tel:+12899141644"
     }
@@ -834,7 +834,7 @@ window.CONTENT = {
       "title": "Join Our Team",
       "body": "We’re always looking for exceptional tutors who share our philosophy — deep subject knowledge, genuine empathy, and a commitment to student independence.",
       "primaryLabel": "Get in Touch",
-      "primaryHref": "https://calendly.com/rachit-chakerwarti/call"
+      "primaryHref": "https://calendly.com/hello-magnolia-education/30min"
     }
   },
   "story": {
@@ -888,7 +888,7 @@ window.CONTENT = {
       "title": "Let’s write your student’s story.",
       "body": "Start with a free 30-minute consultation. No commitment — just a conversation.",
       "primaryLabel": "Book a Consultation",
-      "primaryHref": "https://calendly.com/rachit-chakerwarti/call"
+      "primaryHref": "https://calendly.com/hello-magnolia-education/30min"
     }
   },
   "contact": {
@@ -901,7 +901,7 @@ window.CONTENT = {
     },
     "cta": {
       "label": "Book a Consultation",
-      "href": "https://calendly.com/rachit-chakerwarti/call"
+      "href": "https://calendly.com/hello-magnolia-education/30min"
     }
   }
 };
