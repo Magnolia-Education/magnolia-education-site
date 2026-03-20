@@ -136,11 +136,7 @@
     }
     .hero-title {
       font-family: var(--font-display); font-size: clamp(3.5rem, 8vw, 6rem);
-      font-weight: 500; line-height: 1.05; color: var(--navy); margin-bottom: 24px;
-    }
-    .hero-subtitle {
-      font-size: 1.15rem; line-height: 1.7; color: var(--text-light);
-      max-width: 520px; margin: 0 auto;
+      font-weight: 500; line-height: 1.05; color: var(--navy);
     }
 
     /* ── CONTACT FORM ── */
@@ -167,32 +163,15 @@
     }
     .form-submit:hover { background: #d96e54; transform: translateY(-1px); }
 
-    /* ── CONTACT CARDS ── */
-    .contact-section { padding: 80px 48px 100px; background: #fff; }
+    /* ── CONTACT STRIP ── */
+    .contact-section {
+      padding: 80px 48px 100px;
+      background: linear-gradient(135deg, var(--hero-start) 0%, var(--hero-end) 100%);
+    }
     .contact-inner { max-width: 800px; margin: 0 auto; }
-    .contact-cta-card {
-      background: var(--navy); border-radius: 20px; padding: 56px 48px;
-      text-align: center; margin-bottom: 40px;
-      box-shadow: 0 16px 56px rgba(61,68,102,0.18);
-    }
-    .contact-cta-card h2 {
-      font-family: var(--font-display); font-size: clamp(1.8rem, 3vw, 2.6rem);
-      color: #fff; font-weight: 500; margin-bottom: 12px;
-    }
-    .contact-cta-card p {
-      color: rgba(255,255,255,0.7); font-size: 1rem; line-height: 1.7;
-      margin-top: 28px; max-width: 420px; margin-left: auto; margin-right: auto;
-    }
-    .btn-cta-large {
-      display: inline-block; background: var(--coral); color: #fff;
-      padding: 18px 48px; border-radius: 10px; text-decoration: none;
-      font-weight: 600; font-size: 1.05rem; transition: background .2s, transform .15s;
-    }
-    .btn-cta-large:hover { background: #d96e54; transform: translateY(-2px); }
-
     .contact-details { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     .contact-detail-card {
-      background: #f8f9fc; border-radius: 14px; padding: 32px 28px;
+      background: #fff; border-radius: 14px; padding: 32px 28px;
       display: flex; align-items: flex-start; gap: 20px;
       border: 1.5px solid rgba(61,68,102,0.08);
       transition: border-color .2s, box-shadow .2s;
@@ -200,7 +179,7 @@
     }
     .contact-detail-card:hover {
       border-color: rgba(61,68,102,0.2);
-      box-shadow: 0 8px 24px rgba(61,68,102,0.08);
+      box-shadow: 0 8px 24px rgba(61,68,102,0.12);
     }
     .contact-detail-icon {
       width: 44px; height: 44px; border-radius: 10px;
@@ -275,10 +254,8 @@
       .hero-title { font-size: 3rem; }
 
       .contact-form-section { padding: 60px 20px; }
-      .contact-section { padding: 60px 20px; }
+      .contact-section { padding: 60px 20px 80px; }
       .calendly-section { padding: 60px 20px 80px; }
-      .contact-cta-card { padding: 40px 24px; }
-      .btn-cta-large { width: 100%; text-align: center; padding: 16px 32px; }
       .contact-details { grid-template-columns: 1fr; }
 
       footer { padding: 48px 20px 24px; }
@@ -336,7 +313,6 @@
 <section class="hero">
   <div class="hero-inner reveal">
     <h1 class="hero-title" id="ct-hero-title"></h1>
-    <p class="hero-subtitle" id="ct-hero-subtitle"></p>
   </div>
 </section>
 
@@ -358,20 +334,28 @@
       </div>
       <div class="form-field">
         <label for="cf-message">Message</label>
-        <textarea id="cf-message" name="message" placeholder="Tell us about your student and what you're looking for..." required></textarea>
+        <textarea id="cf-message" name="message" placeholder="How can we help?" required></textarea>
       </div>
       <button type="submit" class="form-submit">Send Message</button>
     </form>
   </div>
 </section>
 
-<!-- CONTACT SECTION -->
+<!-- CALENDLY INLINE WIDGET -->
+<section class="calendly-section">
+  <div class="calendly-inner reveal">
+    <h2>Book an Intro Call</h2>
+    <p class="calendly-subline">Find a time that works for you below.</p>
+    <!-- Calendly inline widget begin -->
+    <div class="calendly-inline-widget" data-url="https://calendly.com/hello-magnolia-education/30min?hide_event_type_details=1&hide_gdpr_banner=1&background_color=faf7f2" style="min-width:320px;height:700px;"></div>
+    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+    <!-- Calendly inline widget end -->
+  </div>
+</section>
+
+<!-- CONTACT STRIP -->
 <section class="contact-section">
   <div class="contact-inner">
-    <div class="contact-cta-card reveal">
-      <a href="https://calendly.com/hello-magnolia-education/30min" target="_blank" class="btn-cta-large" id="ct-cta-btn"></a>
-      <p>30 minutes, no commitment. We'll talk about your student, find the right fit, and answer any questions you have.</p>
-    </div>
     <div class="contact-details reveal">
       <a href="mailto:hello@magnolia-education.com" class="contact-detail-card" id="email-copy-card">
         <div class="contact-detail-icon">✉</div>
@@ -388,18 +372,6 @@
         </div>
       </a>
     </div>
-  </div>
-</section>
-
-<!-- CALENDLY INLINE WIDGET -->
-<section class="calendly-section">
-  <div class="calendly-inner reveal">
-    <h2>Book an Intro Call</h2>
-    <p class="calendly-subline">Find a time that works for you below.</p>
-    <!-- Calendly inline widget begin -->
-    <div class="calendly-inline-widget" data-url="https://calendly.com/hello-magnolia-education/30min?hide_event_type_details=1&hide_gdpr_banner=1&background_color=faf7f2" style="min-width:320px;height:700px;"></div>
-    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-    <!-- Calendly inline widget end -->
   </div>
 </section>
 
@@ -459,11 +431,6 @@
 
   // Hero
   setText('ct-hero-title', CT.hero.title);
-  setText('ct-hero-subtitle', CT.hero.subtitle);
-
-  // CTA button
-  setText('ct-cta-btn', CT.cta.label);
-  setAttr('ct-cta-btn', 'href', CT.cta.href);
 
   // Footer
   setText('f-tagline', H.footer.tagline);
