@@ -203,21 +203,13 @@ async function handleToolCall(name, args) {
     case 'get_closed_tasks': {
       const params = new URLSearchParams();
       if (args.projectId) params.set('projectId', args.projectId);
-      if (args.from) {
-        // TickTick API requires Unix timestamps in milliseconds, not ISO 8601 strings
-        const ms = new Date(args.from).getTime();
-        if (isNaN(ms)) throw new Error(`Invalid 'from' date: ${args.from}`);
-        params.set('from', String(ms));
-      }
-      if (args.to) {
-        const ms = new Date(args.to).getTime();
-        if (isNaN(ms)) throw new Error(`Invalid 'to' date: ${args.to}`);
-        params.set('to', String(ms));
-      }
+      // TickTick API accepts ISO 8601 strings e.g. "2026-03-23T00:00:00+0000"
+      if (args.from) params.set('from', args.from);
+      if (args.to) params.set('to', args.to);
       if (args.limit) params.set('limit', String(args.limit));
       const qs = params.toString();
-      // Correct endpoint is /project/all/closed (not /project/closed)
-      const result = await ticktick('GET', `/project/all/closed${qs ? '?' + qs : ''}`);
+      // Correct endpoint is /project/all/completed
+      const result = await ticktick('GET', `/project/all/completed${qs ? '?' + qs : ''}`);
       // Return empty array instead of null when no completed tasks exist
       return result ?? [];
     }
