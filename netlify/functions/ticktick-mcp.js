@@ -201,17 +201,53 @@ async function handleToolCall(name, args) {
     }
 
     case 'get_closed_tasks': {
-      const params = new URLSearchParams();
-      if (args.projectId) params.set('projectId', args.projectId);
-      // TickTick API accepts ISO 8601 strings e.g. "2026-03-23T00:00:00+0000"
-      if (args.from) params.set('from', args.from);
-      if (args.to) params.set('to', args.to);
-      if (args.limit) params.set('limit', String(args.limit));
-      const qs = params.toString();
-      // Correct endpoint is /project/all/completed
-      const result = await ticktick('GET', `/project/all/completed${qs ? '?' + qs : ''}`);
-      // Return empty array instead of null when no completed tasks exist
-      return result ?? [];
+      // The TickTick Open API v1 has no dedicated completed-tasks endpoint.
+      // We fetch each project's data and filter for tasks with status === 2 (completed).
+      const { projectId, from, to, limit = 20 } = args;
+
+      // Resolve which projects to search
+      let projectIds;
+      if (projectId) {
+        projectIds = [projectId];
+      } else {
+        const projects = await ticktick('GET', '/project');
+        // Skip archived/closed projects to reduce unnecessary API calls
+        projectIds = (projects || []).filter(p => !p.closed).map(p => p.id);
+      }
+
+      // Fetch all project data in parallel; ignore individual failures
+      const dataResults = await Promise.all(
+        projectIds.map(pid =>
+          ticktick('GET', `/project/${pid}/data`).catch(() => null)
+        )
+      );
+
+      // Collect completed tasks (status === 2) across all projects
+      let completed = [];
+      for (const data of dataResults) {
+        if (!data?.tasks) continue;
+        completed.push(...data.tasks.filter(t => t.status === 2));
+      }
+
+      // Filter by completedTime if a date range was requested
+      if (from || to) {
+        const fromMs = from ? new Date(from).getTime() : 0;
+        const toMs = to ? new Date(to).getTime() : Infinity;
+        completed = completed.filter(t => {
+          if (!t.completedTime) return false;
+          const ms = new Date(t.completedTime).getTime();
+          return ms >= fromMs && ms <= toMs;
+        });
+      }
+
+      // Sort newest-first and apply limit
+      completed.sort((a, b) => {
+        const aMs = a.completedTime ? new Date(a.completedTime).getTime() : 0;
+        const bMs = b.completedTime ? new Date(b.completedTime).getTime() : 0;
+        return bMs - aMs;
+      });
+
+      return completed.slice(0, Number(limit));
     }
 
     case 'get_tags': {
@@ -373,7 +409,7 @@ const TOOLS = [
   },
   {
     name: 'get_closed_tasks',
-    description: 'Get completed/closed tasks, optionally filtered by project and date range. Returns an empty array if no tasks match.',
+    description: 'Get completed tasks (status=2) across all active projects, or within a specific project. Optionally filter by completedTime date range. Returns an empty array if none found.',
     inputSchema: {
       type: 'object',
       properties: {
