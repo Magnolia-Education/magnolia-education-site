@@ -203,11 +203,23 @@ async function handleToolCall(name, args) {
     case 'get_closed_tasks': {
       const params = new URLSearchParams();
       if (args.projectId) params.set('projectId', args.projectId);
-      if (args.from) params.set('from', args.from);
-      if (args.to) params.set('to', args.to);
+      if (args.from) {
+        // TickTick API requires Unix timestamps in milliseconds, not ISO 8601 strings
+        const ms = new Date(args.from).getTime();
+        if (isNaN(ms)) throw new Error(`Invalid 'from' date: ${args.from}`);
+        params.set('from', String(ms));
+      }
+      if (args.to) {
+        const ms = new Date(args.to).getTime();
+        if (isNaN(ms)) throw new Error(`Invalid 'to' date: ${args.to}`);
+        params.set('to', String(ms));
+      }
       if (args.limit) params.set('limit', String(args.limit));
       const qs = params.toString();
-      return ticktick('GET', `/project/closed${qs ? '?' + qs : ''}`);
+      // Correct endpoint is /project/all/closed (not /project/closed)
+      const result = await ticktick('GET', `/project/all/closed${qs ? '?' + qs : ''}`);
+      // Return empty array instead of null when no completed tasks exist
+      return result ?? [];
     }
 
     case 'get_tags': {
@@ -369,13 +381,13 @@ const TOOLS = [
   },
   {
     name: 'get_closed_tasks',
-    description: 'Get completed/closed tasks, optionally filtered by project and date range.',
+    description: 'Get completed/closed tasks, optionally filtered by project and date range. Returns an empty array if no tasks match.',
     inputSchema: {
       type: 'object',
       properties: {
         projectId: { type: 'string', description: 'Filter by project ID' },
-        from: { type: 'string', description: 'Start of date range (ISO 8601)' },
-        to: { type: 'string', description: 'End of date range (ISO 8601)' },
+        from: { type: 'string', description: 'Start of date range as ISO 8601 string, e.g. 2026-03-23T00:00:00+0000' },
+        to: { type: 'string', description: 'End of date range as ISO 8601 string, e.g. 2026-03-23T23:59:59+0000' },
         limit: { type: 'integer', description: 'Max results (default 20)' },
       },
       required: [],
