@@ -13,7 +13,7 @@ Magnolia Education — premium tutoring business (Mississauga/Toronto). This rep
 - **Hosting:** Netlify (auto-deploys on push to `main`)
 - **Preview URL:** `lucent-bunny-d11129.netlify.app`
 - **Production domain:** `magnolia-education.com` (Cloudflare DNS)
-- **Old domain:** `magnoliatutoring.com` (Squarespace, to be redirected)
+- **Old domain:** `magnoliatutoring.com` (Redirecting to magnolia-education.com)
 
 ---
 
@@ -68,7 +68,6 @@ Every change follows this sequence. No exceptions.
 - **NEVER guess `transform: scale()` values** — if an image tuner config JSON exists, read values from there. If it doesn't exist yet, ask Rachit for the values or flag that they need to be set manually
 - Tutor headshots are in `images/` folder, some filenames have spaces
 - Headshots support optional `photoPosition` field in `content.js`
-- Callum's photo is `.jpg`, others may vary
 
 ### Content
 - Dynamic content lives in `content.js`

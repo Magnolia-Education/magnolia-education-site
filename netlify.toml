@@ -1,4 +1,5 @@
 [build]
+  command = "cd tools-app && npm install && npm run build && mkdir -p ../tools && cp -r out/* ../tools/"
   functions = "netlify/functions"
   publish = "."
 
