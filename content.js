@@ -99,9 +99,10 @@ window.CONTENT = {
       ]
     },
     "examBanner": {
-      "title": "January Mock Exams — Register Now",
+      "title": "June Mock Exams — Register Now",
       "body": "Two in-person locations across Toronto. Full-length timed conditions, detailed worked solutions, and a mindfulness opening. Spots fill fast.",
-      "date": "📅 January 17th, 2026",
+      "date": "📅 June 13th, 2026",
+      "deadline": "⏰ Register by June 6th — spots are limited",
       "ctaLabel": "View Upcoming Exams",
       "ctaHref": "mock-exams.html",
       "linkLabel": "Learn about mock exams →",
@@ -356,6 +357,7 @@ window.CONTENT = {
       "label": "Mock Exams",
       "title": "Mock Exams.",
       "subtitle": "Full-length practice exams held in person across Toronto — because the real thing shouldn’t be your first time.",
+      "deadline": "⏰ Register by June 6th — spots are limited",
       "ctaLabel": "View Upcoming Exams",
       "ctaHref": "#upcoming"
     },
@@ -373,7 +375,7 @@ window.CONTENT = {
         {
           "number": "02",
           "title": "Full-length exam",
-          "body": "Real timed conditions, full exam length. Same pressure as the real thing — but in a supportive, familiar environment.",
+          "body": "Real timed conditions, full exam length. Same pressure as the real thing — but in a supportive, familiar environment. Choose to write open or closed book.",
           "imgSrc": "images/6Mockexampage.png",
           "imgAlt": "Full-length exam under timed conditions"
         },
@@ -401,13 +403,14 @@ window.CONTENT = {
     "upcoming": {
       "label": "Upcoming Exams",
       "title": "Upcoming Exams",
+      "deadline": "⏰ Register by June 6th — spots are limited",
       "sessions": [
         {
-          "month": "January 2026",
+          "month": "June 2026",
           "exams": [
             {
               "location": "West Toronto",
-              "date": "Saturday, January 17th, 2026",
+              "date": "Saturday, June 13th, 2026",
               "arriveBy": "1:15 PM",
               "examTime": "1:30–3:30 PM",
               "venue": "Roncesvalles United Church",
@@ -415,48 +418,19 @@ window.CONTENT = {
               "price": "$80.00 CAD",
               "tbc": false,
               "ctaLabel": "Register — West Toronto",
-              "ctaHref": "https://buy.stripe.com/5kQ3co2lF2Ua6Dzeu70Fi04"
+              "ctaHref": "https://buy.stripe.com/8x29AMgcv9iy4vrbhV0Fi05"
             },
             {
               "location": "East Toronto",
-              "date": "Saturday, January 17th, 2026",
+              "date": "Saturday, June 13th, 2026",
               "arriveBy": "9:30 AM",
-              "examTime": "9:45 AM–11:45 AM",
+              "examTime": "9:45–11:45 AM",
               "venue": "East End United Church (entrance on Jackman Ave)",
               "bring": "Calculator, study notes, writing utensils",
               "price": "$80.00 CAD",
               "tbc": false,
               "ctaLabel": "Register — East Toronto",
-              "ctaHref": "https://buy.stripe.com/4gM6oA7FZ2Ua3rn1Hl0Fi01"
-            }
-          ]
-        },
-        {
-          "month": "June 2026",
-          "exams": [
-            {
-              "location": "West Toronto",
-              "date": "Saturday, June 13th, 2026",
-              "arriveBy": "",
-              "examTime": "",
-              "venue": "",
-              "bring": "Calculator, study notes, writing utensils",
-              "price": "$80.00 CAD",
-              "tbc": true,
-              "ctaLabel": "Register — West Toronto",
-              "ctaHref": "STRIPE_JUNE_WEST_LINK_HERE"
-            },
-            {
-              "location": "East Toronto",
-              "date": "Saturday, June 13th, 2026",
-              "arriveBy": "",
-              "examTime": "",
-              "venue": "",
-              "bring": "Calculator, study notes, writing utensils",
-              "price": "$80.00 CAD",
-              "tbc": true,
-              "ctaLabel": "Register — East Toronto",
-              "ctaHref": "STRIPE_JUNE_EAST_LINK_HERE"
+              "ctaHref": "https://buy.stripe.com/9B600c9O766maTP5XB0Fi06"
             }
           ]
         }

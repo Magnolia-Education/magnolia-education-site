@@ -249,6 +249,18 @@
     .exam-banner p { color: var(--text-light); font-size: 1rem; line-height: 1.7; max-width: 540px; }
     .exam-banner-cta { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
     .exam-date { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--coral); }
+    .hero-deadline {
+      display: flex; width: fit-content; align-items: center; gap: 9px;
+      background: var(--coral-pale); color: var(--coral);
+      font-weight: 600; font-size: 0.95rem; letter-spacing: 0.01em;
+      padding: 11px 20px; border-radius: 999px;
+      border: 1px solid rgba(232, 131, 106, 0.28);
+      margin-bottom: 32px;
+      text-decoration: none; cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+    .hero-deadline:hover { background: #fbe4dc; border-color: rgba(232, 131, 106, 0.5); }
+    .hero-deadline:empty { display: none; }
 
     /* ── VALUES ── */
     /* ── TESTIMONIALS ── */
@@ -488,6 +500,7 @@
       <p id="exam-body"></p>
     </div>
     <div class="exam-banner-cta reveal">
+      <a href="mock-exams.html#upcoming" class="hero-deadline" id="exam-deadline"></a>
       <p class="exam-date" id="exam-date"></p>
       <a href="#" id="exam-cta" class="btn-primary"></a>
       <a href="#" id="exam-link" class="service-link"></a>
@@ -638,6 +651,7 @@
     // Exam banner
     setText('exam-title', H.examBanner.title);
     setText('exam-body', H.examBanner.body);
+    setText('exam-deadline', H.examBanner.deadline);
     setText('exam-date', H.examBanner.date);
     setText('exam-cta', H.examBanner.ctaLabel);
     setAttr('exam-cta', 'href', H.examBanner.ctaHref);

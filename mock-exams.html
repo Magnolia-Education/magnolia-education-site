@@ -180,8 +180,20 @@
     }
     .hero-subtitle {
       font-size: 1.05rem; line-height: 1.7; color: var(--text-light);
-      margin-bottom: 36px; max-width: 480px;
+      margin-bottom: 28px; max-width: 480px;
     }
+    .hero-deadline {
+      display: flex; width: fit-content; align-items: center; gap: 9px;
+      background: var(--coral-pale); color: var(--coral);
+      font-weight: 600; font-size: 0.95rem; letter-spacing: 0.01em;
+      padding: 11px 20px; border-radius: 999px;
+      border: 1px solid rgba(232, 131, 106, 0.28);
+      margin-bottom: 32px;
+      text-decoration: none; cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+    .hero-deadline:hover { background: #fbe4dc; border-color: rgba(232, 131, 106, 0.5); }
+    .hero-deadline:empty { display: none; }
     .hero-img { text-align: center; }
     .hero-img img { max-width: 100%; height: auto; max-height: 380px; object-fit: contain; }
 
@@ -254,7 +266,7 @@
       padding: 100px 48px;
     }
     .upcoming-inner { max-width: 1120px; margin: 0 auto; }
-    .upcoming-header { text-align: center; margin-bottom: 64px; }
+    .upcoming-header { text-align: center; margin-bottom: 88px; }
     .upcoming-title {
       font-family: var(--font-display); font-size: 2.6rem; font-weight: 600;
       color: var(--navy); line-height: 1.2;
@@ -461,6 +473,7 @@
       <p class="hero-eyebrow" id="me-hero-label"></p>
       <h1 class="hero-title" id="me-hero-title"></h1>
       <p class="hero-subtitle" id="me-hero-subtitle"></p>
+      <a href="#upcoming" class="hero-deadline" id="me-hero-deadline"></a>
       <a href="#upcoming" class="btn-primary" id="me-hero-cta"></a>
     </div>
     <div class="hero-img reveal">
@@ -501,6 +514,7 @@
     <div class="upcoming-header reveal">
       <p class="section-label" id="me-upcoming-label"></p>
       <h2 class="upcoming-title" id="me-upcoming-title"></h2>
+      <a href="#me-sessions" class="hero-deadline" id="me-upcoming-deadline" style="margin:40px auto 0;"></a>
     </div>
     <div id="me-sessions"></div>
   </div>
@@ -586,6 +600,7 @@
   setText('me-hero-label', ME.hero.label);
   setText('me-hero-title', ME.hero.title);
   setText('me-hero-subtitle', ME.hero.subtitle);
+  setText('me-hero-deadline', ME.hero.deadline);
   setText('me-hero-cta', ME.hero.ctaLabel);
   setAttr('me-hero-cta', 'href', ME.hero.ctaHref);
 
@@ -636,6 +651,7 @@
   // Upcoming exams
   setText('me-upcoming-label', ME.upcoming.label);
   setText('me-upcoming-title', ME.upcoming.title);
+  setText('me-upcoming-deadline', ME.upcoming.deadline);
 
   const sessionsEl = document.getElementById('me-sessions');
   if (sessionsEl) {
