@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Magnolia Admin — Onboarding Boards</title>
+<style>
+  :root { --magnolia:#c2185b; --ink:#2b2330; --muted:#6b6470; --line:#e7d6df; --bg:#fdf3f7; --ok:#2e7d32; --err:#c62828; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); background:var(--bg); }
+  .wrap { max-width:780px; margin:0 auto; padding:40px 24px 80px; }
+  h1 { font-size:24px; margin:0 0 4px; }
+  p.sub { color:var(--muted); margin:0 0 24px; font-size:14px; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:18px 20px; box-shadow:0 1px 3px rgba(60,20,40,.08); margin-bottom:16px; }
+  label { display:block; font-size:13px; font-weight:600; margin-bottom:6px; }
+  input[type=password], input[type=url] { width:100%; padding:9px 11px; border:1px solid var(--line); border-radius:8px; font-size:14px; }
+  button { background:var(--magnolia); color:#fff; border:0; border-radius:8px; padding:9px 16px; font-size:14px; font-weight:600; cursor:pointer; }
+  button.secondary { background:#fff; color:var(--magnolia); border:1px solid var(--magnolia); }
+  button:disabled { opacity:.5; cursor:default; }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th,td { text-align:left; padding:10px 8px; border-bottom:1px solid var(--line); vertical-align:middle; }
+  th { font-size:12px; text-transform:uppercase; letter-spacing:.4px; color:var(--muted); }
+  .row-actions { display:flex; gap:8px; align-items:center; }
+  .row-actions input { min-width:240px; }
+  .msg { font-size:13px; margin-top:10px; }
+  .msg.ok { color:var(--ok); }
+  .msg.err { color:var(--err); }
+  .empty { color:var(--muted); font-size:14px; padding:12px 0; }
+  .hidden { display:none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🌸 Onboarding Boards</h1>
+  <p class="sub">Paste a student's BitPaper board URL back into the portal after you create the board. https:// links only.</p>
+
+  <div class="card" id="gate">
+    <label for="pw">Admin password</label>
+    <input type="password" id="pw" placeholder="••••••••" autocomplete="current-password" />
+    <div style="margin-top:12px;"><button id="loadBtn">Load boards</button></div>
+    <div class="msg err" id="gateMsg"></div>
+  </div>
+
+  <div class="card hidden" id="listCard">
+    <div id="boards"></div>
+  </div>
+</div>
+
+<script>
+  const ENDPOINT = '/.netlify/functions/board-linkback';
+  const pwEl = document.getElementById('pw');
+  const loadBtn = document.getElementById('loadBtn');
+  const gateMsg = document.getElementById('gateMsg');
+  const listCard = document.getElementById('listCard');
+  const boardsEl = document.getElementById('boards');
+
+  function password() { return pwEl.value; }
+
+  async function api(payload) {
+    const res = await fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
+    return data;
+  }
+
+  async function loadBoards() {
+    gateMsg.textContent = '';
+    loadBtn.disabled = true;
+    try {
+      const { boards } = await api({ action: 'list', password: password() });
+      render(boards || []);
+      listCard.classList.remove('hidden');
+    } catch (e) {
+      gateMsg.textContent = e.message;
+    } finally {
+      loadBtn.disabled = false;
+    }
+  }
+
+  function render(boards) {
+    if (!boards.length) {
+      boardsEl.innerHTML = '<div class="empty">No boards are waiting for a URL. 🎉</div>';
+      return;
+    }
+    const rows = boards.map((b) => {
+      const studentName = (b.enrollment && b.enrollment.student && b.enrollment.student.name) || '—';
+      const subject = (b.enrollment && b.enrollment.subject) || (b.label || '—');
+      return `<tr data-id="${b.id}">
+        <td><strong>${escapeHtml(studentName)}</strong><br><span style="color:#6b6470">${escapeHtml(subject)}</span></td>
+        <td><div class="row-actions">
+          <input type="url" placeholder="https://bitpaper.io/go/..." />
+          <button class="secondary saveBtn">Save</button>
+        </div><div class="msg"></div></td>
+      </tr>`;
+    }).join('');
+    boardsEl.innerHTML = `<table><thead><tr><th>Student</th><th>Board URL</th></tr></thead><tbody>${rows}</tbody></table>`;
+    boardsEl.querySelectorAll('.saveBtn').forEach((btn) => btn.addEventListener('click', onSave));
+  }
+
+  async function onSave(ev) {
+    const tr = ev.target.closest('tr');
+    const boardId = tr.getAttribute('data-id');
+    const url = tr.querySelector('input').value.trim();
+    const msg = tr.querySelector('.msg');
+    msg.className = 'msg';
+    msg.textContent = 'Saving…';
+    ev.target.disabled = true;
+    try {
+      await api({ action: 'save', password: password(), boardId, url });
+      msg.className = 'msg ok';
+      msg.textContent = 'Saved ✓';
+      setTimeout(loadBoards, 600);
+    } catch (e) {
+      msg.className = 'msg err';
+      msg.textContent = e.message;
+      ev.target.disabled = false;
+    }
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+  }
+
+  loadBtn.addEventListener('click', loadBoards);
+  pwEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') loadBoards(); });
+</script>
+</body>
+</html>
