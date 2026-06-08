@@ -52,7 +52,7 @@ exports.handler = async (event) => {
     ? Buffer.from(event.body || '', 'base64').toString('utf8')
     : (event.body || '');
 
-  const sigHeader = event.headers['x-magnolia-signature'] || event.headers['X-Magnolia-Signature'];
+  const sigHeader = event.headers['x-magnolia-signature']; // Netlify lowercases all header keys
   if (!verifySignature(rawBody, sigHeader, secret)) {
     return json(401, { error: 'Invalid signature' });
   }

@@ -52,6 +52,9 @@ async function upsertStudent(row) {
     body: [row],
     prefer: 'resolution=merge-duplicates,return=representation',
   });
+  if (!rows || !rows[0]) {
+    throw new Error('upsertStudent: PostgREST returned no row — return=representation not honoured');
+  }
   return rows[0];
 }
 

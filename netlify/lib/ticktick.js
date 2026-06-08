@@ -36,14 +36,14 @@ function buildTaskBody(s) {
     '## Student',
     `- Name: ${s.name}`,
     s.email ? `- Email: ${s.email}` : null,
-    s.grade ? `- Grade: ${s.grade}` : null,
+    s.grade != null ? `- Grade: ${s.grade}` : null,
     s.school ? `- School: ${s.school}` : null,
     s.phone ? `- Phone: ${s.phone}` : null,
     s.parent_name ? `- Parent: ${s.parent_name}` : null,
     s.parent_email ? `- Parent email: ${s.parent_email}` : null,
     s.parent_phone ? `- Parent phone: ${s.parent_phone}` : null,
     s.subject ? `- Subject (from signup): ${s.subject}` : null,
-  ].filter(Boolean);
+  ].filter((l) => l !== null && l !== undefined);
   return lines.join('\n');
 }
 
