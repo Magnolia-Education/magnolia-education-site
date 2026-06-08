@@ -12,12 +12,6 @@
   to = "/.netlify/functions/ticktick-callback"
   status = 200
 
-# Clean URL for the onboarding webhook (Zapier posts the TutorBird "New Student" event here)
-[[redirects]]
-  from = "/hooks/tutorbird"
-  to = "/.netlify/functions/onboarding"
-  status = 200
-
 # Protect the admin with a redirect that still allows the page to load.
 # For full password protection, set NETLIFY_AUTH_PASSWORD in Netlify dashboard.
 [[headers]]
