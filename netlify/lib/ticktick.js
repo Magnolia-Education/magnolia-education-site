@@ -17,7 +17,11 @@ async function callTickTick(baseUrl, toolName, args) {
     }),
   });
 
-  const json = await res.json();
+  const text0 = await res.text();
+  if (!res.ok) {
+    throw new Error(`ticktick-mcp HTTP ${res.status}: ${text0.slice(0, 200)}`);
+  }
+  const json = JSON.parse(text0);
   if (json.error) throw new Error(`TickTick MCP error: ${json.error.message}`);
   // The MCP wraps tool results as { content: [{ type:'text', text: <json> }] }.
   const text = json.result?.content?.[0]?.text;

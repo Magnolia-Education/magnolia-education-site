@@ -97,10 +97,20 @@ exports.handler = async (event) => {
       parent_phone: p.parent_phone,
       subject: p.subject,
     });
-    await db.setStudentTaskId(student.id, taskId);
+    // Persist the task id. If this PATCH fails we still return 200 so Zapier does NOT
+    // retry — the TickTick task already exists and a retry would create a duplicate.
+    // The student row is left without a stored task id, which means the idempotency
+    // guard above won't fire on a future manual retry, but that's the safer trade-off
+    // vs silently creating duplicate tasks for every transient Supabase blip.
+    try {
+      await db.setStudentTaskId(student.id, taskId);
+    } catch (patchErr) {
+      console.error('setStudentTaskId failed (task was created):', patchErr.message);
+    }
 
     return json(200, { ok: true, student_id: student.id, ticktick_task_id: taskId });
   } catch (err) {
-    return json(500, { error: err.message });
+    console.error('onboarding error:', err.message);
+    return json(500, { error: 'Internal error — check Netlify function logs' });
   }
 };
