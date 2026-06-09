@@ -55,7 +55,15 @@ function parseRange(rangeStr) {
   const endMerMatch = parts[1].match(/(am|pm)/i);
   const endMer = endMerMatch ? endMerMatch[1].toLowerCase() : null;
   const end = to24h(parts[1], endMer);
-  const start = to24h(parts[0], endMer); // start inherits end's meridiem if it omits its own
+  let start = to24h(parts[0], endMer); // start inherits end's meridiem if it omits its own
+  // Range crossing noon: a start with no explicit am/pm that inherits "pm" can land AT/AFTER the
+  // end (e.g. "11:30-12:30pm" -> 23:30, "11-1pm" -> 23:00). Retry the start as am in that case.
+  // (Zero-padded "HH:MM" strings compare correctly, so start >= end is a valid ordering check.)
+  const startHasMer = /(am|pm)/i.test(parts[0]);
+  if (start && end && !startHasMer && endMer === 'pm' && start >= end) {
+    const retry = to24h(parts[0], 'am');
+    if (retry) start = retry;
+  }
   if (!start || !end) return null;
   return { start, end };
 }
