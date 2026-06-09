@@ -47,7 +47,15 @@ function buildTaskBody(s) {
     s.parent_email ? `- Parent email: ${s.parent_email}` : null,
     s.parent_phone ? `- Parent phone: ${s.parent_phone}` : null,
     s.subject ? `- Subject (from signup): ${s.subject}` : null,
+    s.device ? `- Device: ${s.device}` : null,
+    s.session_plan ? `- Session plan: ${s.session_plan}` : null,
   ].filter((l) => l !== null && l !== undefined);
+
+  // Flag anything the heuristic parser couldn't read so Rachit can fix the student row.
+  if (Array.isArray(s.warnings) && s.warnings.length) {
+    lines.push('', '## ⚠️ Needs review', ...s.warnings.map((w) => `- ${w}`));
+  }
+
   return lines.join('\n');
 }
 

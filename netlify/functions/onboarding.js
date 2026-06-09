@@ -18,6 +18,7 @@
 const crypto = require('crypto');
 const db = require('../lib/supabase');
 const ticktick = require('../lib/ticktick');
+const parse = require('../lib/parse');
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
@@ -77,11 +78,48 @@ exports.handler = async (event) => {
     }
 
     const name = `${p.first_name} ${p.last_name}`.trim();
-    const grade = Number.parseInt(p.grade, 10);
+
+    // Heuristically parse the free-text/structured intake fields. Anything unparseable is
+    // skipped and noted in `warnings` (surfaced in the TickTick task) -- we never reject.
+    const { fields, warnings } = parse.parseIntake(p);
+
+    // Create / link the parent (idempotent on email, migration 0013). Skip when no parent
+    // email was provided -- the unique index is partial, so a null-email upsert wouldn't merge.
+    let parentId = null;
+    const parentEmail = p.parent_email && String(p.parent_email).trim();
+    if (parentEmail) {
+      const parentFirst = (p.parent_first_name || '').trim();
+      const parentLast = (p.parent_last_name || '').trim();
+      const parent = await db.upsertParent({
+        first_name: parentFirst || null,
+        last_name: parentLast || null,
+        name: `${parentFirst} ${parentLast}`.trim() || p.parent_name || parentEmail,
+        email: parentEmail,
+        phone: p.parent_phone || null,
+      });
+      parentId = parent.id;
+    } else {
+      warnings.push('No parent email provided — parent not linked.');
+    }
+
     const student = await db.upsertStudent({
       tutorbird_id: p.tutorbird_id,
       name,
-      grade: Number.isNaN(grade) ? null : grade,
+      first_name: p.first_name,
+      last_name: p.last_name,
+      grade: fields.grade,
+      school: p.school || null,
+      device: fields.device,
+      subject_requested: p.subject_requested || p.subject || null,
+      previous_subject_mark: fields.previous_subject_mark,
+      sessions_per_week: fields.sessions_per_week,
+      session_length_min: fields.session_length_min,
+      preferred_times: fields.preferred_times,
+      unavailable_times: fields.unavailable_times,
+      earliest_start_after_school: fields.earliest_start_after_school,
+      spare_period: p.spare_period ? String(p.spare_period).trim() : null,
+      primary_parent_id: parentId,
+      intake_raw: { ...p, _parse_warnings: warnings },
     });
 
     const proto = event.headers['x-forwarded-proto'] || 'https';
@@ -89,13 +127,16 @@ exports.handler = async (event) => {
     const taskId = await ticktick.createOnboardingTask(baseUrl, {
       name,
       email: p.email,
-      grade: Number.isNaN(grade) ? null : grade,
+      grade: fields.grade,
       school: p.school,
       phone: p.phone,
-      parent_name: p.parent_name,
+      parent_name: p.parent_name || `${p.parent_first_name || ''} ${p.parent_last_name || ''}`.trim(),
       parent_email: p.parent_email,
       parent_phone: p.parent_phone,
-      subject: p.subject,
+      subject: p.subject_requested || p.subject,
+      device: fields.device,
+      session_plan: p.session_plan,
+      warnings,
     });
     // Persist the task id. If this PATCH fails we still return 200 so Zapier does NOT
     // retry — the TickTick task already exists and a retry would create a duplicate.
