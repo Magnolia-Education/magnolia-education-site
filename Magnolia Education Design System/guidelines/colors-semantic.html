@@ -1,0 +1,24 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Semantic" subtitle="Status colors, each with a soft tinted background" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--white); padding: 28px 30px; }
+  .row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .item { border-radius: var(--radius-md); padding: 14px 16px; display: flex; align-items: center; gap: 11px; }
+  .dot { width: 26px; height: 26px; border-radius: 999px; flex: none; }
+  .name { font-size: 0.84rem; font-weight: 600; color: var(--navy); }
+  .hex { font-size: 0.68rem; color: var(--ink-soft); }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="item" style="background:var(--success-bg)"><div class="dot" style="background:var(--success)"></div><div><div class="name">Success</div><div class="hex">#5B8A6B</div></div></div>
+    <div class="item" style="background:var(--warning-bg)"><div class="dot" style="background:var(--warning)"></div><div><div class="name">Warning</div><div class="hex">#C9954A</div></div></div>
+    <div class="item" style="background:var(--error-bg)"><div class="dot" style="background:var(--error)"></div><div><div class="name">Error</div><div class="hex">#C2553F</div></div></div>
+    <div class="item" style="background:var(--info-bg)"><div class="dot" style="background:var(--info)"></div><div><div class="name">Info</div><div class="hex">#5E7C97</div></div></div>
+  </div>
+</body>
+</html>

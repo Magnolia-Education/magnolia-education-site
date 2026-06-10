@@ -1,0 +1,25 @@
+<!-- @dsCard group="Spacing" viewport="700x190" name="Shadows" subtitle="Navy-tinted, two-layer soft elevation — plus the coral CTA glow" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--cream); padding: 34px 30px; }
+  .row { display: flex; gap: 26px; flex-wrap: wrap; }
+  .item { text-align: center; }
+  .box { width: 96px; height: 60px; background: var(--white); border-radius: var(--radius-md); }
+  .n { font-size: 0.74rem; font-weight: 600; color: var(--navy); margin-top: 14px; }
+  .cta { background: var(--coral); }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="item"><div class="box" style="box-shadow:var(--shadow-xs)"></div><div class="n">xs</div></div>
+    <div class="item"><div class="box" style="box-shadow:var(--shadow-sm)"></div><div class="n">sm · card</div></div>
+    <div class="item"><div class="box" style="box-shadow:var(--shadow-md)"></div><div class="n">md</div></div>
+    <div class="item"><div class="box" style="box-shadow:var(--shadow-lg)"></div><div class="n">lg · float</div></div>
+    <div class="item"><div class="box cta" style="box-shadow:var(--shadow-cta)"></div><div class="n">cta glow</div></div>
+  </div>
+</body>
+</html>

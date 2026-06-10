@@ -1,0 +1,55 @@
+/* ============================================================
+   Magnolia Education — Spacing, Radius, Shadow & Motion
+   Generous whitespace. Soft, rounded, never boxy. Shadows are
+   tinted with navy so depth reads warm, not gray.
+   ============================================================ */
+
+:root {
+  /* ---- Spacing scale (4px base) -------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* Section rhythm */
+  --section-pad-y: 100px;   /* vertical padding of a page section */
+  --section-pad-x: 48px;
+  --content-max: 1120px;    /* max readable content width         */
+
+  /* ---- Radius — soft, generous --------------------------- */
+  --radius-xs: 6px;     /* inputs, small chips         */
+  --radius-sm: 8px;     /* buttons                     */
+  --radius-md: 14px;    /* cards                       */
+  --radius-lg: 20px;    /* image panels, large cards   */
+  --radius-xl: 28px;    /* feature blocks              */
+  --radius-pill: 999px; /* badges, pills, deadlines    */
+
+  /* ---- Shadows — navy-tinted, two-layer soft ------------- */
+  --shadow-xs: 0 1px 2px rgba(61, 68, 102, 0.06);
+  --shadow-sm: 0 4px 24px rgba(61, 68, 102, 0.08);
+  --shadow-md: 0 8px 24px rgba(61, 68, 102, 0.10);
+  --shadow-lg: 0 20px 60px rgba(61, 68, 102, 0.15);
+  --shadow-cta: 0 6px 18px rgba(232, 131, 106, 0.28);
+
+  /* Soft drop-shadow for cut-out illustrations (no card) */
+  --shadow-art: drop-shadow(0 20px 60px rgba(61, 68, 102, 0.15));
+
+  /* ---- Motion — gentle, never bouncy --------------------- */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1); /* @kind other */
+  --dur-fast: 0.15s; /* @kind other */
+  --dur: 0.2s; /* @kind other */
+  /* scroll-reveal fades */
+  --dur-slow: 0.65s; /* @kind other */
+
+  /* hover lift on buttons/cards */
+  --lift: translateY(-2px); /* @kind other */
+}

@@ -1,0 +1,28 @@
+<!-- @dsCard group="Colors" viewport="700x190" name="Brand core" subtitle="Navy, coral & warm grounds — the four that carry the brand" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--white); padding: 28px 30px; }
+  .row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+  .sw { border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-xs); }
+  .chip { height: 76px; }
+  .meta { padding: 9px 11px 12px; }
+  .name { font-size: 0.82rem; font-weight: 600; color: var(--navy); }
+  .hex { font-size: 0.72rem; color: var(--ink-soft); letter-spacing: 0.02em; margin-top: 1px; }
+  .tok { font-size: 0.66rem; color: var(--ink-faint); margin-top: 4px; }
+  .b { border: 1px solid var(--line); }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="sw"><div class="chip" style="background:var(--navy)"></div><div class="meta"><div class="name">Navy</div><div class="hex">#3D4466</div><div class="tok">--navy</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--coral)"></div><div class="meta"><div class="name">Coral</div><div class="hex">#E8836A</div><div class="tok">--coral</div></div></div>
+    <div class="sw b"><div class="chip" style="background:var(--coral-pale)"></div><div class="meta"><div class="name">Coral pale</div><div class="hex">#FDF0EC</div><div class="tok">--coral-pale</div></div></div>
+    <div class="sw b"><div class="chip" style="background:var(--beige)"></div><div class="meta"><div class="name">Beige</div><div class="hex">#EDE8E0</div><div class="tok">--beige</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--navy-deep)"></div><div class="meta"><div class="name">Dark navy</div><div class="hex">#2A2D40</div><div class="tok">--navy-deep</div></div></div>
+  </div>
+</body>
+</html>

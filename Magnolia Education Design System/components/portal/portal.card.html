@@ -1,0 +1,42 @@
+<!-- @dsCard group="Components" viewport="700x320" name="Student hub — Stat tiles & sessions" subtitle="The portal building blocks, in true Magnolia brand" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--beige); padding: 28px 30px; }
+  .lbl { font-size: 0.66rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); margin: 0 0 12px; }
+  .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 26px; }
+  .rows { display: flex; flex-direction: column; gap: 10px; }
+</style>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="../../_ds_bundle.js"></script>
+  <script type="text/babel">
+    const { StatTile, SessionRow } = window.MagnoliaEducationDesignSystem_019ddb;
+    function Demo() {
+      return (
+        <div>
+          <p className="lbl">At a glance</p>
+          <div className="tiles">
+            <StatTile label="Boards" value="3 active" sub="View all →" />
+            <StatTile label="This month" value="4 sessions" sub="3 completed · 1 upcoming" />
+            <StatTile label="Your tutor" value="Rachit" sub="Message →" />
+          </div>
+          <p className="lbl">Upcoming</p>
+          <div className="rows">
+            <SessionRow subject="Advanced Functions" tutorName="Rachit" when="Tue, Jun 10 · 4:30 PM EST" status="scheduled" />
+            <SessionRow subject="Advanced Functions" tutorName="Rachit" when="Tue, Jun 3 · 4:30 PM EST" status="completed" />
+          </div>
+        </div>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById('app')).render(<Demo />);
+  </script>
+</body>
+</html>
