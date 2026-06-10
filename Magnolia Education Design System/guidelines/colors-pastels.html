@@ -1,0 +1,29 @@
+<!-- @dsCard group="Colors" viewport="700x200" name="Sky & illustration pastels" subtitle="The cool blue hero gradient + accents pulled from the hand-drawn art" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--white); padding: 28px 30px; }
+  .grad { height: 56px; border-radius: var(--radius-md); background: var(--gradient-sky); box-shadow: var(--shadow-xs); display: flex; align-items: center; padding: 0 16px; margin-bottom: 16px; }
+  .grad span { font-size: 0.72rem; color: var(--navy); font-weight: 600; }
+  .row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+  .sw { text-align: center; }
+  .chip { height: 52px; border-radius: var(--radius-sm); box-shadow: var(--shadow-xs); }
+  .name { font-size: 0.72rem; font-weight: 600; color: var(--navy); margin-top: 7px; }
+  .hex { font-size: 0.64rem; color: var(--ink-faint); }
+</style>
+</head>
+<body>
+  <div class="grad"><span>--gradient-sky · #E2EAF2 → #D4E5EE · hero & soft panels</span></div>
+  <div class="row">
+    <div class="sw"><div class="chip" style="background:var(--blossom)"></div><div class="name">Blossom</div><div class="hex">#EFA8C4</div></div>
+    <div class="sw"><div class="chip" style="background:var(--blossom-soft)"></div><div class="name">Blossom soft</div><div class="hex">#F5C6D6</div></div>
+    <div class="sw"><div class="chip" style="background:var(--leaf)"></div><div class="name">Leaf</div><div class="hex">#A9B57C</div></div>
+    <div class="sw"><div class="chip" style="background:var(--leaf-soft)"></div><div class="name">Leaf soft</div><div class="hex">#C7D3A0</div></div>
+    <div class="sw"><div class="chip" style="background:var(--butter)"></div><div class="name">Butter</div><div class="hex">#F6E7B8</div></div>
+    <div class="sw"><div class="chip" style="background:var(--star)"></div><div class="name">Star</div><div class="hex">#F5A623</div></div>
+  </div>
+</body>
+</html>

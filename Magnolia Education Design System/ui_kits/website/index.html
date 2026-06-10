@@ -1,0 +1,239 @@
+<!-- @dsCard group="Website" viewport="1280x860" name="Marketing site — Homepage" subtitle="Full homepage recreation: hero, founder, services, testimonials, footer" -->
+<!-- @startingPoint section="Website" subtitle="Homepage: nav, hero, founder, services, testimonials, CTA, footer" viewport="1280x860" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magnolia Education | Tutoring for Grades 8–12</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); color: var(--ink); background: #fff; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding-inline: 48px; }
+  a { color: inherit; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; z-index: 50; background: var(--navy); height: 68px; display: flex; align-items: center; padding: 0 48px; gap: 40px; }
+  .logo { display: flex; align-items: center; gap: 11px; margin-right: auto; text-decoration: none; }
+  .logo img { height: 36px; }
+  .logo span { font-family: var(--font-display); font-size: 1.25rem; color: #fff; font-weight: 500; letter-spacing: 0.02em; white-space: nowrap; }
+  .nav-links { display: flex; align-items: center; gap: 30px; }
+  .nav-links a { color: rgba(255,255,255,0.85); font-size: 0.9rem; text-decoration: none; transition: color var(--dur); }
+  .nav-links a:hover { color: #fff; }
+  .nav-cta { background: var(--coral); color: #fff !important; padding: 9px 22px; border-radius: 6px; font-weight: 500; font-size: 0.875rem; transition: background var(--dur), transform var(--dur-fast); }
+  .nav-cta:hover { background: var(--coral-hover); transform: translateY(-1px); }
+
+  /* HERO */
+  .hero { background: var(--gradient-sky); padding: 76px 0 84px; }
+  .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .hero h1 { font-family: var(--font-display); font-weight: 500; font-size: clamp(2.8rem,5vw,4.2rem); line-height: 1.1; color: var(--navy); margin-bottom: 34px; }
+  .hero h1 em { font-style: italic; color: var(--coral); font-size: 0.67em; }
+  .hero .sub { font-size: 1.05rem; line-height: 1.7; color: var(--ink-soft); margin-bottom: 34px; max-width: 480px; }
+  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; font-weight: 500; font-size: 0.95rem; padding: 14px 32px; border-radius: 8px; text-decoration: none; border: 2px solid transparent; cursor: pointer; transition: all var(--dur) var(--ease); }
+  .btn-primary { background: var(--coral); color: #fff; box-shadow: 0 6px 18px rgba(232,131,106,0.28); }
+  .btn-primary:hover { background: var(--coral-hover); transform: translateY(-2px); }
+  .btn-secondary { background: transparent; color: var(--navy); border-color: var(--navy); }
+  .btn-secondary:hover { background: var(--navy); color: #fff; }
+  .hero-art { display: flex; justify-content: center; }
+  .hero-art img { width: 100%; max-width: 440px; filter: drop-shadow(0 20px 60px rgba(61,68,102,0.15)); }
+
+  /* FOUNDER */
+  .founder { background: var(--navy); padding: 96px 0; }
+  .founder-grid { display: grid; grid-template-columns: 0.85fr 1fr; gap: 64px; align-items: center; }
+  .founder-art { background: rgba(255,255,255,0.04); border-radius: 16px; overflow: hidden; aspect-ratio: 4/5; display: flex; align-items: flex-end; justify-content: center; }
+  .founder-art img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+  .founder .eyebrow { color: var(--coral); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 14px; }
+  .founder h2 { font-family: var(--font-display); font-weight: 500; font-size: clamp(2rem,4vw,2.8rem); color: #fff; margin-bottom: 4px; }
+  .founder .pron { color: rgba(255,255,255,0.5); font-size: 0.8rem; font-style: italic; margin-bottom: 22px; }
+  .founder p { color: rgba(255,255,255,0.8); line-height: 1.8; margin-bottom: 16px; }
+  .founder .sig { font-family: var(--font-display); font-style: italic; font-size: 1.5rem; color: #fff; margin-top: 8px; }
+
+  /* SERVICES */
+  .services { padding: 100px 0; }
+  .sec-eyebrow { color: var(--coral); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 16px; }
+  .sec-title { font-family: var(--font-display); font-weight: 500; font-size: clamp(2rem,4vw,3rem); line-height: 1.18; color: var(--navy); margin-bottom: 18px; }
+  .sec-sub { font-size: 1.05rem; color: var(--ink-soft); line-height: 1.7; max-width: 620px; }
+  .srow { display: grid; grid-template-columns: 40% 60%; gap: 64px; align-items: center; margin-top: 64px; padding-bottom: 64px; border-bottom: 1px solid var(--line); }
+  .srow:last-child { border-bottom: none; padding-bottom: 0; }
+  .srow.reverse { grid-template-columns: 60% 40%; }
+  .srow.reverse .sart { order: 2; }
+  .sart { background: var(--gradient-sky); border-radius: 20px; min-height: 280px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .sart img { width: 100%; max-height: 300px; object-fit: contain; transform: scale(1.35); }
+  .srow h3 { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.8rem,3.4vw,2.6rem); color: var(--navy); margin-bottom: 16px; line-height: 1.15; }
+  .srow p { color: var(--ink-soft); line-height: 1.75; margin-bottom: 22px; }
+  .slink { color: var(--coral); font-weight: 600; font-size: 0.9rem; text-decoration: none; }
+  .slink:hover { text-decoration: underline; }
+
+  /* TESTIMONIALS */
+  .testi { background: var(--gradient-sky); padding: 96px 0; }
+  .testi .wrap { padding-inline: 48px; }
+  .testi-head { margin-bottom: 40px; }
+  .testi-rail { display: flex; gap: 22px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: none; }
+  .testi-rail::-webkit-scrollbar { display: none; }
+  .tcard { background: #fff; border-radius: 14px; padding: 28px; min-width: 320px; max-width: 320px; box-shadow: var(--shadow-sm); flex: none; }
+  .tcard .stars { color: var(--star); letter-spacing: 2px; margin-bottom: 14px; font-size: 0.95rem; }
+  .tcard p { font-style: italic; font-size: 0.9rem; line-height: 1.7; color: var(--ink); margin-bottom: 18px; }
+  .tcard .by { font-weight: 600; font-size: 0.78rem; letter-spacing: 0.05em; color: var(--navy); }
+  .tcard .role { font-size: 0.74rem; color: var(--ink-soft); margin-top: 2px; }
+
+  /* CTA */
+  .cta { background: var(--navy); padding: 92px 0; text-align: center; }
+  .cta h2 { font-family: var(--font-display); font-weight: 500; font-size: clamp(2rem,4vw,3rem); color: #fff; margin-bottom: 16px; }
+  .cta p { color: rgba(255,255,255,0.75); font-size: 1.05rem; max-width: 540px; margin: 0 auto 36px; line-height: 1.7; }
+  .btn-white { background: #fff; color: var(--navy); }
+  .btn-white:hover { background: rgba(255,255,255,0.9); transform: translateY(-2px); }
+
+  /* FOOTER */
+  footer { background: var(--navy-deep); color: rgba(255,255,255,0.7); padding: 64px 0 30px; }
+  .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 44px; }
+  .foot-brand img { height: 34px; margin-bottom: 14px; }
+  .foot-brand p { font-size: 0.86rem; line-height: 1.7; color: rgba(255,255,255,0.55); max-width: 260px; }
+  .foot-brand .quote { font-family: var(--font-display); font-style: italic; font-size: 1rem; color: rgba(255,255,255,0.7); margin-top: 12px; }
+  .foot-col h4 { color: #fff; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
+  .foot-col a { display: block; color: rgba(255,255,255,0.55); font-size: 0.86rem; text-decoration: none; margin-bottom: 10px; }
+  .foot-col a:hover { color: rgba(255,255,255,0.9); }
+  .foot-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .foot-bottom p { font-size: 0.78rem; color: rgba(255,255,255,0.35); }
+  .foot-bottom .fact { font-style: italic; max-width: 440px; text-align: right; }
+</style>
+</head>
+<body>
+  <template id="__bundler_thumbnail" data-bg-color="#3D4466">
+    <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+      <rect width="1200" height="800" fill="#3D4466"/>
+      <g transform="translate(600 320)">
+        <g fill="#E8836A">
+          <ellipse cx="0" cy="-70" rx="34" ry="64"/>
+          <ellipse cx="0" cy="70" rx="34" ry="64"/>
+          <ellipse cx="-70" cy="0" rx="64" ry="34"/>
+          <ellipse cx="70" cy="0" rx="64" ry="34"/>
+          <ellipse cx="-50" cy="-50" rx="50" ry="30" transform="rotate(45 -50 -50)"/>
+          <ellipse cx="50" cy="-50" rx="50" ry="30" transform="rotate(-45 50 -50)"/>
+          <ellipse cx="-50" cy="50" rx="50" ry="30" transform="rotate(-45 -50 50)"/>
+          <ellipse cx="50" cy="50" rx="50" ry="30" transform="rotate(45 50 50)"/>
+        </g>
+        <circle cx="0" cy="0" r="30" fill="#F6E7B8"/>
+      </g>
+      <text x="600" y="540" font-family="Georgia, serif" font-size="76" font-style="italic" fill="#FBF8F2" text-anchor="middle">Magnolia Education</text>
+    </svg>
+  </template>
+
+  <nav>
+    <a href="#" class="logo"><img src="../../assets/logo/magnolia-flower.png" alt="Magnolia"><span>Magnolia Education</span></a>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#founder">About</a>
+      <a href="#testi">Reviews</a>
+      <a href="#" class="nav-cta">Book a Consultation</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>Better grades.<br><em>And a better way to get them.</em></h1>
+        <p class="sub">Magnolia Education offers personalized math tutoring, mock exams, study skills coaching, and prep cohorts for high school students Grades 8–12.</p>
+        <div class="hero-btns">
+          <a href="#" class="btn btn-primary">Book a Consultation</a>
+          <a href="#services" class="btn btn-secondary">Explore Tutoring</a>
+        </div>
+      </div>
+      <div class="hero-art"><img src="../../assets/illustrations/cloud-surfing.png" alt="Student surfing on an A+ paper through clouds"></div>
+    </div>
+  </section>
+
+  <section class="founder" id="founder">
+    <div class="wrap founder-grid">
+      <div class="founder-art"><img src="../../assets/illustrations/founder-portrait.png" alt="Rachit Chakerwarti, founder"></div>
+      <div>
+        <p class="eyebrow">From the Founder</p>
+        <h2>Hi, I'm Rachit.</h2>
+        <p class="pron">(pronounced Rutch-it, like "Dutch" with an R)</p>
+        <p>I started Magnolia because I believe that with the right tools every student can learn math — and more importantly, what math teaches you: how to learn, and how to do hard things in life.</p>
+        <p>I've struggled and I've triumphed. I know the gap, and what it takes to get from one place to the other. Our tutors are handpicked for warmth, patience, and deep subject knowledge.</p>
+        <div class="sig">— Rachit</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services" id="services">
+    <div class="wrap">
+      <p class="sec-eyebrow">What We Offer</p>
+      <h2 class="sec-title">Everything a student needs to thrive.</h2>
+      <p class="sec-sub">From tutoring to exam prep, study systems, and getting ahead of the next course — we've got something to bridge the gaps along the math journey.</p>
+
+      <div class="srow">
+        <div class="sart"><img src="../../assets/illustrations/magnolia-tree.png" alt="Students under a magnolia tree"></div>
+        <div>
+          <h3>Tutoring</h3>
+          <p>Personalized math tutoring for Grades 8–12. Homework help, mindfulness openers, and concept mastery, integrated with study systems that last for life.</p>
+          <a href="#" class="slink">Learn more →</a>
+        </div>
+      </div>
+
+      <div class="srow reverse">
+        <div class="sart"><img src="../../assets/illustrations/time-management.png" alt="Student managing study schedule"></div>
+        <div>
+          <h3>Study Skills</h3>
+          <p>The Three Review System, Pomodoro time-blocking, and goal-setting — the habits that separate students who work hard from students who study smart.</p>
+          <a href="#" class="slink">Learn more →</a>
+        </div>
+      </div>
+
+      <div class="srow">
+        <div class="sart"><img src="../../assets/illustrations/mock-exam.png" alt="Mock exam with worked solutions"></div>
+        <div>
+          <h3>Mock Exams</h3>
+          <p>Full-length mock exams under real conditions across Toronto. Detailed worked solutions, a mindfulness opening, and a celebration cookie for every student.</p>
+          <a href="#" class="slink">Learn more →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testi" id="testi">
+    <div class="wrap">
+      <div class="testi-head">
+        <p class="sec-eyebrow">What Families Say</p>
+        <h2 class="sec-title">300+ students taught. Real results.</h2>
+      </div>
+      <div class="testi-rail">
+        <div class="tcard"><div class="stars">★★★★★</div><p>&ldquo;His approach is a perfect combination of accountability, understanding and patience. We have seen our son's confidence soar over the past two years.&rdquo;</p><div class="by">KRISTY FLETCHER</div><div class="role">Parent</div></div>
+        <div class="tcard"><div class="stars">★★★★★</div><p>&ldquo;Rachit helped me develop very good learning habits and allowed me to have more profound understandings of math instead of relying on memorization.&rdquo;</p><div class="by">TAL PERRY</div><div class="role">Student</div></div>
+        <div class="tcard"><div class="stars">★★★★★</div><p>&ldquo;One of my sons went from an 80% average to 98% on his final Grade 12 Advanced Functions exam.&rdquo;</p><div class="by">SYLVIA APOSTOLIDIS</div><div class="role">Parent</div></div>
+        <div class="tcard"><div class="stars">★★★★★</div><p>&ldquo;Not only has my love for subjects grown a lot, but my grades and understanding have skyrocketed since doing tutoring with Rachit.&rdquo;</p><div class="by">MADELINE GALBRAITH</div><div class="role">Student</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap">
+      <h2>Ready to see the difference?</h2>
+      <p>Start with a free 30-minute consultation. No commitment, no pressure — just a conversation about your student and how we can help.</p>
+      <a href="#" class="btn btn-white">Book a Consultation</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <img src="../../assets/logo/magnolia-flower.png" alt="Magnolia">
+          <p>Personalized tutoring and exam prep for high school students in Grades 8–12. Math, science, and the skills to learn anything.</p>
+          <p class="quote">"Better grades. And a better way to get them."</p>
+        </div>
+        <div class="foot-col"><h4>Services</h4><a href="#">Tutoring</a><a href="#">Mock Exams</a><a href="#">Study Skills</a><a href="#">Prep Cohorts</a></div>
+        <div class="foot-col"><h4>About</h4><a href="#">Our Story</a><a href="#">Our Tutors</a><a href="#">Join Our Team</a></div>
+        <div class="foot-col"><h4>Connect</h4><a href="#">Contact</a><a href="#">hello@magnolia-education.com</a><a href="#">Book a Consultation</a></div>
+      </div>
+      <div class="foot-bottom">
+        <p>© 2026 Magnolia Education. All rights reserved.</p>
+        <p class="fact">🌸 The magnolia is one of Earth's oldest flowering plants — fossils date back 95 million years. Some things are worth preserving.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

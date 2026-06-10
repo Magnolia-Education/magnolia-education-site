@@ -1,0 +1,183 @@
+<!-- @dsCard group="Student Hub" viewport="1200x760" name="Student Hub" subtitle="The portal dashboard, re-skinned in the real Magnolia brand layer" -->
+<!-- @startingPoint section="Student Hub" subtitle="Sidebar + greeting + next session + at-a-glance tiles" viewport="1200x760" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magnolia — Student Hub</title>
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-body); background: var(--cream); color: var(--ink); }
+  .app { display: flex; min-height: 100vh; }
+
+  /* ---- Sidebar ---- */
+  .side { width: 240px; flex: none; background: var(--white); border-right: 1px solid var(--line); display: flex; flex-direction: column; }
+  .side .brand { display: flex; align-items: center; gap: 10px; height: 64px; padding: 0 20px; border-bottom: 1px solid var(--line); }
+  .side .brand img { height: 32px; }
+  .side .brand span { font-family: var(--font-display); font-size: 1.4rem; color: var(--navy); font-weight: 500; }
+  .nav { display: flex; flex-direction: column; gap: 4px; padding: 16px 12px; }
+  .nav a { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 10px; border-left: 3px solid transparent; color: var(--ink-soft); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: background var(--dur) var(--ease), color var(--dur) var(--ease); cursor: pointer; }
+  .nav a svg { width: 19px; height: 19px; }
+  .nav a:hover { background: var(--coral-pale); color: var(--navy); }
+  .nav a.active { background: var(--coral-pale); color: var(--coral); border-left-color: var(--coral); font-weight: 600; }
+  .nav-divider { height: 1px; background: var(--line); margin: 14px 16px; }
+  .nav .soon { display: flex; align-items: center; gap: 12px; padding: 11px 14px; color: var(--ink-faint); font-size: 0.86rem; font-style: italic; }
+  .nav .soon svg { width: 15px; height: 15px; }
+  .side .user { margin-top: auto; display: flex; align-items: center; gap: 11px; padding: 16px; border-top: 1px solid var(--line); }
+  .avatar { width: 38px; height: 38px; border-radius: 999px; background: var(--coral-pale); color: var(--coral); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.85rem; flex: none; }
+  .user .meta { min-width: 0; }
+  .user .meta b { display: block; font-size: 0.85rem; color: var(--navy); font-weight: 600; }
+  .user .meta small { display: block; font-size: 0.74rem; color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* ---- Main ---- */
+  .main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+  .hero { padding: 44px 48px 40px; background: linear-gradient(135deg, var(--blossom-soft) 0%, var(--coral-pale) 45%, var(--cream) 100%); }
+  .hero h1 { font-family: var(--font-display); font-weight: 500; font-size: 2.4rem; color: var(--navy); }
+  .next { margin-top: 22px; max-width: 560px; }
+  .next .kick { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--coral); }
+  .next h2 { font-family: var(--font-display); font-weight: 500; font-size: 1.7rem; color: var(--navy); margin: 8px 0 2px; }
+  .next p { color: var(--ink-soft); font-size: 0.92rem; }
+  .next .btns { display: flex; gap: 10px; margin-top: 18px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; font-size: 0.88rem; font-weight: 600; padding: 11px 22px; border-radius: 8px; text-decoration: none; cursor: pointer; border: 2px solid transparent; transition: all var(--dur) var(--ease); }
+  .btn-primary { background: var(--coral); color: #fff; box-shadow: 0 6px 18px rgba(232,131,106,0.28); }
+  .btn-primary:hover { background: var(--coral-hover); transform: translateY(-2px); }
+  .btn-ghost { background: transparent; color: var(--navy); border-color: var(--line-strong); }
+  .btn-ghost:hover { background: var(--white); }
+
+  .content { padding: 36px 48px 40px; max-width: 920px; }
+  .content h3.section { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 14px; }
+  .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 34px; }
+  .tile { display: block; background: var(--white); border-radius: 14px; box-shadow: var(--shadow-sm); padding: 20px; text-decoration: none; transition: transform var(--dur) var(--ease), background var(--dur) var(--ease), box-shadow var(--dur) var(--ease); cursor: pointer; }
+  .tile:hover { transform: translateY(-2px); background: var(--coral-pale); box-shadow: var(--shadow-md); }
+  .tile .l { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--coral); }
+  .tile .v { font-size: 1.08rem; font-weight: 600; color: var(--navy); margin-top: 6px; }
+  .tile .s { font-size: 0.84rem; color: var(--ink-soft); margin-top: 2px; }
+
+  .rows { display: flex; flex-direction: column; gap: 10px; }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 16px; background: var(--white); border-radius: 14px; box-shadow: var(--shadow-sm); padding: 16px 20px; }
+  .row b { color: var(--navy); font-weight: 600; }
+  .row p { font-size: 0.85rem; color: var(--ink-soft); margin-top: 3px; }
+  .pill { font-size: 0.64rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; }
+  .pill.scheduled { background: var(--coral-pale); color: var(--coral); }
+  .pill.completed { background: var(--success-bg); color: var(--success); }
+
+  .panel { display: none; }
+  .panel.show { display: block; }
+  .foot { margin-top: auto; display: flex; justify-content: space-between; padding: 22px 48px; border-top: 1px solid var(--line); font-size: 0.85rem; color: var(--ink-soft); }
+  .foot a { color: var(--ink-soft); text-decoration: none; cursor: pointer; }
+  .foot a:hover { color: var(--navy); }
+</style>
+</head>
+<body>
+  <div class="app">
+    <aside class="side">
+      <div class="brand"><img src="../../assets/logo/magnolia-flower.png" alt="Magnolia"><span>Magnolia</span></div>
+      <nav class="nav" id="nav">
+        <a class="active" data-panel="dashboard"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+        <a data-panel="schedule"><i data-lucide="calendar"></i> Schedule</a>
+        <a data-panel="boards"><i data-lucide="target"></i> Your boards</a>
+        <a data-panel="tutor"><i data-lucide="user"></i> Your tutor</a>
+        <div class="nav-divider"></div>
+        <span class="soon"><i data-lucide="lock"></i> AI Tutor</span>
+        <span class="soon"><i data-lucide="lock"></i> Homework upload</span>
+      </nav>
+      <div class="user">
+        <div class="avatar">SB</div>
+        <div class="meta"><b>Simon Burn</b><small>simon@family.ca</small></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="hero">
+        <h1 id="greeting">Hi Simon</h1>
+        <div class="next">
+          <div class="kick">Next session</div>
+          <h2>Advanced Functions with Rachit</h2>
+          <p>Tuesday, June 10 · 4:30–5:30 PM EST</p>
+          <div class="btns">
+            <a class="btn btn-primary"><i data-lucide="external-link" style="width:16px;height:16px"></i> Open board</a>
+            <a class="btn btn-ghost">Reschedule</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <!-- Dashboard panel -->
+        <div class="panel show" id="panel-dashboard">
+          <h3 class="section">At a glance</h3>
+          <div class="tiles">
+            <a class="tile" data-panel="boards"><div class="l">Boards</div><div class="v">3 active</div><div class="s">View all →</div></a>
+            <a class="tile" data-panel="schedule"><div class="l">This month</div><div class="v">4 sessions</div><div class="s">3 completed · 1 upcoming</div></a>
+            <a class="tile" data-panel="tutor"><div class="l">Your tutor</div><div class="v">Rachit</div><div class="s">Message →</div></a>
+          </div>
+          <h3 class="section">Recent boards</h3>
+          <div class="rows">
+            <div class="row"><div><b>Trigonometric Functions</b><p>Updated 2 days ago</p></div><span class="pill scheduled">Active</span></div>
+            <div class="row"><div><b>Polynomials &amp; Factoring</b><p>Updated last week</p></div><span class="pill scheduled">Active</span></div>
+          </div>
+        </div>
+
+        <!-- Schedule panel -->
+        <div class="panel" id="panel-schedule">
+          <h3 class="section">Upcoming</h3>
+          <div class="rows" style="margin-bottom:30px">
+            <div class="row"><div><b>Advanced Functions with Rachit</b><p>Tue, Jun 10 · 4:30 PM EST</p></div><span class="pill scheduled">Scheduled</span></div>
+          </div>
+          <h3 class="section">Past</h3>
+          <div class="rows">
+            <div class="row"><div><b>Advanced Functions with Rachit</b><p>Tue, Jun 3 · 4:30 PM EST</p></div><span class="pill completed">Completed</span></div>
+            <div class="row"><div><b>Advanced Functions with Rachit</b><p>Tue, May 27 · 4:30 PM EST</p></div><span class="pill completed">Completed</span></div>
+            <div class="row"><div><b>Advanced Functions with Rachit</b><p>Tue, May 20 · 4:30 PM EST</p></div><span class="pill completed">Completed</span></div>
+          </div>
+        </div>
+
+        <!-- Boards panel -->
+        <div class="panel" id="panel-boards">
+          <h3 class="section">Your boards</h3>
+          <div class="rows">
+            <div class="row"><div><b>Trigonometric Functions</b><p>Bitpaper · updated 2 days ago</p></div><span class="pill scheduled">Active</span></div>
+            <div class="row"><div><b>Polynomials &amp; Factoring</b><p>Bitpaper · updated last week</p></div><span class="pill scheduled">Active</span></div>
+            <div class="row"><div><b>Exponents &amp; Logarithms</b><p>Bitpaper · updated 3 weeks ago</p></div><span class="pill completed">Archived</span></div>
+          </div>
+        </div>
+
+        <!-- Tutor panel -->
+        <div class="panel" id="panel-tutor">
+          <h3 class="section">Your tutor</h3>
+          <div class="row" style="align-items:flex-start; gap:18px; padding:22px 24px">
+            <div class="avatar" style="width:54px;height:54px;font-size:1.1rem">R</div>
+            <div>
+              <b style="font-size:1.05rem">Rachit Chakerwarti</b>
+              <p style="margin-top:6px; max-width:520px; line-height:1.6">Founder &amp; lead tutor. Mathematics, University of Toronto. Reach out anytime — I usually reply within a day.</p>
+              <div class="btns" style="margin-top:16px">
+                <a class="btn btn-primary"><i data-lucide="mail" style="width:16px;height:16px"></i> Message Rachit</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <div style="display:flex; gap:16px"><a>Policies</a><span aria-hidden>·</span><a>Help</a></div>
+        <a>Sign out</a>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    lucide.createIcons();
+    const nav = document.getElementById('nav');
+    const greeting = document.getElementById('greeting');
+    function go(panel) {
+      document.querySelectorAll('.nav a').forEach(a => a.classList.toggle('active', a.dataset.panel === panel));
+      document.querySelectorAll('.panel').forEach(p => p.classList.toggle('show', p.id === 'panel-' + panel));
+    }
+    document.querySelectorAll('[data-panel]').forEach(el => {
+      el.addEventListener('click', () => go(el.dataset.panel));
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!-- @dsCard group="Emails" viewport="1280x900" name="Email templates" subtitle="Branded transactional emails — warm, personal, signed Rachit" -->
+<!-- @startingPoint section="Emails" subtitle="Welcome, mock-exam reminder & parent update — React Email-ready" viewport="1280x900" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magnolia Education — Email Templates</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-body); background: var(--beige); color: var(--ink); padding: 48px 24px 72px; }
+  .page-head { max-width: 1180px; margin: 0 auto 36px; }
+  .page-head .eyebrow { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--coral); }
+  .page-head h1 { font-family: var(--font-display); font-weight: 500; font-size: 2.6rem; color: var(--navy); margin: 8px 0 6px; }
+  .page-head p { color: var(--ink-soft); font-size: 0.95rem; max-width: 640px; line-height: 1.6; }
+
+  .gallery { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 32px; align-items: start; }
+  .frame { }
+  .frame > .tag { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 12px; padding-left: 4px; }
+
+  /* The email itself — 600px column, email-safe */
+  .email { width: 100%; max-width: 600px; margin: 0 auto; background: var(--white); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-md); }
+  .e-head { background: var(--navy); padding: 22px 32px; display: flex; align-items: center; gap: 11px; }
+  .e-head img { height: 30px; width: auto; }
+  .e-head span { font-family: var(--font-display); font-size: 1.2rem; color: #fff; font-weight: 500; letter-spacing: 0.02em; }
+
+  .e-hero { background: linear-gradient(135deg, var(--sky-mist), var(--sky-frost)); padding: 36px 32px 30px; }
+  .e-hero.coral { background: var(--coral-pale); }
+  .e-hero .kicker { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--coral); margin-bottom: 12px; }
+  .e-hero h2 { font-family: var(--font-display); font-weight: 500; font-size: 1.9rem; line-height: 1.15; color: var(--navy); }
+  .e-hero h2 em { font-style: italic; color: var(--coral); }
+  .e-illus { display: block; width: 150px; height: 150px; object-fit: contain; margin: 6px auto -6px; transform: scale(1.25); }
+
+  .e-body { padding: 30px 32px 12px; }
+  .e-body p { font-size: 0.97rem; line-height: 1.72; color: var(--ink); margin-bottom: 16px; }
+  .e-body p.lead { font-size: 1.05rem; color: var(--navy); }
+  .e-body strong { color: var(--navy); font-weight: 600; }
+
+  .e-detail { background: var(--cream); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; margin: 4px 0 22px; }
+  .e-detail .row { display: flex; justify-content: space-between; gap: 16px; padding: 7px 0; font-size: 0.9rem; }
+  .e-detail .row + .row { border-top: 1px solid var(--line); }
+  .e-detail .row .k { color: var(--ink-soft); }
+  .e-detail .row .v { color: var(--navy); font-weight: 600; text-align: right; }
+
+  .e-cta { padding: 4px 32px 8px; }
+  .btn { display: inline-block; background: var(--coral); color: #fff; text-decoration: none; font-weight: 600; font-size: 0.95rem; padding: 14px 30px; border-radius: 8px; box-shadow: 0 6px 18px rgba(232,131,106,0.28); }
+  .btn-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .btn-link { color: var(--coral); font-weight: 600; font-size: 0.88rem; text-decoration: none; }
+
+  .e-sign { padding: 22px 32px 30px; }
+  .e-sign p { font-size: 0.96rem; line-height: 1.7; color: var(--ink); margin-bottom: 4px; }
+  .e-sign .sig { font-family: var(--font-display); font-style: italic; font-size: 1.5rem; color: var(--navy); margin-top: 10px; }
+  .e-sign .pron { font-size: 0.74rem; color: var(--ink-faint); font-style: italic; margin-top: 1px; }
+
+  .stars { color: var(--star); letter-spacing: 2px; font-size: 0.9rem; margin-bottom: 10px; }
+  .quote { font-style: italic; color: var(--ink); font-size: 0.95rem; line-height: 1.7; }
+  .quote-by { font-size: 0.76rem; font-weight: 600; letter-spacing: 0.05em; color: var(--navy); margin-top: 10px; }
+
+  .e-foot { background: var(--navy-deep); padding: 24px 32px; }
+  .e-foot p { font-size: 0.76rem; color: rgba(255,255,255,0.5); line-height: 1.6; }
+  .e-foot a { color: rgba(255,255,255,0.7); text-decoration: none; }
+  .e-foot .foot-links { margin-bottom: 8px; display: flex; gap: 16px; }
+  .e-foot .foot-links a { font-size: 0.78rem; }
+</style>
+</head>
+<body>
+  <div class="page-head">
+    <div class="eyebrow">Magnolia Math Suite · Brand Layer</div>
+    <h1>Email templates</h1>
+    <p>Transactional and relationship emails parents and students actually receive. Built for React Email + Resend — a 600px column, web-safe structure, and the warm, personal voice of a note from a great teacher. Always signed Rachit.</p>
+  </div>
+
+  <div class="gallery">
+
+    <!-- WELCOME -->
+    <div class="frame">
+      <div class="tag">Welcome · new family</div>
+      <div class="email">
+        <div class="e-head"><img src="../../assets/logo/magnolia-flower.png" alt="Magnolia"><span>Magnolia Education</span></div>
+        <div class="e-hero">
+          <div class="kicker">Welcome to Magnolia</div>
+          <h2>So glad your family is <em>here.</em></h2>
+          <img class="e-illus" src="../../assets/illustrations/magnolia-tree.png" alt="">
+        </div>
+        <div class="e-body">
+          <p class="lead">Hi Sarah,</p>
+          <p>Thank you for trusting us with Dylan's math. I don't take that lightly — it's the whole reason Magnolia exists.</p>
+          <p>Before our first session, I'll send a short note to learn where Dylan is at and what he's hoping to work on. No prep needed on your end. We'll start with a calming breath, then get to work.</p>
+        </div>
+        <div class="e-cta">
+          <div class="btn-row">
+            <a href="#" class="btn">Book your first session</a>
+            <a href="#" class="btn-link">Read our approach →</a>
+          </div>
+        </div>
+        <div class="e-sign">
+          <p>Talk soon,</p>
+          <div class="sig">— Rachit</div>
+          <div class="pron">(pronounced Rutch-it, like "Dutch" with an R)</div>
+        </div>
+        <div class="e-foot">
+          <div class="foot-links"><a href="#">Visit website</a><a href="#">Contact</a></div>
+          <p>Magnolia Education · Toronto, ON · hello@magnolia-education.com<br>You're receiving this because you booked a consultation with us.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOCK EXAM REMINDER -->
+    <div class="frame">
+      <div class="tag">Reminder · mock exam</div>
+      <div class="email">
+        <div class="e-head"><img src="../../assets/logo/magnolia-flower.png" alt="Magnolia"><span>Magnolia Education</span></div>
+        <div class="e-hero coral">
+          <div class="kicker">⏰ This Saturday</div>
+          <h2>Your mock exam is <em>almost here.</em></h2>
+          <img class="e-illus" src="../../assets/illustrations/exam-exhale.png" alt="">
+        </div>
+        <div class="e-body">
+          <p class="lead">Hi Simon,</p>
+          <p>A quick note before Saturday. You've done the work — this is just a chance to practice the real thing in a calm room, with a cookie waiting at the end. 🍪</p>
+        </div>
+        <div class="e-cta" style="padding-bottom:0">
+          <div class="e-detail" style="margin-left:0;margin-right:0">
+            <div class="row"><span class="k">When</span><span class="v">Sat, June 13 · arrive 1:15 PM</span></div>
+            <div class="row"><span class="k">Where</span><span class="v">Roncesvalles United Church</span></div>
+            <div class="row"><span class="k">Bring</span><span class="v">Calculator, notes, pencils</span></div>
+          </div>
+        </div>
+        <div class="e-cta">
+          <a href="#" class="btn">View exam details</a>
+        </div>
+        <div class="e-sign">
+          <p>You've got this. See you Saturday.</p>
+          <div class="sig">— Rachit</div>
+        </div>
+        <div class="e-foot">
+          <div class="foot-links"><a href="#">Reschedule</a><a href="#">Contact</a></div>
+          <p>Magnolia Education · Toronto, ON · hello@magnolia-education.com</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARENT MONTHLY UPDATE -->
+    <div class="frame">
+      <div class="tag">Update · parent monthly</div>
+      <div class="email">
+        <div class="e-head"><img src="../../assets/logo/magnolia-flower.png" alt="Magnolia"><span>Magnolia Education</span></div>
+        <div class="e-hero">
+          <div class="kicker">May progress · Dylan</div>
+          <h2>A month of <em>real</em> momentum.</h2>
+        </div>
+        <div class="e-body">
+          <p class="lead">Hi Sarah,</p>
+          <p>Dylan had a strong month. We finished the unit on trigonometric functions, and — more importantly — he's started marking his own homework before our sessions. That's the habit that lasts.</p>
+          <div class="e-detail">
+            <div class="row"><span class="k">Sessions this month</span><span class="v">4 of 4 attended</span></div>
+            <div class="row"><span class="k">Current focus</span><span class="v">Advanced Functions</span></div>
+            <div class="row"><span class="k">Latest unit test</span><span class="v">88% · up from 79%</span></div>
+          </div>
+          <p>Next month we'll get ahead of exam season with the Three Review System. I'll send study notes as we go.</p>
+          <div style="border-top:1px solid var(--line); padding-top:18px; margin-top:6px;">
+            <div class="stars">★★★★★</div>
+            <p class="quote">&ldquo;We have seen our son's confidence soar over the past two years.&rdquo;</p>
+            <div class="quote-by">KRISTY FLETCHER · PARENT</div>
+          </div>
+        </div>
+        <div class="e-cta">
+          <a href="#" class="btn">See Dylan's full progress</a>
+        </div>
+        <div class="e-sign">
+          <p>As always, reach out anytime.</p>
+          <div class="sig">— Rachit</div>
+        </div>
+        <div class="e-foot">
+          <div class="foot-links"><a href="#">Manage updates</a><a href="#">Contact</a></div>
+          <p>Magnolia Education · Toronto, ON · hello@magnolia-education.com</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

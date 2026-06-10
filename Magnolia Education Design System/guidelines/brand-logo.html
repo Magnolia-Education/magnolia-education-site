@@ -1,0 +1,27 @@
+<!-- @dsCard group="Brand" viewport="700x230" name="Logo & wordmark" subtitle="The magnolia mark + Cormorant wordmark, on light and on navy" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--white); padding: 0; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; height: 230px; }
+  .panel { display: flex; align-items: center; justify-content: center; gap: 14px; }
+  .light { background: var(--cream); }
+  .dark { background: var(--navy); }
+  .lock { display: flex; align-items: center; gap: 13px; }
+  .lock img { height: 50px; width: auto; }
+  .wm { font-family: var(--font-display); font-weight: var(--weight-medium); font-size: 1.7rem; letter-spacing: 0.02em; }
+  .light .wm { color: var(--navy); }
+  .dark .wm { color: #fff; }
+  .tag { position: absolute; bottom: 12px; left: 16px; font-size: 0.62rem; color: var(--ink-faint); }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <div class="panel light"><div class="lock"><img src="../assets/logo/magnolia-flower.png" alt="Magnolia flower mark"><span class="wm">Magnolia Education</span></div></div>
+    <div class="panel dark"><div class="lock"><img src="../assets/logo/magnolia-flower.png" alt="Magnolia flower mark"><span class="wm">Magnolia Education</span></div></div>
+  </div>
+</body>
+</html>

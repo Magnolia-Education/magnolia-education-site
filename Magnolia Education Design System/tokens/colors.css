@@ -1,0 +1,79 @@
+/* ============================================================
+   Magnolia Education — Color Tokens
+   Warm, editorial, boutique. Navy + coral on cream & beige,
+   harmonized with the pastel palette of the brand illustrations.
+   ============================================================ */
+
+:root {
+  /* ---- Brand core ---------------------------------------- */
+  --navy: #3D4466;          /* headings, body text, nav bar      */
+  --navy-deep: #2A2D40;     /* footer, deepest ground            */
+  --coral: #E8836A;         /* primary CTA, accents, eyebrows    */
+  --coral-hover: #D96E54;   /* CTA hover / pressed               */
+  --coral-pale: #FDF0EC;    /* soft accent fills, tinted panels  */
+  --coral-pale-2: #FBE4DC;  /* slightly deeper coral wash        */
+  --beige: #EDE8E0;         /* section backgrounds               */
+  --cream: #FBF8F2;         /* warm off-white page ground        */
+  --white: #FFFFFF;
+
+  /* ---- Sky / hero blues (the cool counterweight) --------- */
+  --sky-mist: #E2EAF2;      /* hero gradient start               */
+  --sky-frost: #D4E5EE;     /* hero gradient end                 */
+
+  /* ---- Illustration pastels (accents, never large fields) - */
+  --blossom: #EFA8C4;       /* magnolia blossom pink             */
+  --blossom-soft: #F5C6D6;  /* pale blossom                      */
+  --leaf: #A9B57C;          /* magnolia branch green             */
+  --leaf-soft: #C7D3A0;     /* pale leaf                          */
+  --butter: #F6E7B8;        /* warm paper highlight              */
+  --star: #F5A623;          /* review stars (gold)               */
+
+  /* ---- Ink / neutrals ------------------------------------ */
+  --ink: #2A2A2A;           /* default reading text on light     */
+  --ink-soft: #5A5A6A;      /* muted/secondary text              */
+  --ink-faint: #8C8C99;     /* captions, meta, placeholders      */
+  --line: rgba(61, 68, 102, 0.12);  /* hairline dividers         */
+  --line-strong: rgba(61, 68, 102, 0.22);
+
+  /* ---- On-dark text (over navy) -------------------------- */
+  --on-dark: rgba(255, 255, 255, 0.92);
+  --on-dark-soft: rgba(255, 255, 255, 0.72);
+  --on-dark-faint: rgba(255, 255, 255, 0.45);
+  --line-on-dark: rgba(255, 255, 255, 0.12);
+
+  /* ---- Semantic ------------------------------------------ */
+  --success: #5B8A6B;
+  --success-bg: #E7F0E9;
+  --warning: #C9954A;
+  --warning-bg: #FBF0DC;
+  --error: #C2553F;
+  --error-bg: #F8E3DD;
+  --info: #5E7C97;
+  --info-bg: #E4ECF2;
+
+  /* ========================================================
+     SEMANTIC ALIASES — prefer these in components
+     ======================================================== */
+  --bg-page: var(--white);
+  --bg-warm: var(--cream);
+  --bg-section: var(--beige);
+  --bg-accent: var(--coral-pale);
+  --bg-footer: var(--navy-deep);
+  --surface-card: var(--white);
+
+  --text-heading: var(--navy);
+  --text-body: var(--ink);
+  --text-muted: var(--ink-soft);
+  --text-faint: var(--ink-faint);
+  --text-eyebrow: var(--coral);
+
+  --accent: var(--coral);
+  --accent-hover: var(--coral-hover);
+  --accent-quiet: var(--coral-pale);
+
+  --border-subtle: var(--line);
+  --border-strong: var(--line-strong);
+
+  /* Hero / brand gradient (blue mist) */
+  --gradient-sky: linear-gradient(135deg, var(--sky-mist) 0%, var(--sky-frost) 100%);
+}
