@@ -36,7 +36,8 @@ function to24h(token, inherit) {
   let hour = parseInt(m[1], 10);
   const min = m[2] ? parseInt(m[2], 10) : 0;
   const mer = (m[3] || inherit || '').toLowerCase();
-  if (hour < 1 || hour > 12 || min > 59) {
+  if (min > 59) return null; // invalid minutes regardless of hour/meridiem
+  if (hour < 1 || hour > 12) {
     // allow a bare 24h hour like "13" only if no meridiem was given
     if (!mer && hour >= 0 && hour <= 23) return `${String(hour).padStart(2, '0')}:${String(min).padStart(2, '0')}`;
     return null;
@@ -97,7 +98,8 @@ function parseAvailability(str, label, warnings) {
 }
 
 // "1x45min" | "2x30min" -> { sessions_per_week, session_length_min }. Validates the minimum
-// rule (1 => >=45, 2+ => >=30); a violation is kept but warned.
+// rule (1 => >=45, 2+ => >=30); a violation is dropped (null) + warned, NOT stored -- migration
+// 0011's students_session_plan_minimum CHECK would otherwise reject the whole upsert (500).
 function parseSessionPlan(str, warnings) {
   const empty = { sessions_per_week: null, session_length_min: null };
   if (isBlank(str)) return empty;
@@ -113,8 +115,9 @@ function parseSessionPlan(str, warnings) {
     (sessions_per_week >= 2 && session_length_min >= 30);
   if (!okMin) {
     warnings.push(
-      `Session plan below minimum (got ${sessions_per_week}x${session_length_min}min; need 1x45 or 2x30)`
+      `Session plan below minimum (got ${sessions_per_week}x${session_length_min}min; need 1x45 or 2x30) — not stored`
     );
+    return empty;
   }
   return { sessions_per_week, session_length_min };
 }
@@ -128,7 +131,8 @@ function parseTimeOfDay(str, warnings) {
   return t;
 }
 
-// Percentage 0-100. null if blank/unparseable; out-of-range is kept but warned.
+// Percentage 0-100. null if blank/unparseable; out-of-range is dropped (null) + warned, NOT
+// stored -- migration 0011's previous_subject_mark CHECK (0..100) would otherwise reject the upsert.
 function parseMark(str, warnings) {
   if (isBlank(str)) return null;
   const n = parseInt(String(str).replace('%', '').trim(), 10);
@@ -136,7 +140,10 @@ function parseMark(str, warnings) {
     warnings.push(`Couldn't parse previous mark: "${String(str).trim()}"`);
     return null;
   }
-  if (n < 0 || n > 100) warnings.push(`Previous mark out of range: ${n}`);
+  if (n < 0 || n > 100) {
+    warnings.push(`Previous mark out of range (${n}) — not stored`);
+    return null;
+  }
   return n;
 }
 
