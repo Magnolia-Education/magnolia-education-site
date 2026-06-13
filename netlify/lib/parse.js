@@ -39,7 +39,7 @@ function to24h(token, inherit) {
   if (min > 59) return null; // invalid minutes regardless of hour/meridiem
   if (hour < 1 || hour > 12) {
     // allow a bare 24h hour like "13" only if no meridiem was given
-    if (!mer && hour >= 0 && hour <= 23) return `${String(hour).padStart(2, '0')}:${String(min).padStart(2, '0')}`;
+    if (!mer && hour <= 23) return `${String(hour).padStart(2, '0')}:${String(min).padStart(2, '0')}`;
     return null;
   }
   if (!mer) return null; // ambiguous 1-12 with no am/pm
@@ -156,6 +156,10 @@ function parseGrade(str, warnings) {
     return null;
   }
   const n = parseInt(m[0], 10);
+  // Out-of-range grade is KEPT (not nulled like parseMark): there is no DB CHECK on
+  // students.grade, and the matcher SKIPS its grade filter when grade is null -- so nulling a
+  // bogus grade would let the student match a tutor of any grade. Keeping the odd value yields
+  // no match -> manual placement, which is the correct outcome.
   if (n < 1 || n > 13) warnings.push(`Grade out of range: ${n}`);
   return n;
 }

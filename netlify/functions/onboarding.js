@@ -119,7 +119,7 @@ exports.handler = async (event) => {
       earliest_start_after_school: fields.earliest_start_after_school,
       spare_period: p.spare_period ? String(p.spare_period).trim() : null,
       primary_parent_id: parentId,
-      intake_raw: { ...p, _parse_warnings: warnings },
+      intake_raw: { payload: p, parse_warnings: warnings },
     });
 
     const proto = event.headers['x-forwarded-proto'] || 'https';
