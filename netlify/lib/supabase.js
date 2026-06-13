@@ -52,6 +52,9 @@ async function upsertStudent(row) {
     body: [row],
     prefer: 'resolution=merge-duplicates,return=representation',
   });
+  if (!rows || !rows[0]) {
+    throw new Error('upsertStudent: PostgREST returned no row — return=representation not honoured');
+  }
   return rows[0];
 }
 
@@ -63,4 +66,19 @@ async function setStudentTaskId(studentId, taskId) {
   });
 }
 
-module.exports = { getStudentByTutorbirdId, upsertStudent, setStudentTaskId };
+// Idempotent upsert keyed on the partial-unique parents.email (migration 0013). Caller MUST
+// only invoke this when `row.email` is set — the unique index is partial (email is not null),
+// so a null-email upsert would insert a fresh row every time instead of merging.
+async function upsertParent(row) {
+  const rows = await sb('/parents?on_conflict=email', {
+    method: 'POST',
+    body: [row],
+    prefer: 'resolution=merge-duplicates,return=representation',
+  });
+  if (!rows || !rows[0]) {
+    throw new Error('upsertParent: PostgREST returned no row — return=representation not honoured');
+  }
+  return rows[0];
+}
+
+module.exports = { getStudentByTutorbirdId, upsertStudent, setStudentTaskId, upsertParent };

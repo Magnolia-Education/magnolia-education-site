@@ -17,7 +17,11 @@ async function callTickTick(baseUrl, toolName, args) {
     }),
   });
 
-  const json = await res.json();
+  const text0 = await res.text();
+  if (!res.ok) {
+    throw new Error(`ticktick-mcp HTTP ${res.status}: ${text0.slice(0, 200)}`);
+  }
+  const json = JSON.parse(text0);
   if (json.error) throw new Error(`TickTick MCP error: ${json.error.message}`);
   // The MCP wraps tool results as { content: [{ type:'text', text: <json> }] }.
   const text = json.result?.content?.[0]?.text;
@@ -36,14 +40,22 @@ function buildTaskBody(s) {
     '## Student',
     `- Name: ${s.name}`,
     s.email ? `- Email: ${s.email}` : null,
-    s.grade ? `- Grade: ${s.grade}` : null,
+    s.grade != null ? `- Grade: ${s.grade}` : null,
     s.school ? `- School: ${s.school}` : null,
     s.phone ? `- Phone: ${s.phone}` : null,
     s.parent_name ? `- Parent: ${s.parent_name}` : null,
     s.parent_email ? `- Parent email: ${s.parent_email}` : null,
     s.parent_phone ? `- Parent phone: ${s.parent_phone}` : null,
     s.subject ? `- Subject (from signup): ${s.subject}` : null,
-  ].filter(Boolean);
+    s.device ? `- Device: ${s.device}` : null,
+    s.session_plan ? `- Session plan: ${s.session_plan}` : null,
+  ].filter((l) => l !== null && l !== undefined);
+
+  // Flag anything the heuristic parser couldn't read so Rachit can fix the student row.
+  if (Array.isArray(s.warnings) && s.warnings.length) {
+    lines.push('', '## ⚠️ Needs review', ...s.warnings.map((w) => `- ${w}`));
+  }
+
   return lines.join('\n');
 }
 
