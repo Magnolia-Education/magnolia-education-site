@@ -64,11 +64,20 @@ async function createOnboardingTask(baseUrl, student) {
   const projectId = process.env.TICKTICK_ONBOARDING_PROJECT_ID;
   if (!projectId) throw new Error('TICKTICK_ONBOARDING_PROJECT_ID not set in Netlify env');
 
+  // Due 2 days after sign-up (all-day, Eastern) so board setup stays timely and the
+  // task surfaces in TickTick's dated views. TickTick can't set a real assignee via the
+  // API (see buildTaskBody) -- only the due date is settable.
+  const due = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000);
+  const dueDate = `${due.toISOString().slice(0, 10)}T00:00:00+0000`;
+
   const task = await callTickTick(baseUrl, 'create_task', {
     title: `Create board for ${student.name}`,
     projectId,
     content: buildTaskBody(student),
     priority: 3,
+    dueDate,
+    isAllDay: true,
+    timeZone: 'America/Toronto',
   });
   if (!task || !task.id) {
     throw new Error(`create_task returned no task id: ${JSON.stringify(task)}`);
