@@ -1,0 +1,26 @@
+<!-- @dsCard group="Spacing" viewport="700x180" name="Radius" subtitle="Soft, rounded, never boxy — from chips to feature blocks" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--white); padding: 28px 30px; }
+  .row { display: flex; gap: 20px; align-items: flex-end; flex-wrap: wrap; }
+  .item { text-align: center; }
+  .box { width: 78px; height: 64px; background: var(--coral-pale); border: 1.5px solid var(--coral); }
+  .n { font-size: 0.74rem; font-weight: 600; color: var(--navy); margin-top: 9px; }
+  .v { font-size: 0.64rem; color: var(--ink-faint); }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="item"><div class="box" style="border-radius:var(--radius-xs)"></div><div class="n">xs · 6</div><div class="v">inputs, chips</div></div>
+    <div class="item"><div class="box" style="border-radius:var(--radius-sm)"></div><div class="n">sm · 8</div><div class="v">buttons</div></div>
+    <div class="item"><div class="box" style="border-radius:var(--radius-md)"></div><div class="n">md · 14</div><div class="v">cards</div></div>
+    <div class="item"><div class="box" style="border-radius:var(--radius-lg)"></div><div class="n">lg · 20</div><div class="v">image panels</div></div>
+    <div class="item"><div class="box" style="border-radius:var(--radius-xl)"></div><div class="n">xl · 28</div><div class="v">feature blocks</div></div>
+    <div class="item"><div class="box" style="border-radius:var(--radius-pill);width:64px"></div><div class="n">pill</div><div class="v">badges</div></div>
+  </div>
+</body>
+</html>

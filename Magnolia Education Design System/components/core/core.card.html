@@ -1,0 +1,90 @@
+<!-- @dsCard group="Components" viewport="700x440" name="Core — Button, Badge, Card, Avatar" subtitle="The everyday primitives" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--cream); padding: 28px 30px; color: var(--ink); }
+  .group { margin-bottom: 24px; }
+  .lbl { font-size: 0.66rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 12px; }
+  .rowflex { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .navy-strip { background: var(--navy); border-radius: var(--radius-md); padding: 16px 18px; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .cards h4 { font-family: var(--font-display); font-weight: 500; font-size: 1.2rem; color: var(--navy); margin: 0 0 6px; }
+  .cards p { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.55; margin: 0; }
+  .cards .navy h4 { color: #fff; } .cards .navy p { color: rgba(255,255,255,0.72); }
+</style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="../../_ds_bundle.js"></script>
+
+  <script type="text/babel">
+    const { Button, Badge, Card, Avatar } = window.MagnoliaEducationDesignSystem_019ddb;
+
+    function Demo() {
+      return (
+        <div>
+          <div className="group">
+            <div className="lbl">Buttons</div>
+            <div className="rowflex">
+              <Button variant="primary">Book a Consultation</Button>
+              <Button variant="secondary">Explore Tutoring</Button>
+              <Button variant="ghost">Learn more →</Button>
+              <Button variant="primary" size="sm">Register</Button>
+              <Button variant="primary" disabled>Disabled</Button>
+            </div>
+          </div>
+
+          <div className="group">
+            <div className="lbl">Buttons on navy</div>
+            <div className="navy-strip rowflex">
+              <Button variant="white">Get in Touch</Button>
+              <Button variant="outline-white">Call us</Button>
+            </div>
+          </div>
+
+          <div className="group">
+            <div className="lbl">Badges</div>
+            <div className="rowflex">
+              <Badge variant="eyebrow">What We Offer</Badge>
+              <Badge variant="capsule" tone="coral">⏰ Register by June 6th</Badge>
+              <Badge variant="status" tone="success">Completed</Badge>
+              <Badge variant="status" tone="coral">Scheduled</Badge>
+              <Badge variant="pill" tone="navy">Grade 11</Badge>
+            </div>
+          </div>
+
+          <div className="group">
+            <div className="lbl">Cards &amp; Avatars</div>
+            <div className="cards">
+              <Card variant="plain" interactive>
+                <h4>Tutoring</h4>
+                <p>Personalized math tutoring for Grades 8–12.</p>
+              </Card>
+              <Card variant="accent">
+                <h4>Study Skills</h4>
+                <p>The habits that separate working hard from studying smart.</p>
+              </Card>
+              <Card variant="navy" className="navy">
+                <div style={{display:'flex',alignItems:'center',gap:'12px',marginBottom:'10px'}}>
+                  <Avatar name="Rachit Chakerwarti" size={40} />
+                  <Avatar name="Gladys Lou" size={40} />
+                </div>
+                <h4>Your tutor</h4>
+                <p>Handpicked for warmth and patience.</p>
+              </Card>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById('app')).render(<Demo />);
+  </script>
+</body>
+</html>

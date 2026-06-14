@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magnolia Education — Brand Assets</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; color: #2a2a2a; background: #fff; padding: 48px; max-width: 800px; margin: 0 auto; }
+  h1 { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 500; color: #3D4466; margin-bottom: 6px; }
+  h2 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; color: #3D4466; margin: 40px 0 16px; border-bottom: 1px solid #EDE8E0; padding-bottom: 8px; }
+  .subtitle { font-size: 14px; color: #5a5a6a; margin-bottom: 40px; }
+  .colors { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 8px; }
+  .swatch { border-radius: 8px; padding: 20px 14px 14px; text-align: center; }
+  .swatch-dark { color: rgba(255,255,255,0.9); }
+  .swatch-light { color: #3D4466; border: 1px solid #e0ddd6; }
+  .swatch .name { font-weight: 500; font-size: 14px; margin-bottom: 2px; }
+  .swatch .hex { font-size: 13px; opacity: 0.7; font-family: 'DM Sans', monospace; }
+  .swatch .use { font-size: 11px; opacity: 0.55; margin-top: 4px; }
+  .font-sample { margin: 12px 0 24px; }
+  .font-display { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 500; color: #3D4466; margin-bottom: 4px; }
+  .font-body { font-family: 'DM Sans', sans-serif; font-size: 16px; color: #2a2a2a; margin-bottom: 4px; }
+  .font-meta { font-size: 13px; color: #5a5a6a; margin-bottom: 16px; }
+  .font-meta code { background: #f5f3ef; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+  .css-block { background: #f9f8f6; border: 1px solid #e0ddd6; border-radius: 8px; padding: 20px; font-family: 'DM Sans', monospace; font-size: 13px; line-height: 1.8; color: #3D4466; white-space: pre; overflow-x: auto; }
+</style>
+</head>
+<body>
+
+<h1>Magnolia Education</h1>
+<p class="subtitle">Brand assets reference</p>
+
+<h2>Colors</h2>
+
+<div class="colors">
+  <div class="swatch swatch-dark" style="background: #3D4466;">
+    <div class="name">Navy</div>
+    <div class="hex">#3D4466</div>
+    <div class="use">Headings, nav, text</div>
+  </div>
+  <div class="swatch swatch-dark" style="background: #E8836A;">
+    <div class="name">Coral</div>
+    <div class="hex">#E8836A</div>
+    <div class="use">Buttons, CTAs, labels</div>
+  </div>
+  <div class="swatch swatch-light" style="background: #FDF0EC;">
+    <div class="name">Coral pale</div>
+    <div class="hex">#FDF0EC</div>
+    <div class="use">Light accent fills</div>
+  </div>
+  <div class="swatch swatch-light" style="background: #EDE8E0;">
+    <div class="name">Beige</div>
+    <div class="hex">#EDE8E0</div>
+    <div class="use">Section backgrounds</div>
+  </div>
+</div>
+
+<div class="colors" style="margin-top: 12px;">
+  <div class="swatch swatch-light" style="background: #E2EAF2;">
+    <div class="name">Blue mist</div>
+    <div class="hex">#E2EAF2</div>
+    <div class="use">Hero gradient start</div>
+  </div>
+  <div class="swatch swatch-light" style="background: #D4E5EE;">
+    <div class="name">Blue frost</div>
+    <div class="hex">#D4E5EE</div>
+    <div class="use">Hero gradient end</div>
+  </div>
+  <div class="swatch swatch-dark" style="background: #2a2d40;">
+    <div class="name">Dark navy</div>
+    <div class="hex">#2a2d40</div>
+    <div class="use">Footer</div>
+  </div>
+  <div class="swatch swatch-light" style="background: #ffffff;">
+    <div class="name">White</div>
+    <div class="hex">#FFFFFF</div>
+    <div class="use">Backgrounds, cards</div>
+  </div>
+</div>
+
+<h2>Typography</h2>
+
+<div class="font-sample">
+  <div class="font-display">Cormorant Garamond</div>
+  <p class="font-meta">Display / headings — weights 400, 500, 600 — <code>font-family: 'Cormorant Garamond', Georgia, serif</code></p>
+  <p class="font-meta">Google Fonts: <code>Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500</code></p>
+</div>
+
+<div class="font-sample">
+  <div class="font-body" style="font-size: 24px;">DM Sans</div>
+  <p class="font-meta">Body / UI text — weights 300, 400, 500, 600 — <code>font-family: 'DM Sans', system-ui, sans-serif</code></p>
+  <p class="font-meta">Google Fonts: <code>DM+Sans:wght@300;400;500;600</code></p>
+</div>
+
+<h2>CSS variables</h2>
+
+<div class="css-block">--navy: #3D4466;
+--coral: #E8836A;
+--coral-pale: #FDF0EC;
+--hero-start: #E2EAF2;
+--hero-end: #D4E5EE;
+--beige: #EDE8E0;
+--white: #FFFFFF;
+--text: #2a2a2a;
+--text-light: #5a5a6a;
+--font-display: 'Cormorant Garamond', Georgia, serif;
+--font-body: 'DM Sans', system-ui, sans-serif;</div>
+
+</body>
+</html>
