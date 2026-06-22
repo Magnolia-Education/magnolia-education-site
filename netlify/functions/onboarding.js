@@ -107,6 +107,12 @@ exports.handler = async (event) => {
       name,
       first_name: p.first_name,
       last_name: p.last_name,
+      // Student's OWN contact info. email is a REQUIRED field (validated above), so
+      // new rows always populate it; lowercased to match the students.email backfill
+      // (MMS migration 0015) that the student-portal login allow-list reads. phone is
+      // optional. Previously these only survived inside intake_raw.payload.
+      email: String(p.email).trim().toLowerCase(),
+      phone: p.phone ? String(p.phone).trim() : null,
       grade: fields.grade,
       school: p.school || null,
       device: fields.device,
