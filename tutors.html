@@ -240,15 +240,17 @@
     }
     .tutor-carousel::before { left: 0;  background: linear-gradient(to right, var(--beige), rgba(237,232,224,0)); }
     .tutor-carousel::after  { right: 0; background: linear-gradient(to left,  var(--beige), rgba(237,232,224,0)); }
+    /* Gap lives on the card (margin-right, incl. the last) so translateX(-50%) over the
+       duplicated set loops seamlessly — a flex `gap` would leave a half-gap hitch at the seam. */
     .tutor-track {
-      display: flex; gap: 28px; width: max-content;
+      display: flex; width: max-content;
       animation: tutor-scroll 60s linear infinite;
     }
     /* Keep spinning off-screen; pause when a visitor hovers to read */
     .tutor-carousel:hover .tutor-track { animation-play-state: paused; }
     @keyframes tutor-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
     .tutor-card {
-      flex: 0 0 300px; box-sizing: border-box;
+      flex: 0 0 300px; box-sizing: border-box; margin-right: 28px;
       background: var(--white); border-radius: 18px; padding: 32px 28px; text-align: center;
       box-shadow: 0 10px 30px rgba(61,68,102,0.09);
     }
@@ -268,9 +270,12 @@
       font-size: 0.9rem; line-height: 1.6; color: var(--text-light);
       display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden;
     }
-    /* Accessibility: honour reduced-motion — stop the spin, show a static wrapped grid */
+    /* Accessibility: honour reduced-motion — stop the spin, show a static wrapped grid,
+       and drop the duplicated (aria-hidden) set so each tutor appears exactly once */
     @media (prefers-reduced-motion: reduce) {
       .tutor-track { animation: none; flex-wrap: wrap; justify-content: center; width: auto; }
+      .tutor-card--dupe { display: none; }
+      .tutor-card { margin: 0 14px 20px; }
       .tutor-carousel::before, .tutor-carousel::after { display: none; }
     }
     @media (max-width: 600px) { .tutor-card { flex-basis: 260px; } }
@@ -503,7 +508,9 @@
   // Render tutors as an infinite, auto-spinning carousel. Renders from bundled content.js
   // immediately, then progressively swaps to the live MMS feed when it's reachable.
   const list = document.getElementById('tu-list');
-  const TUTORS_FEED = 'https://magnolia-math-suite-dev.vercel.app/api/public/tutors';
+  // Live tutor feed (MMS). Override per-environment by setting window.MAGNOLIA_TUTORS_FEED
+  // before this script runs; the default below must be the PRODUCTION MMS origin at deploy.
+  const TUTORS_FEED = window.MAGNOLIA_TUTORS_FEED || 'https://magnolia-math-suite-dev.vercel.app/api/public/tutors';
 
   // Escape interpolated text — the live feed's bios/names are tutor-authored, rendered on a
   // public page via innerHTML, so they must be treated as untrusted.
@@ -513,14 +520,18 @@
     ));
   }
 
-  function cardHTML(t) {
+  // dupe = the second, animation-only copy: hidden from screen readers, and dropped entirely
+  // under reduced-motion (via .tutor-card--dupe) so each tutor is announced/shown once.
+  function cardHTML(t, dupe) {
     const pos = esc(t.photoPosition || 'center top');
     const img = t.photo
       ? `<img src="${esc(t.photo)}" alt="${esc(t.name)}" loading="lazy" style="object-position:${pos}" />`
       : '';
     const badge = t.founder ? `<span class="tutor-card-badge">Founder</span>` : '';
+    const cls = dupe ? 'tutor-card tutor-card--dupe' : 'tutor-card';
+    const aria = dupe ? ' aria-hidden="true"' : '';
     return `
-      <article class="tutor-card">
+      <article class="${cls}"${aria}>
         <div class="tutor-card-photo">${img}</div>
         ${badge}
         <h3 class="tutor-card-name">${esc(t.name)}</h3>
@@ -531,11 +542,12 @@
 
   function renderCarousel(tutors) {
     if (!list || !tutors.length) return;
-    // Duplicate the set so the CSS translateX(-50%) loop is seamless.
-    const cards = tutors.map(cardHTML).join('');
+    // Real set + a duplicated (aria-hidden) set so the CSS translateX(-50%) loop is seamless.
+    const cards = tutors.map(t => cardHTML(t, false)).join('');
+    const dupes = tutors.map(t => cardHTML(t, true)).join('');
     list.innerHTML =
       `<div class="tutor-carousel" aria-label="Our tutors">
-         <div class="tutor-track">${cards}${cards}</div>
+         <div class="tutor-track">${cards}${dupes}</div>
        </div>`;
   }
 
