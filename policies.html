@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K7DCX7CEJ9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-K7DCX7CEJ9');
+  </script>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Tutoring policies for Magnolia Education — billing, scheduling, makeup sessions, and credit card terms for Grades 8–12 tutoring in Toronto." />
+  <meta name="keywords" content="Magnolia Education policies, tutoring policies, billing policies, makeup sessions, Toronto tutoring terms" />
+  <meta property="og:title" content="Tutoring Policies | Magnolia Education" />
+  <meta property="og:description" content="Tutoring policies for Magnolia Education — billing, scheduling, makeup sessions, and credit card terms for Grades 8–12 tutoring in Toronto." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://magnolia-education.com/policies" />
+  <meta property="og:image" content="https://magnolia-education.com/images/CLOUDSURFING.png" />
+  <meta property="og:site_name" content="Magnolia Education" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Tutoring Policies | Magnolia Education" />
+  <meta name="twitter:description" content="Tutoring policies for Magnolia Education — billing, scheduling, makeup sessions, and credit card terms." />
+  <link rel="canonical" href="https://magnolia-education.com/policies" />
+  <!-- DEV TOOL: Preload tuned image styles before paint (local only) -->
+  <script src="dev/image-tuner-preload.js"></script>
+  <title>Tutoring Policies | Magnolia Education</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="content.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #3D4466;
+      --coral: #E8836A;
+      --coral-pale: #FDF0EC;
+      --cream: #FBF8F2;
+      --beige: #EDE8E0;
+      --white: #ffffff;
+      --text: #2a2a2a;
+      --text-light: #5a5a6a;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body { font-family: var(--font-body); color: var(--text); background: #fff; overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--navy);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 68px; display: flex; align-items: center;
+      padding: 0 48px; gap: 40px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; margin-right: auto; }
+    .nav-logo img { height: 38px; width: auto; }
+    .nav-logo-text { font-family: var(--font-display); font-size: 1.25rem; color: var(--white); font-weight: 500; letter-spacing: 0.02em; }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a, .nav-dropdown > a {
+      color: rgba(255,255,255,0.88); font-size: 0.9rem; text-decoration: none;
+      font-weight: 400; letter-spacing: 0.01em; transition: color .2s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown > a::after { content: ' ▾'; font-size: 0.7em; opacity: 0.7; }
+    .nav-dropdown-menu {
+      display: none; position: absolute; top: 100%; left: 0;
+      background: var(--navy); border-top: 2px solid var(--coral);
+      min-width: 180px; padding: 8px 0;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+    .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+    .nav-dropdown-menu a { display: block; padding: 10px 20px; color: rgba(255,255,255,0.8); font-size: 0.875rem; }
+    .nav-dropdown-menu a:hover { color: #fff; background: rgba(255,255,255,0.05); }
+    .nav-cta {
+      background: var(--coral); color: #fff !important; padding: 9px 22px;
+      border-radius: 6px; font-weight: 500; font-size: 0.875rem !important;
+      transition: background .2s, transform .15s !important;
+    }
+    .nav-cta:hover { background: #d96e54 !important; transform: translateY(-1px); }
+
+    /* ── HAMBURGER ── */
+    .nav-hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      padding: 8px; margin-left: auto; background: none; border: none;
+    }
+    .nav-hamburger span { display: block; width: 24px; height: 2px; background: rgba(255,255,255,0.88); border-radius: 2px; transition: transform .3s, opacity .3s; }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile nav drawer */
+    .nav-mobile {
+      display: none; position: fixed;
+      top: 68px; left: 0; right: 0; bottom: 0;
+      background-color: #3D4466; z-index: 9999;
+      padding: 2rem 1.5rem; overflow-y: auto;
+    }
+    .nav-mobile.open { display: block; }
+    .nav-mobile a { display: block; color: rgba(255,255,255,0.85); font-size: 1rem; text-decoration: none; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .nav-mobile a:last-child { border-bottom: none; }
+    .nav-mobile .mobile-cta { display: block; margin-top: 16px; background: var(--coral); color: #fff; text-align: center; padding: 14px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── HERO ── */
+    .policies-hero { background: var(--cream); padding-top: 68px; }
+    .policies-hero-inner {
+      max-width: 860px; margin: 0 auto; width: 100%;
+      padding: 80px 48px 68px; text-align: center;
+    }
+    .policies-eyebrow {
+      display: inline-block;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--coral); margin-bottom: 14px;
+    }
+    .policies-hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      font-weight: 500; line-height: 1.1; color: var(--navy);
+    }
+
+    /* ── POLICIES BODY ── */
+    .policies-body { background: #fff; padding: 0 48px 80px; }
+    .policies-body-inner { max-width: 720px; margin: 0 auto; padding-top: 64px; }
+
+    /* ── ACCORDION ── */
+    .policy-block { border-bottom: 1.5px solid var(--beige); }
+    .policy-block:last-child { border-bottom: none; }
+
+    .policy-heading { margin: 0; }
+
+    .policy-toggle {
+      width: 100%; display: flex; align-items: center; justify-content: space-between;
+      gap: 20px; background: none; border: none; cursor: pointer;
+      padding: 28px 0; text-align: left;
+    }
+    .policy-toggle-label {
+      font-family: var(--font-display);
+      font-size: clamp(1.55rem, 3vw, 2.1rem);
+      font-weight: 500; color: var(--navy);
+      line-height: 1.2; transition: color .2s;
+    }
+    .policy-toggle:hover .policy-toggle-label { color: var(--coral); }
+
+    .policy-toggle-icon {
+      width: 30px; height: 30px; flex-shrink: 0;
+      border-radius: 50%; background: var(--beige);
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s;
+    }
+    .policy-toggle-icon::before {
+      content: '';
+      display: block; width: 8px; height: 8px;
+      border-right: 2px solid var(--navy);
+      border-bottom: 2px solid var(--navy);
+      transform: rotate(45deg) translate(-1px, -2px);
+      transition: transform .3s ease, border-color .2s;
+    }
+    .policy-toggle[aria-expanded="true"] .policy-toggle-icon { background: var(--coral-pale); }
+    .policy-toggle[aria-expanded="true"] .policy-toggle-icon::before {
+      transform: rotate(-135deg) translate(-1px, 2px);
+      border-color: var(--coral);
+    }
+
+    .policy-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s ease;
+    }
+    .policy-body.open { max-height: 800px; }
+    .policy-body-inner { padding-bottom: 36px; }
+
+    /* Content styles */
+    .policy-block p {
+      font-size: 1rem; line-height: 1.85; color: var(--text);
+      margin-bottom: 16px;
+    }
+    .policy-block p:last-child { margin-bottom: 0; }
+    .policy-note {
+      font-size: 0.92rem; color: var(--text-light);
+      font-style: italic; line-height: 1.75;
+      margin-top: 20px; display: block;
+    }
+    .policy-list { list-style: none; margin: 18px 0 0; padding: 0; }
+    .policy-list li {
+      padding: 0 0 14px 22px;
+      position: relative;
+      font-size: 1rem; line-height: 1.8; color: var(--text);
+    }
+    .policy-list li:last-child { padding-bottom: 0; }
+    .policy-list li::before {
+      content: '–'; position: absolute; left: 0;
+      color: var(--coral); font-weight: 500;
+    }
+
+    /* ── CONTACT LINE ── */
+    .policies-contact {
+      background: var(--cream); padding: 52px 48px 56px;
+      text-align: center; border-top: 1.5px solid var(--beige);
+    }
+    .policies-contact p { color: var(--coral); font-size: 0.95rem; line-height: 1.75; }
+    .policies-contact a {
+      color: var(--coral); font-weight: 600;
+      text-decoration: underline; text-underline-offset: 3px;
+    }
+    .policies-contact a:hover { opacity: 0.75; }
+
+    /* ── FOOTER ── */
+    footer { background: #2a2d40; color: rgba(255,255,255,0.7); padding: 64px 48px 32px; }
+    .footer-grid { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand img { height: 36px; margin-bottom: 16px; }
+    .footer-brand p { font-size: 0.875rem; line-height: 1.7; color: rgba(255,255,255,0.55); max-width: 260px; }
+    .footer-tagline-text { font-family: var(--font-display); font-size: 1rem; color: rgba(255,255,255,0.7); font-style: italic; margin-top: 12px; }
+    .footer-col h4 { color: #fff; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+    .footer-col a { display: block; color: rgba(255,255,255,0.55); font-size: 0.875rem; text-decoration: none; margin-bottom: 10px; transition: color .2s; }
+    .footer-col a:hover { color: rgba(255,255,255,0.9); }
+    .footer-bottom { max-width: 1120px; margin: 0 auto; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 0.8rem; color: rgba(255,255,255,0.35); }
+    .footer-fun-fact { font-size: 0.78rem; color: rgba(255,255,255,0.35); font-style: italic; max-width: 440px; text-align: right; }
+
+    /* ── PRINT ── */
+    @media print {
+      nav, .nav-mobile, footer { display: none !important; }
+      .policies-hero { padding-top: 0; background: #fff; }
+      .policies-hero-inner { padding: 24px 0 32px; }
+      .policies-body { padding: 0; }
+      .policies-contact { background: #fff; border-top: 1px solid #ccc; padding: 24px 0; }
+      .policy-toggle-icon { display: none; }
+      .policy-body { max-height: none !important; overflow: visible !important; }
+      .policy-block { page-break-inside: avoid; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      nav { padding: 0 24px; gap: 20px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+    @media (max-width: 768px) {
+      .policies-hero-inner { padding: 64px 28px 52px; }
+      .policies-body { padding: 0 28px 64px; }
+      .policies-contact { padding: 44px 28px 48px; }
+    }
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+
+      .policies-hero-inner { padding: 60px 20px 48px; }
+      .policies-body { padding: 0 20px 60px; }
+      .policies-contact { padding: 40px 20px 44px; }
+
+      footer { padding: 48px 20px 24px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-fun-fact { text-align: left; max-width: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="images/MAGNOLIA.PNG" alt="Magnolia flower logo" />
+    <span class="nav-logo-text">Magnolia Education</span>
+  </a>
+  <div class="nav-links">
+    <div class="nav-dropdown">
+      <a href="#">Services</a>
+      <div class="nav-dropdown-menu">
+        <a href="tutoring.html">Tutoring</a>
+        <a href="mock-exams.html">Mock Exams</a>
+        <a href="study-skills.html">Study Skills</a>
+        <a href="prep-cohorts.html">Prep Cohorts</a>
+      </div>
+    </div>
+    <div class="nav-dropdown">
+      <a href="#">About</a>
+      <div class="nav-dropdown-menu">
+        <a href="story.html">Our Story</a>
+        <a href="tutors.html">Our Tutors</a>
+      </div>
+    </div>
+    <a href="contact.html">Contact</a>
+    <a href="https://calendly.com/hello-magnolia-education/30min" target="_blank" class="nav-cta">Book a Consultation</a>
+  </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE NAV DRAWER -->
+<div class="nav-mobile" id="mobile-nav">
+  <a href="tutoring.html">Tutoring</a>
+  <a href="mock-exams.html">Mock Exams</a>
+  <a href="study-skills.html">Study Skills</a>
+  <a href="prep-cohorts.html">Prep Cohorts</a>
+  <a href="story.html">Our Story</a>
+  <a href="tutors.html">Our Tutors</a>
+  <a href="contact.html">Contact</a>
+  <a href="policies.html">Policies</a>
+  <a href="https://calendly.com/hello-magnolia-education/30min" target="_blank" class="mobile-cta">Book a Consultation</a>
+</div>
+
+<!-- HERO -->
+<section class="policies-hero">
+  <div class="policies-hero-inner reveal">
+    <span class="policies-eyebrow">Magnolia Education</span>
+    <h1 class="policies-hero-title">Tutoring Policies</h1>
+  </div>
+</section>
+
+<!-- POLICIES CONTENT -->
+<main class="policies-body">
+  <div class="policies-body-inner">
+
+    <!-- Billing -->
+    <div class="policy-block reveal">
+      <h2 class="policy-heading">
+        <button class="policy-toggle" aria-expanded="false" aria-controls="billing-body">
+          <span class="policy-toggle-label">Billing</span>
+          <span class="policy-toggle-icon" aria-hidden="true"></span>
+        </button>
+      </h2>
+      <div class="policy-body" id="billing-body">
+        <div class="policy-body-inner">
+          <p>Sessions are prepaid for each month. Payment is due before the first session of the billing period. The standard payment method is e-transfer to <a href="mailto:hello@magnolia-education.com" style="color:var(--navy);font-weight:500;text-underline-offset:2px;text-decoration:underline;">hello@magnolia-education.com</a>.</p>
+          <p>Every session is a trial. If tutoring is not the right fit, even after four sessions, you can cancel at any time and receive a prorated refund for unused sessions in the current month.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Weekly Commitment -->
+    <div class="policy-block reveal">
+      <h2 class="policy-heading">
+        <button class="policy-toggle" aria-expanded="false" aria-controls="commitment-body">
+          <span class="policy-toggle-label">Weekly Commitment</span>
+          <span class="policy-toggle-icon" aria-hidden="true"></span>
+        </button>
+      </h2>
+      <div class="policy-body" id="commitment-body">
+        <div class="policy-body-inner">
+          <p>Once enrolled, your weekly session slot is reserved for the duration of the school year. There are no cancellations during the school year (July and August are excluded from this commitment).</p>
+          <span class="policy-note">This commitment ensures your student has a consistent schedule and their tutor can plan effectively.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rescheduling and Makeup Sessions -->
+    <div class="policy-block reveal">
+      <h2 class="policy-heading">
+        <button class="policy-toggle" aria-expanded="false" aria-controls="rescheduling-body">
+          <span class="policy-toggle-label">Rescheduling and Makeup Sessions</span>
+          <span class="policy-toggle-icon" aria-hidden="true"></span>
+        </button>
+      </h2>
+      <div class="policy-body" id="rescheduling-body">
+        <div class="policy-body-inner">
+          <p>If you need to miss a session, you must provide at least 24 hours of notice to receive a makeup credit or to reschedule the session directly.</p>
+          <p>Sessions missed without 24 hours of notice are billed as a normal session with no makeup credit.</p>
+          <p>Makeup credits expire at the end of each semester: January for the fall semester, and June for the winter/spring semester.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Holidays and Breaks -->
+    <div class="policy-block reveal">
+      <h2 class="policy-heading">
+        <button class="policy-toggle" aria-expanded="false" aria-controls="holidays-body">
+          <span class="policy-toggle-label">Holidays and Breaks</span>
+          <span class="policy-toggle-icon" aria-hidden="true"></span>
+        </button>
+      </h2>
+      <div class="policy-body" id="holidays-body">
+        <div class="policy-body-inner">
+          <p>Sessions are booked on all holidays throughout the school year, with two exceptions:</p>
+          <ul class="policy-list">
+            <li>The December break (Christmas through New Year's)</li>
+            <li>The first weekend and week of March break</li>
+          </ul>
+          <span class="policy-note">All other holidays (Thanksgiving, Family Day, Victoria Day, etc.) are regular session days.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Credit Card Policy -->
+    <div class="policy-block reveal">
+      <h2 class="policy-heading">
+        <button class="policy-toggle" aria-expanded="false" aria-controls="cc-body">
+          <span class="policy-toggle-label">Credit Card Policy</span>
+          <span class="policy-toggle-icon" aria-hidden="true"></span>
+        </button>
+      </h2>
+      <div class="policy-body" id="cc-body">
+        <div class="policy-body-inner">
+          <p>Your credit card is kept on file for security purposes only. It is not charged for regular session billing. Sessions are billed and paid by e-transfer each month.</p>
+          <p>Your credit card will only be charged in two situations:</p>
+          <ul class="policy-list">
+            <li>An outstanding balance remains unpaid at the end of the semester</li>
+            <li>An outstanding balance remains unpaid 30 days after the end of your engagement</li>
+          </ul>
+          <p style="margin-top: 18px;">A 3% convenience charge applies to all credit card transactions.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- CONTACT LINE -->
+<div class="policies-contact">
+  <p>Questions about these policies? Reach out to your tutor or contact us at <a href="mailto:hello@magnolia-education.com">hello@magnolia-education.com</a>.</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="images/MAGNOLIA.PNG" alt="Magnolia Education logo" />
+      <p id="f-tagline"></p>
+      <p class="footer-tagline-text" id="f-quote"></p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="tutoring.html">Tutoring</a>
+      <a href="mock-exams.html">Mock Exams</a>
+      <a href="study-skills.html">Study Skills</a>
+      <a href="prep-cohorts.html">Prep Cohorts</a>
+    </div>
+    <div class="footer-col">
+      <h4>About</h4>
+      <a href="story.html">Our Story</a>
+      <a href="tutors.html">Our Tutors</a>
+      <a href="contact.html">Join Our Team</a>
+      <a href="policies.html">Policies</a>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <a href="contact.html">Contact</a>
+      <a href="mailto:hello@magnolia-education.com" style="white-space:nowrap">hello@magnolia-education.com</a>
+      <a href="https://calendly.com/hello-magnolia-education/30min" target="_blank">Book a Consultation</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p id="f-copyright"></p>
+    <p class="footer-fun-fact" id="f-funfact"></p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Footer content from content.js
+  const C = window.CONTENT;
+  if (C && C.homepage) {
+    const H = C.homepage;
+    function setText(id, val) {
+      const el = document.getElementById(id);
+      if (el && val != null) el.textContent = val;
+    }
+    setText('f-tagline', H.footer.tagline);
+    setText('f-quote', H.footer.quote);
+    setText('f-copyright', H.footer.copyright);
+    setText('f-funfact', H.footer.funFact);
+  }
+
+  // Accordion
+  document.querySelectorAll('.policy-toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      var body = document.getElementById(btn.getAttribute('aria-controls'));
+      if (body) body.classList.toggle('open', !expanded);
+    });
+  });
+
+  // Reveal on scroll
+  function initReveal() {
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.05 });
+    document.querySelectorAll('.reveal').forEach(function (el) { obs.observe(el); });
+    document.querySelectorAll('.reveal').forEach(function (el) {
+      if (el.getBoundingClientRect().top < window.innerHeight + 40) el.classList.add('visible');
+    });
+  }
+  setTimeout(initReveal, 50);
+  window.addEventListener('scroll', function () {
+    document.querySelectorAll('.reveal:not(.visible)').forEach(function (el) {
+      if (el.getBoundingClientRect().top < window.innerHeight + 40) el.classList.add('visible');
+    });
+  }, { passive: true });
+
+  // Hamburger
+  var hamburger = document.getElementById('hamburger');
+  var mobileNav = document.getElementById('mobile-nav');
+  hamburger && hamburger.addEventListener('click', function () {
+    hamburger.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+  });
+  mobileNav && mobileNav.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      hamburger.classList.remove('open');
+      mobileNav.classList.remove('open');
+    });
+  });
+})();
+</script>
+
+<!-- DEV TOOL: Image tuner overlay (local only, inactive in production) -->
+<script src="dev/image-tuner-overlay.js"></script>
+
+</body>
+</html>
