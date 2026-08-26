@@ -12,6 +12,107 @@
   to = "/.netlify/functions/ticktick-callback"
   status = 200
 
+# --- Magnolia Math Suite (the tutor/student portal, hosted on Vercel) ---
+#
+# status = 200 proxies server-to-server: Netlify fetches the page from Vercel and returns it
+# as its own, so the address bar stays on magnolia-education.com and the visitor never sees
+# a second host. (A 301 would bounce the browser and change the URL — not what we want.)
+#
+# force = true so these win over any same-named file that lands in this repo later.
+#
+# Root paths are listed bare AND splatted. Netlify's "/x/*" does not reliably match a bare
+# "/x", and a missed path here fails silently — the page renders and simply does nothing.
+#
+# NOTE: /admin is deliberately absent. That is THIS site's CMS (admin/index.html). The
+# portal's own admin console is internal and stays on the .vercel.app host.
+
+[[redirects]]
+  from = "/tutor"
+  to = "https://magnolia-math-suite-dev.vercel.app/tutor"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/tutor/*"
+  to = "https://magnolia-math-suite-dev.vercel.app/tutor/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/portal"
+  to = "https://magnolia-math-suite-dev.vercel.app/portal"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/portal/*"
+  to = "https://magnolia-math-suite-dev.vercel.app/portal/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/apply"
+  to = "https://magnolia-math-suite-dev.vercel.app/apply"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/apply/*"
+  to = "https://magnolia-math-suite-dev.vercel.app/apply/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/parent/*"
+  to = "https://magnolia-math-suite-dev.vercel.app/parent/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/login"
+  to = "https://magnolia-math-suite-dev.vercel.app/login"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/auth/*"
+  to = "https://magnolia-math-suite-dev.vercel.app/auth/:splat"
+  status = 200
+  force = true
+
+# The portal's client code fetches these same-origin. Without this rule every button is inert.
+[[redirects]]
+  from = "/api/*"
+  to = "https://magnolia-math-suite-dev.vercel.app/api/:splat"
+  status = 200
+  force = true
+
+# JS/CSS chunks. Without this rule the portal renders perfectly and does nothing at all.
+[[redirects]]
+  from = "/_next/*"
+  to = "https://magnolia-math-suite-dev.vercel.app/_next/:splat"
+  status = 200
+  force = true
+
+# Portal assets referenced from the site root.
+[[redirects]]
+  from = "/magnolia.png"
+  to = "https://magnolia-math-suite-dev.vercel.app/magnolia.png"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/brand/*"
+  to = "https://magnolia-math-suite-dev.vercel.app/brand/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/training/*"
+  to = "https://magnolia-math-suite-dev.vercel.app/training/:splat"
+  status = 200
+  force = true
+
 # Protect the admin with a redirect that still allows the page to load.
 # For full password protection, set NETLIFY_AUTH_PASSWORD in Netlify dashboard.
 [[headers]]
