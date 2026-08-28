@@ -80,7 +80,31 @@
   status = 200
   force = true
 
+# The unsubscribe link at the foot of every CRM campaign email. Without this rule a parent who
+# clicks "Unsubscribe" lands on a 404 at magnolia-education.com, and the next thing they click is
+# "mark as spam" — which costs us the domain reputation our magic-link sign-in mail depends on.
+#
+# Bare AND splatted, per the note above: Netlify's "/x/*" does not reliably match a bare "/x",
+# and the bare form is the one the email footer actually links to.
+#
+# The OTHER half of unsubscribe — Gmail and Outlook's native button (RFC 8058) — POSTs to
+# /api/unsubscribe/one-click and is already covered by the /api/* rule below. This rule is the
+# human half: the visible link someone follows on purpose.
+[[redirects]]
+  from = "/unsubscribe"
+  to = "https://magnolia-math-suite-dev.vercel.app/unsubscribe"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/unsubscribe/*"
+  to = "https://magnolia-math-suite-dev.vercel.app/unsubscribe/:splat"
+  status = 200
+  force = true
+
 # The portal's client code fetches these same-origin. Without this rule every button is inert.
+# This also carries the RFC 8058 one-click unsubscribe POST: Netlify's status=200 proxy forwards
+# the method and body, so /api/unsubscribe/one-click works as a POST target.
 [[redirects]]
   from = "/api/*"
   to = "https://magnolia-math-suite-dev.vercel.app/api/:splat"
