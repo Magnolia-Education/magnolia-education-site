@@ -50,6 +50,19 @@
   status = 200
   force = true
 
+# The family front door. The TutorBird account widget and the MMS intake wizard sit on ONE
+# page so a family completes both in a single sitting; that page is an MMS route now, not the
+# static onboarding.html this repo used to serve. The old `_redirects` entry was deleted in
+# the same commit — a rule there would win over this proxy and quietly serve the dead page.
+#
+# force = true matters more here than for the routes below: onboarding.html still exists in
+# this repo, so without it Netlify would serve that file instead of proxying.
+[[redirects]]
+  from = "/onboarding"
+  to = "https://magnolia-math-suite-dev.vercel.app/onboarding"
+  status = 200
+  force = true
+
 [[redirects]]
   from = "/apply"
   to = "https://magnolia-math-suite-dev.vercel.app/apply"

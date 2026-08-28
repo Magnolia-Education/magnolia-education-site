@@ -1,3 +1,5 @@
-/onboarding     /onboarding.html  200
-/onboarding-form  /onboarding.html  301
+# /onboarding is NOT here any more — it proxies to the MMS app, in netlify.toml with the
+# other portal routes. Rules in this file would win over that proxy and serve the old
+# static page instead, so the entry stays deleted rather than commented back in.
+/onboarding-form  /onboarding  301
 /welcome        /welcome.html     200
