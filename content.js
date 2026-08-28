@@ -1,6 +1,6 @@
 // Magnolia Education — content.js
 // All site copy and tutor data lives in this file.
-// Edit via admin/index.html or commit directly to GitHub.
+// Edit via site-admin/index.html or commit directly to GitHub.
 // The admin reads and writes everything between the braces below.
 
 window.CONTENT = {
