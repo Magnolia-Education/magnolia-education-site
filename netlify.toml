@@ -23,8 +23,27 @@
 # Root paths are listed bare AND splatted. Netlify's "/x/*" does not reliably match a bare
 # "/x", and a missed path here fails silently — the page renders and simply does nothing.
 #
-# NOTE: /admin is deliberately absent. That is THIS site's CMS (admin/index.html). The
-# portal's own admin console is internal and stays on the .vercel.app host.
+# /admin now proxies too. It used to be excluded because this site's own content editor
+# lived there, which meant /admin/ served the CMS while /admin/login and every other console
+# path returned a bare Netlify 404 — read from outside as "the admin portal is down". The
+# editor moved to /site-admin/ and the console took the path.
+#
+# It has to be /admin -> /admin, path for path. The app hard-codes ~72 absolute /admin/...
+# paths (redirect('/admin/login'), <Link href="/admin/crm">, breadcrumbs), so proxying it
+# under any other name would need all 72 edited — the basePath rewrite that was audited and
+# rejected when this proxy was first built.
+
+[[redirects]]
+  from = "/admin"
+  to = "https://magnolia-math-suite-dev.vercel.app/admin"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/admin/*"
+  to = "https://magnolia-math-suite-dev.vercel.app/admin/:splat"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/tutor"
@@ -137,8 +156,16 @@
   status = 200
   force = true
 
-# Protect the admin with a redirect that still allows the page to load.
+# Both admin surfaces get the same hardening. /site-admin/* is this site's content editor,
+# which is what this block was written for; /admin/* is now the proxied MMS console, and it
+# wants the same treatment for the same reason. Neither should ever be framed.
 # For full password protection, set NETLIFY_AUTH_PASSWORD in Netlify dashboard.
+[[headers]]
+  for = "/site-admin/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+
 [[headers]]
   for = "/admin/*"
   [headers.values]

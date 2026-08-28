@@ -4,7 +4,7 @@
 //
 // Required Netlify environment variables (set in Netlify dashboard):
 //   GH_TOKEN      — classic GitHub PAT with repo scope for Magnolia-Education org
-//   ADMIN_PASSWORD — must match the password set in admin/index.html
+//   ADMIN_PASSWORD — must match the password set in site-admin/index.html
 
 const OWNER  = 'Magnolia-Education';
 const REPO   = 'magnolia-education-site';
