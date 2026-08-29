@@ -112,18 +112,20 @@ exports.handler = async (event) => {
       // (MMS migration 0015) that the student-portal login allow-list reads. phone is
       // optional. Previously these only survived inside intake_raw.payload.
       email: String(p.email).trim().toLowerCase(),
+      // Phone is load-bearing beyond CRM display: lib/quo/group-chat.ts builds the pairing
+      // group chat from it, and a student without one blocks that chat entirely.
       phone: p.phone ? String(p.phone).trim() : null,
-      grade: fields.grade,
-      school: p.school || null,
-      device: fields.device,
-      subject_requested: p.subject_requested || p.subject || null,
-      previous_subject_mark: fields.previous_subject_mark,
-      sessions_per_week: fields.sessions_per_week,
-      session_length_min: fields.session_length_min,
-      preferred_times: fields.preferred_times,
-      unavailable_times: fields.unavailable_times,
-      earliest_start_after_school: fields.earliest_start_after_school,
-      spare_period: p.spare_period ? String(p.spare_period).trim() : null,
+      // INTAKE COLUMNS ARE DELIBERATELY ABSENT. The MMS wizard at /onboarding owns grade,
+      // school, device, subject_requested, previous_subject_mark, sessions_per_week,
+      // session_length_min, preferred_times, unavailable_times, earliest_start_after_school
+      // and spare_period now.
+      //
+      // They are OMITTED, not sent as null, and that distinction is the entire point:
+      // upsertStudent posts with PostgREST `resolution=merge-duplicates`, so a key PRESENT
+      // with a null value OVERWRITES the stored column, while an absent key leaves it alone.
+      // parseIntake returns null (never undefined) for missing input, so keeping these lines
+      // would null a family's wizard answers on every Zap re-fire — silently, because none of
+      // these columns is required and nothing would error.
       primary_parent_id: parentId,
       intake_raw: { payload: p, parse_warnings: warnings },
     });

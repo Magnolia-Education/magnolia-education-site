@@ -191,6 +191,26 @@ function parseIntake(p) {
     earliest_start_after_school: parseTimeOfDay(p.earliest_start, warnings),
     previous_subject_mark: parseMark(p.previous_subject_mark, warnings),
   };
+
+  // Every parser above warns on MALFORMED input but says nothing about ABSENT input, and that
+  // asymmetry hid a real outage: the intake questions were removed from the TutorBird widget
+  // some time between 2026-06-14 and 2026-07-19 while the Zap kept string-parsing labels that
+  // no longer existed, so `fromNote('Course')` returned '' every time. Of the three students
+  // ever created through this pipeline, the June one carried 9 of 10 intake fields and both
+  // July ones carried zero — with `parse_warnings` empty on all of them. Nothing anywhere
+  // said a word for five weeks.
+  //
+  // Post-cutover this is the EXPECTED state (the MMS wizard owns intake now), so it is a
+  // warning rather than an error — but it lands in students.intake_raw.parse_warnings, so the
+  // same silent-loss shape can never repeat unobserved.
+  const anyIntake = [
+    p.subject_requested, p.subject, p.grade, p.preferred_times, p.session_plan,
+    p.unavailable_times, p.earliest_start, p.spare_period, p.device, p.previous_subject_mark,
+  ].some((v) => v != null && String(v).trim() !== '');
+  if (!anyIntake) {
+    warnings.push('No intake fields in payload — expected once the MMS wizard owns intake.');
+  }
+
   return { fields, warnings };
 }
 
