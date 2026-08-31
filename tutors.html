@@ -214,7 +214,7 @@
     }
     .tutor-row--founder .tutor-name { color: #fff; }
 
-    /* Subtitle — subjects as uppercase tracking line */
+    /* Subtitle — role as uppercase tracking line */
     .tutor-subtitle {
       font-size: 0.72rem; font-weight: 600; letter-spacing: 0.13em;
       text-transform: uppercase; color: var(--coral);
@@ -474,8 +474,12 @@
       if (!isFounder && altIndex % 2 === 0) rowClass += ' tutor-row--reverse';
       if (!isFounder) altIndex++;
 
-      // Subtitle — use explicit subtitle field if present, otherwise build from subjects
-      const subtitle = tutor.subtitle || (tutor.subjects.join(' and ').toUpperCase() + ' TUTOR');
+      // Subtitle — the explicit subtitle field if the tutor has one, otherwise their role.
+      // Deliberately NOT built from `subjects`: an auto-generated subject line is a course
+      // list, not a description of a person, and the only thing keeping it presentable here
+      // was that content.js happens to hold tidy values. Anything sourced from the MMS roster
+      // renders as a course-code dump.
+      const subtitle = tutor.subtitle || (tutor.role || 'Tutor').toUpperCase();
 
       // Photo frame — img with object-position from tutor data
       const tunerId = `tutors-${tutor.id}`;
