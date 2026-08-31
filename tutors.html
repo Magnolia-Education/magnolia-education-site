@@ -231,55 +231,6 @@
     }
     .tutor-row--founder .tutor-bio { color: rgba(255,255,255,0.8); }
 
-    /* ── Tutor carousel (replaces the alternating rows; the .tutor-row* styles above are
-          now unused and safe to remove) ── */
-    .tutor-carousel { position: relative; overflow: hidden; padding: 72px 0; }
-    /* Soft edge fades so cards ease in/out rather than clipping hard */
-    .tutor-carousel::before, .tutor-carousel::after {
-      content: ''; position: absolute; top: 0; bottom: 0; width: 12%; z-index: 2; pointer-events: none;
-    }
-    .tutor-carousel::before { left: 0;  background: linear-gradient(to right, var(--beige), rgba(237,232,224,0)); }
-    .tutor-carousel::after  { right: 0; background: linear-gradient(to left,  var(--beige), rgba(237,232,224,0)); }
-    /* Gap lives on the card (margin-right, incl. the last) so translateX(-50%) over the
-       duplicated set loops seamlessly — a flex `gap` would leave a half-gap hitch at the seam. */
-    .tutor-track {
-      display: flex; width: max-content;
-      animation: tutor-scroll 60s linear infinite;
-    }
-    /* Keep spinning off-screen; pause when a visitor hovers to read */
-    .tutor-carousel:hover .tutor-track { animation-play-state: paused; }
-    @keyframes tutor-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-    .tutor-card {
-      flex: 0 0 300px; box-sizing: border-box; margin-right: 28px;
-      background: var(--white); border-radius: 18px; padding: 32px 28px; text-align: center;
-      box-shadow: 0 10px 30px rgba(61,68,102,0.09);
-    }
-    .tutor-card-photo {
-      width: 128px; height: 128px; border-radius: 50%; overflow: hidden;
-      margin: 0 auto 18px; background: #d4cfc8;
-    }
-    .tutor-card-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .tutor-card-badge {
-      display: inline-block; font-size: 0.6rem; font-weight: 600; letter-spacing: 0.14em;
-      text-transform: uppercase; color: var(--coral); border: 1px solid var(--coral);
-      border-radius: 4px; padding: 3px 8px; margin-bottom: 12px;
-    }
-    .tutor-card-name { font-family: var(--font-display); font-size: 1.7rem; font-weight: 500; line-height: 1.15; color: var(--navy); margin-bottom: 4px; }
-    .tutor-card-role { font-size: 0.66rem; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase; color: var(--coral); margin-bottom: 14px; }
-    .tutor-card-bio {
-      font-size: 0.9rem; line-height: 1.6; color: var(--text-light);
-      display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden;
-    }
-    /* Accessibility: honour reduced-motion — stop the spin, show a static wrapped grid,
-       and drop the duplicated (aria-hidden) set so each tutor appears exactly once */
-    @media (prefers-reduced-motion: reduce) {
-      .tutor-track { animation: none; flex-wrap: wrap; justify-content: center; width: auto; }
-      .tutor-card--dupe { display: none; }
-      .tutor-card { margin: 0 14px 20px; }
-      .tutor-carousel::before, .tutor-carousel::after { display: none; }
-    }
-    @media (max-width: 600px) { .tutor-card { flex-basis: 260px; } }
-
     /* ── TUNER CONFIG: hardcoded image values from magnolia-image-config.json ── */
     img[data-tuner-id="tutors-rachit"] {
       transform: scale(0.9) translate(-3%, 0%); transform-origin: center;
@@ -506,84 +457,49 @@
   setText('tu-hero-title', T.hero.title);
   setText('tu-hero-subtitle', T.hero.subtitle);
 
-  // Render tutors as an infinite, auto-spinning carousel. Renders from bundled content.js
-  // immediately, then progressively swaps to the live MMS feed when it's reachable.
+  // Render all tutors as full-width alternating rows
   const list = document.getElementById('tu-list');
-  // Live tutor feed (MMS). Override per-environment by setting window.MAGNOLIA_TUTORS_FEED
-  // before this script runs; the default below must be the PRODUCTION MMS origin at deploy.
-  const TUTORS_FEED = window.MAGNOLIA_TUTORS_FEED || 'https://magnolia-math-suite-dev.vercel.app/api/public/tutors';
+  if (list) {
+    let altIndex = 0; // counts non-founder rows to drive alternation
 
-  // Escape interpolated text — the live feed's bios/names are tutor-authored, rendered on a
-  // public page via innerHTML, so they must be treated as untrusted.
-  function esc(s) {
-    return String(s == null ? '' : s).replace(/[&<>"']/g, c => (
-      { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
-    ));
+    list.innerHTML = T.team.map(tutor => {
+      const isFounder = tutor.founder;
+      const photoPos = tutor.photoPosition || 'center top';
+
+      // Determine row direction:
+      // Rachit (founder): always photo left / text right — no reverse class
+      // Non-founders: even altIndex (1st, 3rd, 5th) = text left / photo right → reverse
+      //               odd altIndex (2nd, 4th, 6th) = photo left / text right → normal
+      let rowClass = isFounder ? 'tutor-row--founder' : 'tutor-row';
+      if (!isFounder && altIndex % 2 === 0) rowClass += ' tutor-row--reverse';
+      if (!isFounder) altIndex++;
+
+      // Subtitle — use explicit subtitle field if present, otherwise build from subjects
+      const subtitle = tutor.subtitle || (tutor.subjects.join(' and ').toUpperCase() + ' TUTOR');
+
+      // Photo frame — img with object-position from tutor data
+      const tunerId = `tutors-${tutor.id}`;
+      const frameContent = tutor.photo
+        ? `<img src="${tutor.photo}" alt="${tutor.name}" loading="lazy" data-tuner-id="${tunerId}" data-tuner-page="tutors.html" data-tuner-section="Tutor Profiles" style="object-position:${photoPos}" />`
+        : '';
+
+      // Founder badge
+      const founderBadge = isFounder
+        ? `<span class="founder-badge">Founder &amp; Lead Tutor</span>`
+        : '';
+
+      return `
+        <div class="${rowClass} reveal">
+          <div class="tutor-row-photo">${frameContent}</div>
+          <div class="tutor-row-body">
+            ${founderBadge}
+            <h2 class="tutor-name">${tutor.name}</h2>
+            <p class="tutor-subtitle">${subtitle}</p>
+            <p class="tutor-bio">${tutor.bio}</p>
+          </div>
+        </div>`;
+    }).join('');
   }
-
-  // dupe = the second, animation-only copy: hidden from screen readers, and dropped entirely
-  // under reduced-motion (via .tutor-card--dupe) so each tutor is announced/shown once.
-  function cardHTML(t, dupe) {
-    const pos = esc(t.photoPosition || 'center top');
-    const img = t.photo
-      ? `<img src="${esc(t.photo)}" alt="${esc(t.name)}" loading="lazy" style="object-position:${pos}" />`
-      : '';
-    const badge = t.founder ? `<span class="tutor-card-badge">Founder</span>` : '';
-    const cls = dupe ? 'tutor-card tutor-card--dupe' : 'tutor-card';
-    const aria = dupe ? ' aria-hidden="true"' : '';
-    return `
-      <article class="${cls}"${aria}>
-        <div class="tutor-card-photo">${img}</div>
-        ${badge}
-        <h3 class="tutor-card-name">${esc(t.name)}</h3>
-        <p class="tutor-card-role">${esc(t.role)}</p>
-        <p class="tutor-card-bio">${esc(t.bio)}</p>
-      </article>`;
-  }
-
-  function renderCarousel(tutors) {
-    if (!list || !tutors.length) return;
-    // Real set + a duplicated (aria-hidden) set so the CSS translateX(-50%) loop is seamless.
-    const cards = tutors.map(t => cardHTML(t, false)).join('');
-    const dupes = tutors.map(t => cardHTML(t, true)).join('');
-    list.innerHTML =
-      `<div class="tutor-carousel" aria-label="Our tutors">
-         <div class="tutor-track">${cards}${dupes}</div>
-       </div>`;
-  }
-
-  // Immediate render from bundled content (works before/without the live feed).
-  renderCarousel(T.team.map(t => ({
-    name: t.name,
-    bio: t.bio,
-    photo: t.photo,
-    photoPosition: t.photoPosition,
-    founder: t.founder,
-    role: t.subtitle || (t.subjects ? t.subjects.join(' · ').toUpperCase() + ' TUTOR' : 'MAGNOLIA TUTOR'),
-  })));
-
-  // Progressive enhancement: replace with the live MMS feed when it responds. Carries
-  // founder/photoPosition from content.js by name where available; silent fallback on failure.
-  fetch(TUTORS_FEED)
-    .then(r => (r.ok ? r.json() : Promise.reject()))
-    .then(({ tutors }) => {
-      if (!Array.isArray(tutors) || !tutors.length) return;
-      const byName = new Map(T.team.map(t => [t.name, t]));
-      renderCarousel(tutors.map(t => {
-        const c = byName.get(t.name);
-        return {
-          name: t.name,
-          bio: t.bio,
-          photo: t.photoUrl,
-          photoPosition: c && c.photoPosition,
-          founder: c && c.founder,
-          role: (t.subjects && t.subjects.length)
-            ? t.subjects.join(' · ').toUpperCase()
-            : ((c && c.subtitle) || 'MAGNOLIA TUTOR'),
-        };
-      }));
-    })
-    .catch(() => {});
 
   // CTA
   setText('tu-cta-title', T.cta.title);
