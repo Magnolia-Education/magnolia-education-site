@@ -234,7 +234,7 @@
 
     /* ── Tutor carousel (replaces the alternating rows; the .tutor-row* styles above are
           now unused and safe to remove) ── */
-    .tutor-carousel { position: relative; overflow: hidden; padding: 72px 0; }
+    .tutor-carousel { position: relative; overflow: hidden; padding: 88px 0; }
     /* Soft edge fades so cards ease in/out rather than clipping hard */
     .tutor-carousel::before, .tutor-carousel::after {
       content: ''; position: absolute; top: 0; bottom: 0; width: 12%; z-index: 2; pointer-events: none;
@@ -245,19 +245,21 @@
        duplicated set loops seamlessly — a flex `gap` would leave a half-gap hitch at the seam. */
     .tutor-track {
       display: flex; width: max-content;
-      animation: tutor-scroll 60s linear infinite;
+      /* Duration tracks card width so the reading pace stays put: 300px cards over 60s
+         ran at ~38px/s, and the same 60s over 420px cards would be ~52px/s. 80s is ~39px/s. */
+      animation: tutor-scroll 80s linear infinite;
     }
     /* Keep spinning off-screen; pause when a visitor hovers to read */
     .tutor-carousel:hover .tutor-track { animation-play-state: paused; }
     @keyframes tutor-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
     .tutor-card {
-      flex: 0 0 300px; box-sizing: border-box; margin-right: 28px;
-      background: var(--white); border-radius: 18px; padding: 32px 28px; text-align: center;
+      flex: 0 0 420px; box-sizing: border-box; margin-right: 32px;
+      background: var(--white); border-radius: 22px; padding: 40px 36px; text-align: center;
       box-shadow: 0 10px 30px rgba(61,68,102,0.09);
     }
     .tutor-card-photo {
-      width: 128px; height: 128px; border-radius: 50%; overflow: hidden;
-      margin: 0 auto 18px; background: #d4cfc8;
+      width: 176px; height: 176px; border-radius: 50%; overflow: hidden;
+      margin: 0 auto 22px; background: #d4cfc8;
     }
     .tutor-card-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .tutor-card-badge {
@@ -265,11 +267,14 @@
       text-transform: uppercase; color: var(--coral); border: 1px solid var(--coral);
       border-radius: 4px; padding: 3px 8px; margin-bottom: 12px;
     }
-    .tutor-card-name { font-family: var(--font-display); font-size: 1.7rem; font-weight: 500; line-height: 1.15; color: var(--navy); margin-bottom: 4px; }
-    .tutor-card-role { font-size: 0.66rem; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase; color: var(--coral); margin-bottom: 14px; }
+    .tutor-card-name { font-family: var(--font-display); font-size: 2.1rem; font-weight: 500; line-height: 1.15; color: var(--navy); margin-bottom: 4px; }
+    .tutor-card-role { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase; color: var(--coral); margin-bottom: 14px; }
+    /* 12 lines at this width clears the longest bio on the roster (717 chars), so nothing is
+       cut off. The clamp stays as a guard against a future bio nobody sized for — cards all
+       stretch to the tallest, so one runaway entry would otherwise set the height of the band. */
     .tutor-card-bio {
-      font-size: 0.9rem; line-height: 1.6; color: var(--text-light);
-      display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden;
+      font-size: 0.95rem; line-height: 1.65; color: var(--text-light);
+      display: -webkit-box; -webkit-line-clamp: 12; -webkit-box-orient: vertical; overflow: hidden;
     }
     /* Accessibility: honour reduced-motion — stop the spin, show a static wrapped grid,
        and drop the duplicated (aria-hidden) set so each tutor appears exactly once */
@@ -279,7 +284,12 @@
       .tutor-card { margin: 0 14px 20px; }
       .tutor-carousel::before, .tutor-carousel::after { display: none; }
     }
-    @media (max-width: 600px) { .tutor-card { flex-basis: 260px; } }
+    /* Two steps down, so a 420px card does not overhang a phone: tablets keep most of the
+       size, phones fall back to a card that fits a 375px viewport with the edge fades intact. */
+    @media (max-width: 900px) { .tutor-card { flex-basis: 360px; padding: 34px 30px; } }
+    @media (max-width: 600px) { .tutor-card { flex-basis: 300px; padding: 30px 26px; }
+      .tutor-card-photo { width: 140px; height: 140px; }
+      .tutor-card-name { font-size: 1.8rem; } }
 
     /* ── TUNER CONFIG: hardcoded image values from magnolia-image-config.json ── */
     img[data-tuner-id="tutors-rachit"] {
