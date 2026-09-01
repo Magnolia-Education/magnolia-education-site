@@ -110,7 +110,7 @@ Every change follows this sequence. No exceptions.
 - Calendly embed stays
 - "Book a Consultation" button above the "30 min" text
 
-### tutors.html
+### our-tutors.html
 - Tutor data driven by `content.js`
 - Headshot filenames have spaces
 - `photoPosition` field controls cropping
