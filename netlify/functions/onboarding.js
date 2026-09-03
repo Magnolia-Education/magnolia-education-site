@@ -5,19 +5,25 @@
 //   1. verify the HMAC signature          → 401 on mismatch
 //   2. validate required fields           → 400 (with received_keys)
 //   3. upsert the student into the MMS Supabase DB (idempotent on tutorbird_id)
-//   4. create ONE task in the TickTick "Onboarding Ops" list — "Create board
-//      for {student}" for Rachit — idempotent (skipped if a task id is stored),
-//      then store that id back on the student.
 //
-// No tutor, enrollment, sessions, or board are created — those happen later when
-// staff work the TickTick task.
+// That is the whole job now. No tutor, enrollment, sessions, or board are created.
 //
-// Required Netlify env: ZAPIER_WEBHOOK_SECRET, SUPABASE_URL,
-//   SUPABASE_SERVICE_ROLE_KEY, TICKTICK_ONBOARDING_PROJECT_ID
+// THIS USED TO FILE A TICKTICK TASK. Step 4 created one "Create board for {student}" task in
+// the Onboarding Ops list and stored its id back on the student row. It is gone: the task
+// fired on student CREATION, which is before any enrollment exists, and boards in MMS are
+// keyed per enrollment — so it asked for work nobody could do yet and sat in a list until
+// someone remembered it. MMS now chips the pairing itself on the CRM worklist once the parent
+// has confirmed, which is the first moment the board is actually makeable.
+//
+// The task id also served as the idempotency guard here, and that is NOT a loss:
+// students.tutorbird_id carries a UNIQUE constraint and upsertStudent posts with
+// resolution=merge-duplicates, so a Zapier retry merges into the same row at the database
+// level. The guard only ever prevented a duplicate TICKTICK TASK, never a duplicate student.
+//
+// Required Netlify env: ZAPIER_WEBHOOK_SECRET, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
 
 const crypto = require('crypto');
 const db = require('../lib/supabase');
-const ticktick = require('../lib/ticktick');
 const parse = require('../lib/parse');
 
 const CORS = {
@@ -71,17 +77,13 @@ exports.handler = async (event) => {
   }
 
   try {
-    // Idempotency: a stored task id means we already onboarded this student.
-    const existing = await db.getStudentByTutorbirdId(p.tutorbird_id);
-    if (existing && existing.onboarding_ticktick_task_id) {
-      return json(200, { ok: true, idempotent: true, student_id: existing.id });
-    }
-
     const name = `${p.first_name} ${p.last_name}`.trim();
 
     // Heuristically parse the free-text/structured intake fields. Anything unparseable is
-    // skipped and noted in `warnings` (surfaced in the TickTick task) -- we never reject.
-    const { fields, warnings } = parse.parseIntake(p);
+    // skipped and noted in `warnings` -- we never reject. The warnings used to be rendered
+    // into the TickTick task body as well; they are still persisted on the student row as
+    // intake_raw.parse_warnings, which was always the durable copy.
+    const { warnings } = parse.parseIntake(p);
 
     // Create / link the parent (idempotent on email, migration 0013). Skip when no parent
     // email was provided -- the unique index is partial, so a null-email upsert wouldn't merge.
@@ -130,34 +132,7 @@ exports.handler = async (event) => {
       intake_raw: { payload: p, parse_warnings: warnings },
     });
 
-    const proto = event.headers['x-forwarded-proto'] || 'https';
-    const baseUrl = `${proto}://${event.headers.host}`;
-    const taskId = await ticktick.createOnboardingTask(baseUrl, {
-      name,
-      email: p.email,
-      grade: fields.grade,
-      school: p.school,
-      phone: p.phone,
-      parent_name: p.parent_name || `${p.parent_first_name || ''} ${p.parent_last_name || ''}`.trim(),
-      parent_email: p.parent_email,
-      parent_phone: p.parent_phone,
-      subject: p.subject_requested || p.subject,
-      device: fields.device,
-      session_plan: p.session_plan,
-      warnings,
-    });
-    // Persist the task id. If this PATCH fails we still return 200 so Zapier does NOT
-    // retry — the TickTick task already exists and a retry would create a duplicate.
-    // The student row is left without a stored task id, which means the idempotency
-    // guard above won't fire on a future manual retry, but that's the safer trade-off
-    // vs silently creating duplicate tasks for every transient Supabase blip.
-    try {
-      await db.setStudentTaskId(student.id, taskId);
-    } catch (patchErr) {
-      console.error('setStudentTaskId failed (task was created):', patchErr.message);
-    }
-
-    return json(200, { ok: true, student_id: student.id, ticktick_task_id: taskId });
+    return json(200, { ok: true, student_id: student.id });
   } catch (err) {
     console.error('onboarding error:', err.message);
     return json(500, { error: 'Internal error — check Netlify function logs' });
