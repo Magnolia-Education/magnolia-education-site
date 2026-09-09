@@ -548,7 +548,9 @@
     const img = t.photo
       ? `<img src="${esc(t.photo)}" alt="${esc(t.name)}" loading="lazy" style="object-position:${pos}" />`
       : '';
-    const badge = t.founder ? `<span class="tutor-card-badge">Founder</span>` : '';
+    // The badge is the STANDING fact about a person ("Founder"); the coral line below the name
+    // is what they teach. Two different questions, which is why both fit without a new element.
+    const badge = t.role ? `<span class="tutor-card-badge">${esc(t.role)}</span>` : '';
     const cls = dupe ? 'tutor-card tutor-card--dupe' : 'tutor-card';
     const aria = dupe ? ' aria-hidden="true"' : '';
     return `
@@ -556,7 +558,7 @@
         <div class="tutor-card-photo">${img}</div>
         ${badge}
         <h3 class="tutor-card-name">${esc(t.name)}</h3>
-        <p class="tutor-card-role">${esc(t.role)}</p>
+        <p class="tutor-card-role">${esc(t.disciplines)}</p>
         <p class="tutor-card-bio">${esc(t.bio)}</p>
       </article>`;
   }
@@ -572,17 +574,63 @@
        </div>`;
   }
 
-  // The role line is content.js's own `role` field ("Tutor" / "Founder & Lead Tutor").
-  // Deliberately NOT built from `subjects`: a subject list is a course inventory, not a
-  // description of a person, and it is the exact line that rendered GRADE 7 ENGLISH in #16.
-  renderCarousel(T.team.map(t => ({
+  // ── The team, from content.js ──────────────────────────────────────────────────────────
+  // Rendered FIRST and synchronously, every time. This is the page you get with no network,
+  // a cold MMS, an empty feed or a 500, and it is why the swap below can never blank the
+  // grid the way #16 did.
+  //
+  // The badge carries content.js's `founder` flag; the coral line carries its `subjects`,
+  // which are already discipline words here ("Mathematics", "Physics") and not course codes —
+  // unlike MMS's, which is the distinction that broke #16 and why the feed rolls its own up
+  // server-side rather than joining them here.
+  const fromContent = T.team.map(t => ({
     name: t.name,
     bio: t.bio,
     photo: t.photo,
     photoPosition: t.photoPosition,
-    founder: t.founder,
-    role: t.role || 'Tutor',
-  })));
+    role: t.founder ? 'Founder' : null,
+    disciplines: (t.subjects || []).join(' · '),
+  }));
+  renderCarousel(fromContent);
+
+  // ── …then the live roster, if and only if it has something to say ──────────────────────
+  // Site PR #16 fetched MMS and replaced the page with whatever came back. What came back was
+  // three people, so the public team page showed three people. The rule that prevents a repeat
+  // is below and it is one line: a response that is not a NON-EMPTY array changes nothing.
+  //
+  // Same-origin via the Netlify proxy in netlify.toml, not the Vercel host directly: it keeps
+  // the *.vercel.app address out of the public page source and means no CORS to get wrong.
+  //
+  // No error branch on purpose. Every failure — offline, 500, timeout, malformed JSON, empty
+  // roster — lands in the same place, which is "keep the cards already on screen".
+  const FEED = '/api/public/tutors';
+  const FEED_TIMEOUT_MS = 4000;
+
+  (async () => {
+    try {
+      const ctl = new AbortController();
+      const timer = setTimeout(() => ctl.abort(), FEED_TIMEOUT_MS);
+      const res = await fetch(FEED, { signal: ctl.signal, headers: { accept: 'application/json' } });
+      clearTimeout(timer);
+      if (!res.ok) return;
+      const body = await res.json();
+      const live = body && Array.isArray(body.tutors) ? body.tutors : [];
+      if (!live.length) return;
+
+      renderCarousel(live.map(t => ({
+        name: t.name,
+        bio: t.bio,
+        // A signed URL that failed to mint arrives as null. The card renders its own empty
+        // photo well rather than a broken <img>, which cardHTML already handles.
+        photo: t.photoUrl || '',
+        photoPosition: 'center top',
+        role: t.role || null,
+        // Already rolled up by publicDisciplines server-side. Joined, never built, here — this
+        // is the exact line #16 assembled out of raw course codes.
+        disciplines: (t.disciplines || []).join(' · '),
+      })));
+    } catch { /* keep the content.js cards */ }
+  })();
 
   // CTA
   setText('tu-cta-title', T.cta.title);
