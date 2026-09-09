@@ -3,9 +3,10 @@
 // Pure, dependency-free, DETERMINISTIC heuristics (no AI). Turns the free-text answers
 // from the TutorBird onboarding form into the structured shapes the MMS `students` columns
 // expect (migration 0011). Anything that can't be parsed is SKIPPED and a human-readable
-// note is pushed to `warnings[]` — the caller surfaces those in the TickTick task for Rachit
-// (we never reject a submission). The raw payload is also stored in students.intake_raw, so
-// a misparse is always recoverable.
+// note is pushed to `warnings[]`, which the caller persists as students.intake_raw.parse_warnings
+// (we never reject a submission). These warnings were also rendered into a TickTick task for
+// Rachit until that task was retired; intake_raw was always the durable copy. The raw payload
+// is stored alongside them, so a misparse is always recoverable.
 //
 // Formats mirror the hints configured on the TutorBird fields:
 //   session plan        "1x45min" | "2x30min"
