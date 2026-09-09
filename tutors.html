@@ -269,12 +269,17 @@
     }
     .tutor-card-name { font-family: var(--font-display); font-size: 2.1rem; font-weight: 500; line-height: 1.15; color: var(--navy); margin-bottom: 4px; }
     .tutor-card-role { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase; color: var(--coral); margin-bottom: 14px; }
-    /* 12 lines at this width clears the longest bio on the roster (717 chars), so nothing is
-       cut off. The clamp stays as a guard against a future bio nobody sized for — cards all
-       stretch to the tallest, so one runaway entry would otherwise set the height of the band. */
+    /* 16 lines. The previous 12 was measured against content.js's bios and did clear those;
+       it did NOT clear the ones tutors wrote in MMS, which are longer and wrap differently.
+       Live, it truncated four of the seven cards mid-sentence — Jocelyn, Allie, Murad and
+       Nadia, i.e. precisely the four tutors the feed exists to add. 16 clears the current
+       longest (623 chars) with a line to spare.
+       The clamp stays, because it is a guard and not a layout: cards all stretch to the
+       tallest, so one runaway bio would otherwise set the height of the whole band. If it
+       starts biting again the answer is to re-measure against the feed, not to guess. */
     .tutor-card-bio {
       font-size: 0.95rem; line-height: 1.65; color: var(--text-light);
-      display: -webkit-box; -webkit-line-clamp: 12; -webkit-box-orient: vertical; overflow: hidden;
+      display: -webkit-box; -webkit-line-clamp: 16; -webkit-box-orient: vertical; overflow: hidden;
     }
     /* Accessibility: honour reduced-motion — stop the spin, show a static wrapped grid,
        and drop the duplicated (aria-hidden) set so each tutor appears exactly once */
