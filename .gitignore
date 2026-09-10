@@ -8,3 +8,9 @@ node_modules/
 tools/
 tools-app/.next/
 tools-app/out/
+
+# Netlify CLI link state — machine-local, not the deploy config (that is netlify.toml).
+.netlify/
+
+# Local git worktrees. Committing these adds embedded repos that clones cannot resolve.
+.worktrees/
