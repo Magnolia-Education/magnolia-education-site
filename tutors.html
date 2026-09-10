@@ -241,17 +241,24 @@
     }
     .tutor-carousel::before { left: 0;  background: linear-gradient(to right, var(--beige), rgba(237,232,224,0)); }
     .tutor-carousel::after  { right: 0; background: linear-gradient(to left,  var(--beige), rgba(237,232,224,0)); }
-    /* Gap lives on the card (margin-right, incl. the last) so translateX(-50%) over the
-       duplicated set loops seamlessly — a flex `gap` would leave a half-gap hitch at the seam. */
-    .tutor-track {
-      display: flex; width: max-content;
-      /* Duration tracks card width so the reading pace stays put: 300px cards over 60s
-         ran at ~38px/s, and the same 60s over 420px cards would be ~52px/s. 80s is ~39px/s. */
-      animation: tutor-scroll 80s linear infinite;
+    /* The band is a real scroll container, not a CSS keyframe animation.
+       A translateX animation cannot be dragged: there is no position to read, nothing to hand
+       to a pointer, and no way to resume from where a drag left off. Driving scrollLeft from
+       rAF instead makes the auto-advance and a drag the same quantity, so they compose — and
+       touch devices get native momentum swipe for free, which the transform never offered.
+       The scrollbar is hidden because the edge fades are the affordance; the cursor says grab. */
+    .tutor-viewport {
+      overflow-x: auto; overflow-y: hidden;
+      scrollbar-width: none; -ms-overflow-style: none;
+      cursor: grab; touch-action: pan-x;
     }
-    /* Keep spinning off-screen; pause when a visitor hovers to read */
-    .tutor-carousel:hover .tutor-track { animation-play-state: paused; }
-    @keyframes tutor-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .tutor-viewport::-webkit-scrollbar { display: none; }
+    /* Set only while a mouse drag is in flight. user-select stops the drag from painting every
+       bio blue, which is what makes a drag-to-scroll feel broken. */
+    .tutor-viewport.is-dragging { cursor: grabbing; user-select: none; }
+    /* Gap lives on the card (margin-right, incl. the last) so the duplicated set loops
+       seamlessly — a flex `gap` would leave a half-gap hitch at the seam. */
+    .tutor-track { display: flex; width: max-content; }
     .tutor-card {
       flex: 0 0 420px; box-sizing: border-box; margin-right: 32px;
       background: var(--white); border-radius: 22px; padding: 40px 36px; text-align: center;
@@ -284,7 +291,10 @@
     /* Accessibility: honour reduced-motion — stop the spin, show a static wrapped grid,
        and drop the duplicated (aria-hidden) set so each tutor appears exactly once */
     @media (prefers-reduced-motion: reduce) {
-      .tutor-track { animation: none; flex-wrap: wrap; justify-content: center; width: auto; }
+      /* No auto-advance and no drag surface — the static wrapped grid is the whole component.
+         The JS honours the same query, so nothing is scrolling behind this. */
+      .tutor-viewport { overflow-x: visible; cursor: auto; }
+      .tutor-track { flex-wrap: wrap; justify-content: center; width: auto; }
       .tutor-card--dupe { display: none; }
       .tutor-card { margin: 0 14px 20px; }
       .tutor-carousel::before, .tutor-carousel::after { display: none; }
@@ -568,15 +578,150 @@
       </article>`;
   }
 
+  // The rAF handle for the running band. renderCarousel is called twice on a normal load —
+  // once for content.js, once when the feed arrives — and without cancelling, the first loop
+  // would keep writing scrollLeft on a detached node and then fight the second.
+  let motionStop = null;
+
   function renderCarousel(tutors) {
     if (!list || !tutors.length) return;
-    // Real set + a duplicated (aria-hidden) set so the CSS translateX(-50%) loop is seamless.
+    if (motionStop) { motionStop(); motionStop = null; }
+    // Real set + a duplicated (aria-hidden) set, so wrapping scrollLeft at the halfway point
+    // lands on an identical frame and the loop has no visible seam.
     const cards = tutors.map(t => cardHTML(t, false)).join('');
     const dupes = tutors.map(t => cardHTML(t, true)).join('');
     list.innerHTML =
       `<div class="tutor-carousel" aria-label="Our tutors">
-         <div class="tutor-track">${cards}${dupes}</div>
+         <div class="tutor-viewport" tabindex="0">
+           <div class="tutor-track">${cards}${dupes}</div>
+         </div>
        </div>`;
+    motionStop = initCarouselMotion(list.querySelector('.tutor-viewport'));
+  }
+
+  // Auto-advance + drag-to-scrub, sharing one number: scrollLeft.
+  //
+  // Returns a teardown so a re-render cannot leave a second loop running.
+  function initCarouselMotion(viewport) {
+    if (!viewport) return null;
+    const track = viewport.querySelector('.tutor-track');
+    if (!track) return null;
+
+    // Half the track is one full set of tutors. Wrapping scrollLeft into [0, half) is what
+    // makes the band infinite in BOTH directions — dragging backwards past zero is why this
+    // is a modulo and not a bounds clamp.
+    //
+    // MEASURED ONCE, not per frame. scrollWidth is a layout-forcing read, and the first version
+    // of this called it inside both the rAF loop and every pointermove — sixty-plus forced
+    // reflows a second during a drag, to recompute a number that only changes when the cards
+    // do. Card widths are fixed (flex-basis), so images loading in does not move it; only a
+    // breakpoint change or a re-render can, and both are handled below.
+    let pos = 0;
+    let half = 0;
+    let viewportW = 0;
+    function measure() {
+      half = track.scrollWidth / 2;
+      viewportW = viewport.clientWidth;
+    }
+    measure();
+    const onResize = () => { measure(); pos = wrap(pos); };
+    window.addEventListener('resize', onResize);
+
+    // Same reading pace the 80s animation had, expressed so it survives a change in card
+    // width or tutor count: one full set every 80 seconds, whatever that set now measures.
+    const LOOP_SECONDS = 80;
+    // A drag moves the band further than the hand. 1:1 is the honest default for
+    // drag-to-scroll, but a card is 452px wide, so 1:1 means a long drag to advance one
+    // tutor — which is the waiting this exists to remove.
+    const DRAG_GAIN = 1.6;
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let paused = false;
+    let raf = null;
+    let last = 0;
+
+    const wrap = (v) => (half > 0 ? ((v % half) + half) % half : 0);
+    // Nothing to scroll (a short roster on a wide screen) — leave it alone rather than
+    // writing a scrollLeft the container cannot honour.
+    const scrollable = () => half > viewportW + 1;
+
+    function frame(now) {
+      if (!last) last = now;
+      const dt = Math.min((now - last) / 1000, 0.1); // clamp: a backgrounded tab must not lurch
+      last = now;
+      if (!paused && scrollable()) {
+        pos = wrap(pos + (half / LOOP_SECONDS) * dt);
+        viewport.scrollLeft = pos;
+      }
+      raf = requestAnimationFrame(frame);
+    }
+
+    // Pause to read. focusin as well as hover: a keyboard user arrowing through the band is
+    // reading it just as much as a mouse user resting on it.
+    const pause = () => { paused = true; };
+    const resume = () => { paused = false; last = 0; };
+    viewport.addEventListener('pointerenter', pause);
+    viewport.addEventListener('pointerleave', () => { if (!dragging) resume(); });
+    viewport.addEventListener('focusin', pause);
+    viewport.addEventListener('focusout', resume);
+
+    // A keyboard or trackpad scroll moves scrollLeft behind our back; adopt it rather than
+    // snapping back to `pos` on the next frame.
+    viewport.addEventListener('scroll', () => { if (paused) pos = viewport.scrollLeft; });
+
+    let dragging = false;
+    let startX = 0;
+    let startPos = 0;
+
+    function onDown(e) {
+      // Mouse only. Touch and pen already have native momentum panning, which is better than
+      // anything reimplemented here — hijacking them would make the page worse on a phone.
+      if (e.pointerType !== 'mouse' || e.button !== 0 || !scrollable()) return;
+      dragging = true;
+      paused = true;
+      startX = e.clientX;
+      startPos = viewport.scrollLeft;
+      viewport.classList.add('is-dragging');
+      viewport.setPointerCapture(e.pointerId);
+    }
+
+    function onMove(e) {
+      if (!dragging) return;
+      e.preventDefault();
+      // Recomputed from the drag origin every move, never accumulated, so wrapping past the
+      // seam cannot drift the anchor out from under the cursor.
+      pos = wrap(startPos - (e.clientX - startX) * DRAG_GAIN);
+      viewport.scrollLeft = pos;
+    }
+
+    function onUp(e) {
+      if (!dragging) return;
+      dragging = false;
+      viewport.classList.remove('is-dragging');
+      if (viewport.hasPointerCapture(e.pointerId)) viewport.releasePointerCapture(e.pointerId);
+      // Resume only if the cursor actually left; releasing over the band means they are reading.
+      if (!viewport.matches(':hover')) resume();
+    }
+
+    viewport.addEventListener('pointerdown', onDown);
+    viewport.addEventListener('pointermove', onMove);
+    viewport.addEventListener('pointerup', onUp);
+    viewport.addEventListener('pointercancel', onUp);
+    // A drag that ends outside the window still has to clear is-dragging.
+    window.addEventListener('blur', () => { if (dragging) { dragging = false; viewport.classList.remove('is-dragging'); } });
+
+    // Under reduced motion the CSS has already turned the band into a static wrapped grid.
+    // Starting the loop would scroll a container that is no longer scrolling.
+    if (!reduced.matches) raf = requestAnimationFrame(frame);
+
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+      window.removeEventListener('resize', onResize);
+      viewport.removeEventListener('pointerdown', onDown);
+      viewport.removeEventListener('pointermove', onMove);
+      viewport.removeEventListener('pointerup', onUp);
+      viewport.removeEventListener('pointercancel', onUp);
+    };
   }
 
   // ── The team, from content.js ──────────────────────────────────────────────────────────
