@@ -89,6 +89,12 @@
       transition: background .2s, transform .15s !important;
     }
     .nav-cta:hover { background: #d96e54 !important; transform: translateY(-1px); }
+    .nav-login {
+      border: 1px solid rgba(255,255,255,0.45); color: #fff !important;
+      padding: 8px 20px; border-radius: 6px; font-weight: 500; font-size: 0.875rem !important;
+      transition: background .2s, border-color .2s !important;
+    }
+    .nav-login:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.8); }
 
     /* ── HAMBURGER ── */
     .nav-hamburger {
@@ -118,6 +124,24 @@
     }
     .nav-mobile a { display: block; color: rgba(255,255,255,0.85); font-size: 1rem; text-decoration: none; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
     .nav-mobile a:last-child { border-bottom: none; }
+    /* The bar hands over to the drawer at 1000px now, where it used to hold on to 600px.
+       Its content needs about 950px. Below that the logo wraps to two lines and "Book a
+       Consultation" wraps inside its own button -- which the live site does today between
+       roughly 600px and 780px. Nothing looked wrong from the outside because the logo's
+       `margin-right: auto` soaks up every spare pixel, so the bar never overflows its box;
+       it just quietly squashes. Adding a sixth item widened that band to about 1000px.
+       Handing over before the bar breaks fixes the new band and the old one together, and
+       the drawer carries both buttons.
+       The page's own `@media (max-width: 600px)` copy of these two rules further down is
+       now redundant rather than wrong, so it is left alone. */
+    @media (max-width: 1000px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+    }
+    .nav-mobile .mobile-login {
+      display: block; margin-top: 16px; border: 1px solid rgba(255,255,255,0.45); color: #fff;
+      text-align: center; padding: 13px; border-radius: 8px; font-weight: 600; text-decoration: none;
+    }
     .nav-mobile .mobile-cta { display: block; margin-top: 16px; background: var(--coral); color: #fff; text-align: center; padding: 14px; border-radius: 8px; font-weight: 600; text-decoration: none; }
 
     /* ── SHARED ── */
@@ -433,6 +457,7 @@
       </div>
     </div>
     <a href="contact.html">Contact</a>
+    <a href="/login" class="nav-login">Student Login</a>
     <a href="https://calendly.com/hello-magnolia-education/30min" target="_blank" class="nav-cta">Book a Consultation</a>
   </div>
   <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
@@ -449,6 +474,7 @@
   <a href="story.html">Our Story</a>
   <a href="tutors.html">Our Tutors</a>
   <a href="contact.html">Contact</a>
+  <a href="/login" class="mobile-login">Student Login</a>
   <a href="https://calendly.com/hello-magnolia-education/30min" target="_blank" class="mobile-cta">Book a Consultation</a>
 </div>
 
