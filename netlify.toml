@@ -94,6 +94,17 @@
   status = 200
   force = true
 
+# The first-session survey, which a student, a parent or a tutor opens from a link we emailed
+# or texted them. Added 2026-09-22 after the first thirty went out and every one 404'd here:
+# the app had shipped the route, and this file is the list that decides whether the apex ever
+# forwards a path to it. The tokens in those links live for fourteen days, so adding this
+# revives the links already sitting in people's inboxes rather than needing a re-send.
+[[redirects]]
+  from = "/survey/*"
+  to = "https://magnolia-math-suite-dev.vercel.app/survey/:splat"
+  status = 200
+  force = true
+
 [[redirects]]
   from = "/login"
   to = "https://magnolia-math-suite-dev.vercel.app/login"
