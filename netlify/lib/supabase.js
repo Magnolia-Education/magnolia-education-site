@@ -37,15 +37,12 @@ async function sb(path, { method = 'GET', body, prefer } = {}) {
   return text ? JSON.parse(text) : null;
 }
 
-const enc = encodeURIComponent;
-
-async function getStudentByTutorbirdId(tutorbirdId) {
-  const rows = await sb(`/students?tutorbird_id=eq.${enc(tutorbirdId)}&select=*`);
-  return rows[0] || null;
-}
-
 // Idempotent upsert keyed on the UNIQUE students.tutorbird_id. Only the columns
-// in `row` are written, so user_id / onboarding_ticktick_task_id are preserved.
+// in `row` are written, so user_id is preserved.
+//
+// This IS the onboarding webhook's idempotency: the unique constraint plus
+// merge-duplicates means a Zapier retry updates the existing row rather than
+// inserting a second one. Nothing above it needs to check for a prior visit.
 async function upsertStudent(row) {
   const rows = await sb('/students?on_conflict=tutorbird_id', {
     method: 'POST',
@@ -56,14 +53,6 @@ async function upsertStudent(row) {
     throw new Error('upsertStudent: PostgREST returned no row — return=representation not honoured');
   }
   return rows[0];
-}
-
-async function setStudentTaskId(studentId, taskId) {
-  await sb(`/students?id=eq.${enc(studentId)}`, {
-    method: 'PATCH',
-    body: { onboarding_ticktick_task_id: taskId },
-    prefer: 'return=minimal',
-  });
 }
 
 // Idempotent upsert keyed on the partial-unique parents.email (migration 0013). Caller MUST
@@ -81,4 +70,4 @@ async function upsertParent(row) {
   return rows[0];
 }
 
-module.exports = { getStudentByTutorbirdId, upsertStudent, setStudentTaskId, upsertParent };
+module.exports = { upsertStudent, upsertParent };

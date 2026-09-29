@@ -730,36 +730,11 @@ window.CONTENT = {
         "bio": "I completed my Bachelor of Science degree in Psychology, Math & Economics at the University of Toronto. In my academic career, I’ve done extremely well and I’ve also done extremely poorly. I have deep empathy with students who struggle and I’ve also learned what it takes to excel, while fostering curiosity along the way. That is what I bring to every session."
       },
       {
-        "id": "benjamin-l",
-        "name": "Benjamin Lappalainen",
-        "role": "Tutor",
-        "subjects": [
-          "Physics",
-          "Mathematics"
-        ],
-        "photo": "images/Benjamin Lappalainen.jpg",
-        "founder": false,
-        "bio": "I completed my Bachelor of Applied Science degree in Engineering Science (Aerospace specialization) at the University of Toronto. I’ve taught at the University of Toronto’s DEEP Leadership Camp and given talks and workshops on astrophotography for the Royal Astronomical Society of Canada’s Toronto chapter. I am deeply passionate about teaching and learning as a lifelong exercise. I believe that anyone can learn anything given the right environment and support, and I strive to work with my students’ strengths to develop techniques and patterns of learning that can be applied universally."
-      },
-      {
-        "id": "gladys",
-        "name": "Gladys Lou",
-        "role": "Tutor",
-        "subjects": [
-          "Mathematics",
-          "Chemistry",
-          "Biology"
-        ],
-        "photo": "images/Gladys Lou.jpg",
-        "founder": false,
-        "bio": "I completed my Bachelor of Arts degree in Psychology at the University of Toronto and am currently pursuing my Master of Arts at Bard College in New York. I have worked as a Teaching Assistant for undergraduate courses and have experience tutoring middle and high school students. I am passionate about teaching and strive to provide personalized support and adopt methods tailored to each student’s needs. I believe once students understand the underlying concepts and logic, they can solve any problems with confidence."
-      },
-      {
         "id": "callum",
         "name": "Callum Camazzola",
         "role": "Tutor",
         "subjects": [
-          "Math",
+          "Mathematics",
           "Chemistry",
           "Physics"
         ],
@@ -772,36 +747,12 @@ window.CONTENT = {
         "name": "Benjamin Gladney",
         "role": "Tutor",
         "subjects": [
-          "Math",
+          "Mathematics",
           "Physics"
         ],
         "photo": "images/Benjamin Gladney.jpg",
         "founder": false,
         "bio": "Hi, my name is Ben! I’m in my second year at the University of Waterloo studying Data Science. I love software development and machine learning, but math has always been my favourite. My academic success has not come naturally, so I am a strong believer that hard work beats talent every time."
-      },
-      {
-        "id": "jess",
-        "name": "Jess Nash",
-        "role": "Tutor",
-        "subjects": [
-          "Chemistry",
-          "Biology",
-          "Mathematics"
-        ],
-        "photo": "images/Jess Nash.jpg",
-        "founder": false,
-        "bio": "I completed my Bachelor of Science in Biochemistry at the University of Toronto. I've worked as a freelance science and math tutor, a teaching assistant at the University of Toronto, and a scientific researcher and communicator at Yale University. I love sharing my passion for nature and science. I believe that, with attention to their unique strengths and interests, every student can find the motivation and confidence they need to succeed in science learning—and even come to enjoy the challenges along the way!"
-      },
-      {
-        "id": "gavin",
-        "name": "Gavin Burn",
-        "role": "Tutor",
-        "subjects": [
-          "Mathematics"
-        ],
-        "photo": "images/Gavin Burn.jpg",
-        "founder": false,
-        "bio": "I am currently in my second year at the University of Waterloo, where I am pursuing a Bachelor of Computer Engineering. I am a former student of Rachit's, and I have experienced firsthand the impact quality tutoring can have on a student's performance. When Rachit first started tutoring me, I had a 33 in Grade 9 Math, and by Grade 12, I had a 100 in Advanced Functions. I aim to develop determination and critical thinking in students, which will help them succeed in any academic discipline."
       }
     ],
     "cta": {
