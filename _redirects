@@ -3,3 +3,14 @@
 # static page instead, so the entry stays deleted rather than commented back in.
 /onboarding-form  /onboarding  301
 /welcome        /welcome.html     200
+
+# "Our Tutors" moved off /tutors, one character away from /tutor — the MMS tutor PORTAL,
+# which netlify.toml proxies to Vercel. Two different audiences (a parent browsing who we
+# are, versus a tutor signing in to work) separated by a single letter, and nothing on
+# either page said which one you were on.
+#
+# Both forms 301 rather than 200: the old path is in Google's index and on whatever anyone
+# has bookmarked or linked, so it has to keep resolving — but it should hand the visitor
+# the new address rather than silently serve the page under a name we are retiring.
+/tutors         /our-tutors  301
+/tutors.html    /our-tutors  301

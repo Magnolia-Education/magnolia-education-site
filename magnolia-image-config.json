@@ -94,7 +94,7 @@
       "borderRadius": 0,
       "containerWidth": 655,
       "containerHeight": 450,
-      "page": "tutors.html",
+      "page": "our-tutors.html",
       "section": "Tutor Profiles",
       "id": "tutors-rachit"
     },
@@ -136,7 +136,7 @@
       "borderRadius": 0,
       "containerWidth": 640,
       "containerHeight": 490,
-      "page": "tutors.html",
+      "page": "our-tutors.html",
       "section": "Tutor Profiles",
       "id": "tutors-benjamin-l"
     },
@@ -150,7 +150,7 @@
       "borderRadius": 0,
       "containerWidth": 640,
       "containerHeight": 460,
-      "page": "tutors.html",
+      "page": "our-tutors.html",
       "section": "Tutor Profiles",
       "id": "tutors-gladys"
     },
@@ -164,7 +164,7 @@
       "borderRadius": 0,
       "containerWidth": 640,
       "containerHeight": 550,
-      "page": "tutors.html",
+      "page": "our-tutors.html",
       "section": "Tutor Profiles",
       "id": "tutors-callum"
     },
@@ -178,7 +178,7 @@
       "borderRadius": 0,
       "containerWidth": 640,
       "containerHeight": 390,
-      "page": "tutors.html",
+      "page": "our-tutors.html",
       "section": "Tutor Profiles",
       "id": "tutors-benjamin-g"
     },
@@ -192,7 +192,7 @@
       "borderRadius": 0,
       "containerWidth": 640,
       "containerHeight": 460,
-      "page": "tutors.html",
+      "page": "our-tutors.html",
       "section": "Tutor Profiles",
       "id": "tutors-jess"
     },
@@ -206,7 +206,7 @@
       "borderRadius": 0,
       "containerWidth": 640,
       "containerHeight": 500,
-      "page": "tutors.html",
+      "page": "our-tutors.html",
       "section": "Tutor Profiles",
       "id": "tutors-gavin"
     }
