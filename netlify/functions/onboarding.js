@@ -33,7 +33,12 @@ const CORS = {
   'Content-Type': 'application/json',
 };
 
-const REQUIRED = ['tutorbird_id', 'first_name', 'last_name', 'email'];
+// The student's own `email` is NOT required. A younger child often has no address and the parent
+// handles everything; TutorBird then sends a blank student email. Requiring it returned 400 and
+// created nothing -- no parent, no student -- and a failed Zap run alerts nobody, so the family
+// simply never appeared in MMS (a grade 9 family, Sep 18 2026). What IS required is some address to
+// reach the family by: the student's or the parent's. See the check below.
+const REQUIRED = ['tutorbird_id', 'first_name', 'last_name'];
 
 function json(statusCode, obj) {
   return { statusCode, headers: CORS, body: JSON.stringify(obj) };
@@ -76,6 +81,21 @@ exports.handler = async (event) => {
     return json(400, { error: 'Missing required fields', missing, received_keys: Object.keys(p) });
   }
 
+  // Some address to reach the family by. The student's own when they have one; otherwise the
+  // parent's, which is what MMS already routes a student with no email through (sign-in, offers,
+  // reminders -- 43 students were already in that shape via the roster import).
+  const parentEmail = p.parent_email ? String(p.parent_email).trim() : '';
+  const typedStudentEmail = p.email ? String(p.email).trim().toLowerCase() : '';
+  if (!typedStudentEmail && !parentEmail) {
+    return json(400, { error: 'Missing required fields', missing: ['email or parent_email'], received_keys: Object.keys(p) });
+  }
+  // A parent who typed their OWN address into the student field has not given the child an
+  // address; they have told us they handle everything. Stored on the student, it would make the
+  // parent sign in AS the child (MMS resolves a login to a student before a parent), with no child
+  // picker and no way to reach a sibling. So it is treated as absent and lives on the parent row.
+  const studentEmail =
+    typedStudentEmail && typedStudentEmail !== parentEmail.toLowerCase() ? typedStudentEmail : null;
+
   try {
     const name = `${p.first_name} ${p.last_name}`.trim();
 
@@ -88,7 +108,6 @@ exports.handler = async (event) => {
     // Create / link the parent (idempotent on email, migration 0013). Skip when no parent
     // email was provided -- the unique index is partial, so a null-email upsert wouldn't merge.
     let parentId = null;
-    const parentEmail = p.parent_email && String(p.parent_email).trim();
     if (parentEmail) {
       const parentFirst = (p.parent_first_name || '').trim();
       const parentLast = (p.parent_last_name || '').trim();
@@ -109,11 +128,15 @@ exports.handler = async (event) => {
       name,
       first_name: p.first_name,
       last_name: p.last_name,
-      // Student's OWN contact info. email is a REQUIRED field (validated above), so
-      // new rows always populate it; lowercased to match the students.email backfill
-      // (MMS migration 0015) that the student-portal login allow-list reads. phone is
-      // optional. Previously these only survived inside intake_raw.payload.
-      email: String(p.email).trim().toLowerCase(),
+      // Student's OWN contact info, lowercased to match the students.email backfill (MMS
+      // migration 0015) that the student-portal login allow-list reads. Previously these only
+      // survived inside intake_raw.payload.
+      //
+      // OMITTED, not sent as null, when the student has no address of their own (see the
+      // studentEmail note above) -- for the merge-duplicates reason spelled out under the intake
+      // columns below: a Zap re-fire with a blank email must not wipe an address an admin added
+      // to the row later.
+      ...(studentEmail ? { email: studentEmail } : {}),
       // Phone is load-bearing beyond CRM display: lib/quo/group-chat.ts builds the pairing
       // group chat from it, and a student without one blocks that chat entirely.
       phone: p.phone ? String(p.phone).trim() : null,
