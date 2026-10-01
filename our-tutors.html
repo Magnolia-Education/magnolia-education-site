@@ -614,6 +614,8 @@
     // content.js cards are unlinked on purpose: their names have no guaranteed feed slug, so
     // there is no page to send them to. Only feed tutors carry `slug`.
     if (t.slug) {
+      // encodeURIComponent, not esc() — slug is a URL path segment here, not interpolated
+      // text, and it also neutralises quotes and angle brackets for the attribute context.
       return `
       <a class="${cls}" href="/our-tutors/${encodeURIComponent(t.slug)}"${aria}${dupe ? ' tabindex="-1"' : ''}>${inner}
       </a>`;
@@ -751,6 +753,14 @@
       if (viewport.hasPointerCapture(e.pointerId)) viewport.releasePointerCapture(e.pointerId);
       // Resume only if the cursor actually left; releasing over the band means they are reading.
       if (!viewport.matches(':hover')) resume();
+      // `moved` must only live long enough to suppress the click this same gesture produces.
+      // If the release lands outside the viewport, that click goes to a common ancestor, not
+      // onClickCapture, so nothing would otherwise clear the flag — and a stuck `true` would
+      // swallow an unrelated later click, including a keyboard Enter on a focused card (which
+      // has no preceding pointerdown to reset it). The browser dispatches this gesture's click
+      // before a zero-delay timer runs, so suppression still works; after that, nothing holds
+      // the flag.
+      setTimeout(() => { moved = false; }, 0);
     }
 
     // A mouse drag that ends over a card would otherwise "click" it and open that tutor's page.
@@ -763,8 +773,9 @@
     viewport.addEventListener('pointerup', onUp);
     viewport.addEventListener('pointercancel', onUp);
     viewport.addEventListener('click', onClickCapture, true);
-    // A drag that ends outside the window still has to clear is-dragging.
-    window.addEventListener('blur', () => { if (dragging) { dragging = false; viewport.classList.remove('is-dragging'); } });
+    // A drag that ends outside the window still has to clear is-dragging (and moved, for the
+    // same reason onUp does — the click for this gesture, if any, lands outside our listeners).
+    window.addEventListener('blur', () => { if (dragging) { dragging = false; viewport.classList.remove('is-dragging'); } moved = false; });
 
     // Under reduced motion the CSS has already turned the band into a static wrapped grid.
     // Starting the loop would scroll a container that is no longer scrolling.
