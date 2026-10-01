@@ -14,3 +14,9 @@
 # the new address rather than silently serve the page under a name we are retiring.
 /tutors         /our-tutors  301
 /tutors.html    /our-tutors  301
+
+# A single tutor's page, the link Rachit sends a parent: /our-tutors/ben-gladney.
+# One static page serves every tutor; it reads the slug from the address and looks the tutor
+# up in MMS's /api/public/tutors feed. Bare /our-tutors is NOT meant to match: our-tutors.html
+# shadows it, and tutor-profile.html redirects there itself if it ever loads with no slug.
+/our-tutors/*   /tutor-profile.html   200
