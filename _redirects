@@ -15,6 +15,10 @@
 /tutors         /our-tutors  301
 /tutors.html    /our-tutors  301
 
+# Pins the bare path to the carousel so it never depends on how Netlify's splat treats a
+# bare /x (netlify.toml's own comment says that's unreliable), or on pretty-URL shadowing.
+/our-tutors     /our-tutors.html   200
+
 # A single tutor's page, the link Rachit sends a parent: /our-tutors/ben-gladney.
 # One static page serves every tutor; it reads the slug from the address and looks the tutor
 # up in MMS's /api/public/tutors feed. Bare /our-tutors is NOT meant to match: our-tutors.html

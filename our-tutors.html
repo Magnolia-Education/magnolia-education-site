@@ -616,8 +616,11 @@
     if (t.slug) {
       // encodeURIComponent, not esc() — slug is a URL path segment here, not interpolated
       // text, and it also neutralises quotes and angle brackets for the attribute context.
+      // aria-label on a real card: without it, the link's accessible name is its whole
+      // contents — badge, role line and bio included — rather than just the tutor's name.
+      const label = dupe ? '' : ` aria-label="Meet ${esc(t.name)}"`;
       return `
-      <a class="${cls}" href="/our-tutors/${encodeURIComponent(t.slug)}"${aria}${dupe ? ' tabindex="-1"' : ''}>${inner}
+      <a class="${cls}" href="/our-tutors/${encodeURIComponent(t.slug)}"${aria}${label}${dupe ? ' tabindex="-1"' : ''}>${inner}
       </a>`;
     }
     return `
@@ -733,13 +736,21 @@
       startPos = viewport.scrollLeft;
       moved = false;
       viewport.classList.add('is-dragging');
-      viewport.setPointerCapture(e.pointerId);
     }
 
     function onMove(e) {
       if (!dragging) return;
       e.preventDefault();
-      if (Math.abs(e.clientX - startX) > 5) moved = true;
+      if (Math.abs(e.clientX - startX) > 5) {
+        // Capture is deferred until the pointer has actually moved, not taken on down: with
+        // capture live from pointerdown, a plain click's `click` event targets the viewport
+        // instead of the `<a class="tutor-card">` under the cursor, and the card never opens.
+        // Waiting for real movement means a click never acquires capture at all.
+        if (!moved) {
+          try { viewport.setPointerCapture(e.pointerId); } catch {}
+        }
+        moved = true;
+      }
       // Recomputed from the drag origin every move, never accumulated, so wrapping past the
       // seam cannot drift the anchor out from under the cursor.
       pos = wrap(startPos - (e.clientX - startX) * DRAG_GAIN);
