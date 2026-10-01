@@ -288,6 +288,17 @@
       background: var(--white); border-radius: 22px; padding: 40px 36px; text-align: center;
       box-shadow: 0 10px 30px rgba(61,68,102,0.09);
     }
+    /* A linked card (one with a feed slug) is an <a>, not an <article>, but must look and
+       behave identically — the selector above is enough since both share the .tutor-card
+       class; these rules only add what <a> needs that <article> doesn't. */
+    a.tutor-card {
+      display: block; color: inherit; text-decoration: none; cursor: pointer;
+      -webkit-user-drag: none;
+    }
+    a.tutor-card img { -webkit-user-drag: none; }
+    a.tutor-card:focus-visible {
+      outline: 2px solid var(--coral); outline-offset: 4px;
+    }
     .tutor-card-photo {
       width: 176px; height: 176px; border-radius: 50%; overflow: hidden;
       margin: 0 auto 22px; background: #d4cfc8;
@@ -594,13 +605,21 @@
     const badge = t.role ? `<span class="tutor-card-badge">${esc(t.role)}</span>` : '';
     const cls = dupe ? 'tutor-card tutor-card--dupe' : 'tutor-card';
     const aria = dupe ? ' aria-hidden="true"' : '';
-    return `
-      <article class="${cls}"${aria}>
+    const inner = `
         <div class="tutor-card-photo">${img}</div>
         ${badge}
         <h3 class="tutor-card-name">${esc(t.name)}</h3>
         <p class="tutor-card-role">${esc(t.disciplines)}</p>
-        <p class="tutor-card-bio">${esc(t.bio)}</p>
+        <p class="tutor-card-bio">${esc(t.bio)}</p>`;
+    // content.js cards are unlinked on purpose: their names have no guaranteed feed slug, so
+    // there is no page to send them to. Only feed tutors carry `slug`.
+    if (t.slug) {
+      return `
+      <a class="${cls}" href="/our-tutors/${encodeURIComponent(t.slug)}"${aria}${dupe ? ' tabindex="-1"' : ''}>${inner}
+      </a>`;
+    }
+    return `
+      <article class="${cls}"${aria}>${inner}
       </article>`;
   }
 
@@ -698,6 +717,9 @@
     let dragging = false;
     let startX = 0;
     let startPos = 0;
+    // Whether the pointer has moved far enough to count as a drag rather than a click — a
+    // card is now a link, so a mouse-down-drag-up over it would otherwise navigate.
+    let moved = false;
 
     function onDown(e) {
       // Mouse only. Touch and pen already have native momentum panning, which is better than
@@ -707,6 +729,7 @@
       paused = true;
       startX = e.clientX;
       startPos = viewport.scrollLeft;
+      moved = false;
       viewport.classList.add('is-dragging');
       viewport.setPointerCapture(e.pointerId);
     }
@@ -714,6 +737,7 @@
     function onMove(e) {
       if (!dragging) return;
       e.preventDefault();
+      if (Math.abs(e.clientX - startX) > 5) moved = true;
       // Recomputed from the drag origin every move, never accumulated, so wrapping past the
       // seam cannot drift the anchor out from under the cursor.
       pos = wrap(startPos - (e.clientX - startX) * DRAG_GAIN);
@@ -729,10 +753,16 @@
       if (!viewport.matches(':hover')) resume();
     }
 
+    // A mouse drag that ends over a card would otherwise "click" it and open that tutor's page.
+    const onClickCapture = (e) => {
+      if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; }
+    };
+
     viewport.addEventListener('pointerdown', onDown);
     viewport.addEventListener('pointermove', onMove);
     viewport.addEventListener('pointerup', onUp);
     viewport.addEventListener('pointercancel', onUp);
+    viewport.addEventListener('click', onClickCapture, true);
     // A drag that ends outside the window still has to clear is-dragging.
     window.addEventListener('blur', () => { if (dragging) { dragging = false; viewport.classList.remove('is-dragging'); } });
 
@@ -747,6 +777,7 @@
       viewport.removeEventListener('pointermove', onMove);
       viewport.removeEventListener('pointerup', onUp);
       viewport.removeEventListener('pointercancel', onUp);
+      viewport.removeEventListener('click', onClickCapture, true);
     };
   }
 
@@ -804,6 +835,7 @@
         // Already rolled up by publicDisciplines server-side. Joined, never built, here — this
         // is the exact line #16 assembled out of raw course codes.
         disciplines: (t.disciplines || []).join(' · '),
+        slug: t.slug || null,
       })));
     } catch { /* keep the content.js cards */ }
   })();
