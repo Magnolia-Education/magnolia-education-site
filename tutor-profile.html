@@ -17,6 +17,17 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Meet Magnolia Education's team of qualified tutors. Experts in math, physics, chemistry, and more — all committed to student growth and long-term independence." />
+  <meta name="keywords" content="math tutors Toronto, qualified tutors, physics tutor, chemistry tutor, experienced high school tutors, University of Waterloo tutors" />
+  <meta property="og:title" content="Our Tutors | Magnolia Education" />
+  <meta property="og:description" content="Meet Magnolia Education's team of qualified tutors — experts in math, physics, chemistry, and more, committed to student growth." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://magnolia-education.com/our-tutors.html" />
+  <meta property="og:image" content="https://magnolia-education.com/images/CLOUDSURFING.png" />
+  <meta property="og:site_name" content="Magnolia Education" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Our Tutors | Magnolia Education" />
+  <meta name="twitter:description" content="Meet Magnolia Education's team of qualified tutors — experts in math, physics, chemistry, and more, committed to student growth." />
   <meta name="robots" content="noindex">
   <title>Our Tutors | Magnolia Education</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -294,7 +305,11 @@
 
   // "/our-tutors/Ben-Gladney/" → "ben-gladney". Anything after the first segment is ignored.
   const m = location.pathname.match(/^\/our-tutors\/([^/]+)/i);
-  const slug = m ? decodeURIComponent(m[1]).toLowerCase() : '';
+  let slug = '';
+  if (m) {
+    try { slug = decodeURIComponent(m[1]).toLowerCase(); }
+    catch { return renderNotFound(); } // malformed percent-escape in a pasted link
+  }
   if (!slug) { location.replace('/our-tutors.html'); return; }
 
   function actions() {
