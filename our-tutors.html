@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Netlify can serve this file at /our-tutors/ (trailing slash) as well as /our-tutors.
+       Without this, the page's relative paths (content.js, images/..., dev/...) would resolve
+       against /our-tutors/ instead of root and 404 or hit the tutor-profile splat. -->
+  <base href="/">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-K7DCX7CEJ9"></script>
   <script>
@@ -456,7 +460,7 @@
   </a>
   <div class="nav-links">
     <div class="nav-dropdown">
-      <a href="#">Services</a>
+      <a href="#" onclick="return false;">Services</a>
       <div class="nav-dropdown-menu">
         <a href="tutoring.html">Tutoring</a>
         <a href="mock-exams.html">Mock Exams</a>
@@ -465,7 +469,7 @@
       </div>
     </div>
     <div class="nav-dropdown">
-      <a href="#">About</a>
+      <a href="#" onclick="return false;">About</a>
       <div class="nav-dropdown-menu">
         <a href="story.html">Our Story</a>
         <a href="our-tutors.html">Our Tutors</a>
@@ -717,7 +721,13 @@
     const pause = () => { paused = true; };
     const resume = () => { paused = false; last = 0; };
     viewport.addEventListener('pointerenter', pause);
-    viewport.addEventListener('pointerleave', () => { if (!dragging) resume(); });
+    viewport.addEventListener('pointerleave', (e) => {
+      // A press that leaves the band before 5px of movement never took pointer capture (it's
+      // deferred — see onMove), so this pointerleave is the only notice we get that it left.
+      // End the drag here rather than leaving `dragging` stuck true with no pointerup coming.
+      if (dragging && !moved) { endDrag(e); return; }
+      if (!dragging) resume();
+    });
     viewport.addEventListener('focusin', pause);
     viewport.addEventListener('focusout', resume);
 
@@ -746,6 +756,10 @@
 
     function onMove(e) {
       if (!dragging) return;
+      // Capture is deferred until real movement (see below), so a press that moves out of the
+      // viewport before 5px and is released out there never fires pointerup here — the primary
+      // button is just quietly gone next time a move reaches us. Treat that as the release.
+      if (!(e.buttons & 1)) { endDrag(e); return; }
       e.preventDefault();
       if (Math.abs(e.clientX - startX) > 5) {
         // Capture is deferred until the pointer has actually moved, not taken on down: with
@@ -763,11 +777,12 @@
       viewport.scrollLeft = pos;
     }
 
-    function onUp(e) {
-      if (!dragging) return;
+    // Shared by onUp and the two paths above that notice a drag ended without a pointerup ever
+    // reaching us (capture is deferred, so it can be released elsewhere).
+    function endDrag(e) {
       dragging = false;
       viewport.classList.remove('is-dragging');
-      if (viewport.hasPointerCapture(e.pointerId)) viewport.releasePointerCapture(e.pointerId);
+      if (e && viewport.hasPointerCapture(e.pointerId)) viewport.releasePointerCapture(e.pointerId);
       // Resume only if the cursor actually left; releasing over the band means they are reading.
       if (!viewport.matches(':hover')) resume();
       // `moved` must only live long enough to suppress the click this same gesture produces.
@@ -778,6 +793,11 @@
       // before a zero-delay timer runs, so suppression still works; after that, nothing holds
       // the flag.
       setTimeout(() => { moved = false; }, 0);
+    }
+
+    function onUp(e) {
+      if (!dragging) return;
+      endDrag(e);
     }
 
     // A mouse drag that ends over a card would otherwise "click" it and open that tutor's page.

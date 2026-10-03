@@ -354,18 +354,21 @@
   }
 
   (async () => {
+    const ctl = new AbortController();
+    // 10s, not the carousel's 4s: this page has no fallback content to fall back to.
+    const timer = setTimeout(() => ctl.abort(), 10000);
     try {
-      const ctl = new AbortController();
-      // 10s, not the carousel's 4s: this page has no fallback content to fall back to.
-      const timer = setTimeout(() => ctl.abort(), 10000);
       const res = await fetch('/api/public/tutors', { signal: ctl.signal, headers: { accept: 'application/json' } });
-      clearTimeout(timer);
       if (!res.ok) return renderNotFound();
       const body = await res.json();
       const list = body && Array.isArray(body.tutors) ? body.tutors : [];
       const t = list.find(x => x && x.slug === slug);
       t ? renderTutor(t) : renderNotFound();
     } catch { renderNotFound(); }
+    // Covers the whole fetch, including the body read: cleared only once a path above has
+    // already committed to renderTutor/renderNotFound, so a stalled body can't outlive the
+    // abort and leave the page on "Loading…" forever.
+    finally { clearTimeout(timer); }
   })();
 })();
 </script>
