@@ -292,7 +292,11 @@
        behave identically — the selector above is enough since both share the .tutor-card
        class; these rules only add what <a> needs that <article> doesn't. */
     a.tutor-card {
-      display: block; color: inherit; text-decoration: none; cursor: pointer;
+      /* No `display: block` here: .tutor-card is a flex item of .tutor-track (and stays one
+         under reduced-motion, which only adds flex-wrap), so flex blockifies it already. Adding
+         `block` would give this selector specificity 0,1,1, which beats reduced-motion's
+         `.tutor-card--dupe { display: none; }` (0,1,0) and leaves the dupe cards visible. */
+      color: inherit; text-decoration: none; cursor: pointer;
       -webkit-user-drag: none;
     }
     a.tutor-card img { -webkit-user-drag: none; }
@@ -598,7 +602,7 @@
   function cardHTML(t, dupe) {
     const pos = esc(t.photoPosition || 'center top');
     const img = t.photo
-      ? `<img src="${esc(t.photo)}" alt="${esc(t.name)}" loading="lazy" style="object-position:${pos}" />`
+      ? `<img src="${esc(t.photo)}" alt="${esc(t.name)}" loading="lazy" draggable="false" style="object-position:${pos}" />`
       : '';
     // The badge is the STANDING fact about a person ("Founder"); the coral line below the name
     // is what they teach. Two different questions, which is why both fit without a new element.
@@ -619,8 +623,10 @@
       // aria-label on a real card: without it, the link's accessible name is its whole
       // contents — badge, role line and bio included — rather than just the tutor's name.
       const label = dupe ? '' : ` aria-label="Meet ${esc(t.name)}"`;
+      // draggable="false": Firefox ignores -webkit-user-drag, so without this a press-and-move
+      // on the link starts a native link drag, firing pointercancel and killing drag-to-scroll.
       return `
-      <a class="${cls}" href="/our-tutors/${encodeURIComponent(t.slug)}"${aria}${label}${dupe ? ' tabindex="-1"' : ''}>${inner}
+      <a class="${cls}" href="/our-tutors/${encodeURIComponent(t.slug)}" draggable="false"${aria}${label}${dupe ? ' tabindex="-1"' : ''}>${inner}
       </a>`;
     }
     return `
@@ -786,7 +792,8 @@
     viewport.addEventListener('click', onClickCapture, true);
     // A drag that ends outside the window still has to clear is-dragging (and moved, for the
     // same reason onUp does — the click for this gesture, if any, lands outside our listeners).
-    window.addEventListener('blur', () => { if (dragging) { dragging = false; viewport.classList.remove('is-dragging'); } moved = false; });
+    const onBlur = () => { if (dragging) { dragging = false; viewport.classList.remove('is-dragging'); } moved = false; };
+    window.addEventListener('blur', onBlur);
 
     // Under reduced motion the CSS has already turned the band into a static wrapped grid.
     // Starting the loop would scroll a container that is no longer scrolling.
@@ -795,6 +802,7 @@
     return () => {
       if (raf) cancelAnimationFrame(raf);
       window.removeEventListener('resize', onResize);
+      window.removeEventListener('blur', onBlur);
       viewport.removeEventListener('pointerdown', onDown);
       viewport.removeEventListener('pointermove', onMove);
       viewport.removeEventListener('pointerup', onUp);
