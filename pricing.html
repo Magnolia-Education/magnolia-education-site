@@ -379,6 +379,18 @@
 <main class="policies-body">
   <div class="policies-body-inner">
 
+    <!--
+      !! PRICE DEPENDENCY: MMS COPIES THREE OF THESE PRICES.
+      The intake form in MMS (Magnolia-Education/MMS, lib/portal/intake-copy.ts, key
+      'intake.step5.share.nudge') tells families what a group lesson costs, using the prices below:
+        $70  = Prep courses, per student per 1-hour session
+        $100 = Weekly tutoring with other tutors, 1x/week 60 min
+        $140 = Weekly tutoring with Rachit, 1x/week 60 min
+      $70 is also in MMS's group first-lesson email to tutors (lib/email/templates/registry/tutors.ts,
+      'before_first_lesson_tutor_group'), as the TutorBird rate per student.
+      Nothing keeps them in sync. If you change any of those three here, change those MMS strings
+      too, and check MMS /admin/intake-copy and /admin/emails for an admin override of either.
+    -->
     <section class="price-section reveal">
       <h2>Weekly tutoring</h2>
       <p class="lede">The same tutor at the same time every week, on a shared whiteboard. 45 minutes is the recommended length.</p>
