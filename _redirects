@@ -4,6 +4,10 @@
 /onboarding-form  /onboarding  301
 /welcome        /welcome.html     200
 
+# The Test Center guide, the address the launch emails link to. Pinned, as /our-tutors is below,
+# so it never depends on pretty-URL shadowing. /portal/test-center is the app; this is the page.
+/test-center    /test-center.html  200
+
 # "Our Tutors" moved off /tutors, one character away from /tutor — the MMS tutor PORTAL,
 # which netlify.toml proxies to Vercel. Two different audiences (a parent browsing who we
 # are, versus a tutor signing in to work) separated by a single letter, and nothing on
