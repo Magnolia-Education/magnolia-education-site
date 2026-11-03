@@ -8,6 +8,10 @@
 # so it never depends on pretty-URL shadowing. /portal/test-center is the app; this is the page.
 /test-center    /test-center.html  200
 
+# Jobs: the admin role and the tutor role. Pinned like /test-center so the address the hiring
+# emails link to never depends on pretty-URL shadowing. The tutor form itself stays at /apply.
+/jobs           /jobs.html         200
+
 # "Our Tutors" moved off /tutors, one character away from /tutor — the MMS tutor PORTAL,
 # which netlify.toml proxies to Vercel. Two different audiences (a parent browsing who we
 # are, versus a tutor signing in to work) separated by a single letter, and nothing on
