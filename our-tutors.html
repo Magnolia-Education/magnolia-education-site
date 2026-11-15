@@ -274,11 +274,14 @@
        to a pointer, and no way to resume from where a drag left off. Driving scrollLeft from
        rAF instead makes the auto-advance and a drag the same quantity, so they compose — and
        touch devices get native momentum swipe for free, which the transform never offered.
-       The scrollbar is hidden because the edge fades are the affordance; the cursor says grab. */
+       The scrollbar is hidden because the edge fades are the affordance; the cursor says grab.
+       No `touch-action: pan-x`: it blocked vertical page scroll on any touch that started on
+       the band, and on a phone the band is taller than the screen — so once it filled the
+       view, the page could not be scrolled past it at all. */
     .tutor-viewport {
       overflow-x: auto; overflow-y: hidden;
       scrollbar-width: none; -ms-overflow-style: none;
-      cursor: grab; touch-action: pan-x;
+      cursor: grab;
     }
     .tutor-viewport::-webkit-scrollbar { display: none; }
     /* Set only while a mouse drag is in flight. user-select stops the drag from painting every
@@ -817,7 +820,11 @@
 
     // Under reduced motion the CSS has already turned the band into a static wrapped grid.
     // Starting the loop would scroll a container that is no longer scrolling.
-    if (!reduced.matches) raf = requestAnimationFrame(frame);
+    // Touch screens (no hover) get no auto-advance either: nothing pauses it for a finger, so
+    // it wrote scrollLeft every frame underneath a native swipe and fought it. On a phone the
+    // band moves only when it is swiped.
+    const touchOnly = window.matchMedia('(hover: none)').matches;
+    if (!reduced.matches && !touchOnly) raf = requestAnimationFrame(frame);
 
     return () => {
       if (raf) cancelAnimationFrame(raf);
