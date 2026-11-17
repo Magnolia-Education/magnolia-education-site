@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K7DCX7CEJ9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-K7DCX7CEJ9');
+  </script>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="How homework works in your Magnolia portal: your tutor assigns it, you sign for it with your initials, and sprints help you get it done before your next lesson." />
+  <meta property="og:title" content="Homework and Sprints | Magnolia Education" />
+  <meta property="og:description" content="How homework works in your Magnolia portal: your tutor assigns it, you sign for it with your initials, and sprints help you get it done before your next lesson." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://magnolia-education.com/homework" />
+  <meta property="og:image" content="https://magnolia-education.com/images/CLOUDSURFING.png" />
+  <meta property="og:site_name" content="Magnolia Education" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Homework and Sprints | Magnolia Education" />
+  <meta name="twitter:description" content="How homework works in your Magnolia portal: your tutor assigns it, you sign for it with your initials, and sprints help you get it done before your next lesson." />
+  <link rel="canonical" href="https://magnolia-education.com/homework" />
+  <!-- DEV TOOL: Preload tuned image styles before paint (local only) -->
+  <script src="dev/image-tuner-preload.js"></script>
+  <title>Homework and Sprints | Magnolia Education</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="content.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #3D4466;
+      --coral: #E8836A;
+      --coral-pale: #FDF0EC;
+      --cream: #FBF8F2;
+      --beige: #EDE8E0;
+      --white: #ffffff;
+      --text: #2a2a2a;
+      --text-light: #5a5a6a;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body { font-family: var(--font-body); color: var(--text); background: #fff; overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--navy);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 68px; display: flex; align-items: center;
+      padding: 0 48px; gap: 40px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; margin-right: auto; }
+    .nav-logo img { height: 38px; width: auto; }
+    .nav-logo-text { font-family: var(--font-display); font-size: 1.25rem; color: var(--white); font-weight: 500; letter-spacing: 0.02em; }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a, .nav-dropdown > a {
+      color: rgba(255,255,255,0.88); font-size: 0.9rem; text-decoration: none;
+      font-weight: 400; letter-spacing: 0.01em; transition: color .2s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown > a::after { content: ' ▾'; font-size: 0.7em; opacity: 0.7; }
+    .nav-dropdown-menu {
+      display: none; position: absolute; top: 100%; left: 0;
+      background: var(--navy); border-top: 2px solid var(--coral);
+      min-width: 180px; padding: 8px 0;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+    .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+    .nav-dropdown-menu a { display: block; padding: 10px 20px; color: rgba(255,255,255,0.8); font-size: 0.875rem; }
+    .nav-dropdown-menu a:hover { color: #fff; background: rgba(255,255,255,0.05); }
+    .nav-cta {
+      background: var(--coral); color: #fff !important; padding: 9px 22px;
+      border-radius: 6px; font-weight: 500; font-size: 0.875rem !important;
+      transition: background .2s, transform .15s !important;
+    }
+    .nav-cta:hover { background: #d96e54 !important; transform: translateY(-1px); }
+    .nav-login {
+      border: 1px solid rgba(255,255,255,0.45); color: #fff !important;
+      padding: 8px 20px; border-radius: 6px; font-weight: 500; font-size: 0.875rem !important;
+      transition: background .2s, border-color .2s !important;
+    }
+    .nav-login:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.8); }
+
+    /* ── HAMBURGER ── */
+    .nav-hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      padding: 8px; margin-left: auto; background: none; border: none;
+    }
+    .nav-hamburger span { display: block; width: 24px; height: 2px; background: rgba(255,255,255,0.88); border-radius: 2px; transition: transform .3s, opacity .3s; }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile nav drawer */
+    .nav-mobile {
+      display: none; position: fixed;
+      top: 68px; left: 0; right: 0; bottom: 0;
+      background-color: #3D4466; z-index: 9999;
+      padding: 2rem 1.5rem; overflow-y: auto;
+    }
+    .nav-mobile.open { display: block; }
+    .nav-mobile a { display: block; color: rgba(255,255,255,0.85); font-size: 1rem; text-decoration: none; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .nav-mobile a:last-child { border-bottom: none; }
+    /* The bar hands over to the drawer at 1000px now, where it used to hold on to 600px.
+       Its content needs about 950px. Below that the logo wraps to two lines and "Book a
+       Consultation" wraps inside its own button -- which the live site does today between
+       roughly 600px and 780px. Nothing looked wrong from the outside because the logo's
+       `margin-right: auto` soaks up every spare pixel, so the bar never overflows its box;
+       it just quietly squashes. Adding a sixth item widened that band to about 1000px.
+       Handing over before the bar breaks fixes the new band and the old one together, and
+       the drawer carries both buttons.
+       The page's own `@media (max-width: 600px)` copy of these two rules further down is
+       now redundant rather than wrong, so it is left alone. */
+    @media (max-width: 1000px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+    }
+    .nav-mobile .mobile-login {
+      display: block; margin-top: 16px; border: 1px solid rgba(255,255,255,0.45); color: #fff;
+      text-align: center; padding: 13px; border-radius: 8px; font-weight: 600; text-decoration: none;
+    }
+    .nav-mobile .mobile-cta { display: block; margin-top: 16px; background: var(--coral); color: #fff; text-align: center; padding: 14px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+
+
+    /* ── FOOTER ── */
+    footer { background: #2a2d40; color: rgba(255,255,255,0.7); padding: 64px 48px 32px; }
+    .footer-grid { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand img { height: 36px; margin-bottom: 16px; }
+    .footer-brand p { font-size: 0.875rem; line-height: 1.7; color: rgba(255,255,255,0.55); max-width: 260px; }
+    .footer-tagline-text { font-family: var(--font-display); font-size: 1rem; color: rgba(255,255,255,0.7); font-style: italic; margin-top: 12px; }
+    .footer-col h4 { color: #fff; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+    .footer-col a { display: block; color: rgba(255,255,255,0.55); font-size: 0.875rem; text-decoration: none; margin-bottom: 10px; transition: color .2s; }
+    .footer-col a:hover { color: rgba(255,255,255,0.9); }
+    .footer-bottom { max-width: 1120px; margin: 0 auto; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 0.8rem; color: rgba(255,255,255,0.35); }
+    .footer-fun-fact { font-size: 0.78rem; color: rgba(255,255,255,0.35); font-style: italic; max-width: 440px; text-align: right; }
+
+    /* ── RESPONSIVE (nav and footer, as on the other pages) ── */
+    @media print { nav, .nav-mobile, footer { display: none !important; } }
+    @media (max-width: 960px) {
+      nav { padding: 0 24px; gap: 20px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      footer { padding: 48px 20px 24px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-fun-fact { text-align: left; max-width: none; }
+    }
+
+    /* ── THE GUIDE: one sheet on the site's cream, like a handout. ── */
+    .guide-page { background: var(--cream); padding: calc(68px + 2.5rem) 16px 2.5rem; font-size: 16.5px; line-height: 1.65; }
+    .sheet { --coral-text: #bc5038; --shadow: rgba(61, 68, 102, 0.10);
+      max-width: 8.5in; margin: 0 auto; background: var(--white); box-shadow: 0 1px 3px var(--shadow), 0 12px 32px var(--shadow);
+      padding: clamp(1.5rem, 7vw, 0.9in) clamp(1.25rem, 8vw, 1in); }
+    .sheet > * + * { margin-top: 1rem; }
+    .letterhead { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.25rem 1rem;
+      font-size: 0.8rem; color: var(--text-light); padding-bottom: 0.7rem; border-bottom: 1.5px solid var(--beige); }
+    .letterhead b { font-weight: 700; color: var(--coral); letter-spacing: 0.15em; text-transform: uppercase; font-size: 0.82rem; }
+    .sheet h1 { font-family: var(--font-display); font-weight: 500; color: var(--navy); font-size: clamp(2.1rem, 6vw, 2.8rem); line-height: 1.1; margin: 1.6rem 0 0; text-wrap: balance; }
+    .sheet .subtitle { font-style: italic; color: var(--text-light); margin-top: 0.3rem; }
+    .sheet h2 { font-family: var(--font-display); font-weight: 500; color: var(--navy); font-size: 1.4rem; margin: 2rem 0 0; display: flex; gap: 0.6rem; }
+    .sheet h2 .num { font-variant-numeric: tabular-nums; color: var(--coral); min-width: 1.2rem; }
+    .sheet p + p { margin-top: 0.75rem; }
+    .sheet ol.plain { padding-left: 1.4rem; display: flex; flex-direction: column; gap: 0.5rem; }
+    .sheet ol.plain li::marker { color: var(--coral); font-weight: 600; }
+    .sheet strong { font-weight: 600; color: var(--navy); }
+    .sheet a { color: var(--coral-text); font-weight: 600; text-underline-offset: 3px; }
+    .sheet a:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+    .sheet sup { font-size: 0.7em; line-height: 0; }
+    .sheet sup a { text-decoration: none; }
+    .sheet .aside { border-left: 2px solid var(--beige); padding-left: 1rem; color: var(--text-light); font-style: italic; }
+    dl.qa > div + div { margin-top: 0.85rem; }
+    dl.qa dt { font-weight: 600; color: var(--navy); }
+    dl.qa dd { margin: 0.1rem 0 0; }
+    .sheet .notes { border-top: 1px solid var(--beige); margin-top: 2.2rem; padding-top: 0.9rem; font-size: 0.84rem; color: var(--text-light); }
+    .notes ol { padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.3rem; }
+    .notes li { scroll-margin-top: 84px; }
+    .sheet .signoff { margin-top: 2rem; }
+    @media (max-width: 480px) { .guide-page { font-size: 16px; padding-top: calc(68px + 1rem); padding-bottom: 1rem; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="images/MAGNOLIA.PNG" alt="Magnolia flower logo" />
+    <span class="nav-logo-text">Magnolia Education</span>
+  </a>
+  <div class="nav-links">
+    <div class="nav-dropdown">
+      <a href="#">Services</a>
+      <div class="nav-dropdown-menu">
+        <a href="tutoring.html">Tutoring</a>
+        <a href="mock-exams.html">Mock Exams</a>
+        <a href="study-skills.html">Study Skills</a>
+        <a href="prep-cohorts.html">Prep Cohorts</a>
+      </div>
+    </div>
+    <div class="nav-dropdown">
+      <a href="#">About</a>
+      <div class="nav-dropdown-menu">
+        <a href="story.html">Our Story</a>
+        <a href="our-tutors.html">Our Tutors</a>
+      </div>
+    </div>
+    <a href="contact.html">Contact</a>
+    <a href="/login" class="nav-login">Student Login</a>
+    <a href="https://calendly.com/hello-magnolia-education/30min" target="_blank" class="nav-cta">Book a Consultation</a>
+  </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE NAV DRAWER -->
+<div class="nav-mobile" id="mobile-nav">
+  <a href="tutoring.html">Tutoring</a>
+  <a href="mock-exams.html">Mock Exams</a>
+  <a href="study-skills.html">Study Skills</a>
+  <a href="prep-cohorts.html">Prep Cohorts</a>
+  <a href="story.html">Our Story</a>
+  <a href="our-tutors.html">Our Tutors</a>
+  <a href="contact.html">Contact</a>
+  <a href="policies.html">Policies</a>
+  <a href="/login" class="mobile-login">Student Login</a>
+  <a href="https://calendly.com/hello-magnolia-education/30min" target="_blank" class="mobile-cta">Book a Consultation</a>
+</div>
+
+<main class="guide-page">
+<article class="sheet">
+  <div class="letterhead">
+    <b>Magnolia Education</b>
+    <span>Guide for students and parents · November 2026</span>
+  </div>
+
+  <h1>Homework and Sprints</h1>
+  <p class="subtitle">What it is, why we built it, and how to get the most from it</p>
+
+  <p>When your tutor gives you homework, it now shows at the top of your Magnolia portal Home. You <strong>accept</strong> it, which signs it with your initials, and your tutor checks it at the start of your next lesson. If a task keeps slipping, you can split it into <strong>sprints</strong>: short, planned blocks of focus across the days before that lesson.</p>
+
+  <h2><span class="num">1.</span>Why we built it</h2>
+  <p>Tutors often give extra work in a lesson: a set of practice questions, a video to watch, a study guide to make. That work is not the school's homework. It fills the gaps the class won't, like a review of fractions before the next unit. And until now, it was easy for everyone to lose track of it. The student forgot, the tutor forgot exactly what was said, and the parent never knew it existed.</p>
+  <p>So every task is now written down in one place, and the student agrees to it. Signing for a task is a small act, but it changes who the plan belongs to. People are more likely to follow through on a commitment they made themselves, especially one with a firm deadline they chose.<sup><a href="#n1">1</a></sup></p>
+  <p>Sprints are for the other half of the problem: getting started. Putting a task off is rarely about laziness. It is usually about the task feeling large, vague or unpleasant.<sup><a href="#n2">2</a></sup> Deciding in advance <em>when</em> you will work on it, and keeping each block short, makes starting much easier.<sup><a href="#n3">3</a></sup></p>
+
+  <h2><span class="num">2.</span>How homework works</h2>
+  <ol class="plain">
+    <li><strong>Your tutor assigns it,</strong> usually during the lesson: what to do, and any links you need. It is due at your next lesson in that subject, or a week later if no lesson is booked yet.</li>
+    <li><strong>You accept it.</strong> It appears at the top of your Home as new homework. Tap Accept and your initials are stamped on it, like signing your name. Until you do, your tutor and your parent see “Not accepted yet”.</li>
+    <li><strong>You do it before the lesson.</strong> Finished sooner than planned? Tap Finished early. Your tutor still checks it.</li>
+    <li><strong>Your tutor checks it at the start of the lesson.</strong> They mark it completed, partially completed, incomplete, or no longer relevant. Unfinished work can carry on to the next lesson, still signed with your initials.</li>
+    <li><strong>You can add your own.</strong> Want to hold yourself to something? Choose Add your own homework on your lesson card. It is signed straight away and checked like any other.</li>
+  </ol>
+
+  <h2><span class="num">3.</span>Sprints</h2>
+  <p>One sprint is <strong>25 minutes of focus, then a 5 minute break</strong>. Make the break an active one: stretch, take the stairs, get a glass of water. Not your phone. The idea comes from the Pomodoro Technique, a method of working in short timed blocks.<sup><a href="#n4">4</a></sup></p>
+  <ol class="plain">
+    <li><strong>Plan them with your tutor.</strong> When your tutor assigns homework, you can choose the days before your lesson to do it on, and how many sprints each day. It works best when you pick the days yourself, so it is your plan.</li>
+    <li><strong>See your week at a glance.</strong> Your sprints sit in a strip of days above your homework, one colour per subject, with your lesson days marked.</li>
+    <li><strong>Tap a sprint when you finish it.</strong> It fills in with a tick. Tapped the wrong one? Tap Undo, or tap it again.</li>
+    <li><strong>Plans change.</strong> Drag a sprint to another day to move it. Did more than you planned? Tap + on a day to add a sprint, then tick it off. You can add sprints to any homework, even one that started without them.</li>
+    <li><strong>Finish them all.</strong> When every sprint for a homework is done, they bloom into magnolias.</li>
+  </ol>
+  <p class="aside">Sprints are optional. Your tutor will suggest them when they would help: when homework hasn't been getting done, or when you'd like more structure. Plenty of homework needs nothing more than an Accept.</p>
+
+  <h2><span class="num">4.</span>For parents</h2>
+  <p>You see the same homework in your own portal, on your child's Home: each task, whether it has been accepted and with whose initials, and which sprints are done. Only your child can accept homework or tick off a sprint, so the initials always mean them. If a task still says “Not accepted yet” the day after it was set, that is worth a gentle question.</p>
+
+  <h2><span class="num">5.</span>Common questions</h2>
+  <dl class="qa">
+    <div><dt>Can I decline homework?</dt><dd>No. There is only Accept. If something about a task doesn't work for you, talk to your tutor; they can change it at any time.</dd></div>
+    <div><dt>When is it due?</dt><dd>At your next lesson in that subject, as shown on the homework. With no lesson booked, it is due a week after it was set.</dd></div>
+    <div><dt>How many sprints can I plan?</dt><dd>Up to 6 a day, on any day from today up to your lesson, across at most a week.</dd></div>
+    <div><dt>What if I miss a sprint?</dt><dd>Nothing happens on its own. Move it to another day, or just do it late and tick it off. Your tutor sees the plan and the ticks, and you can talk it through at the lesson.</dd></div>
+    <div><dt>What if I finish early?</dt><dd>Tap Finished early on the homework. The sprints you hadn't done yet are cleared, and your tutor checks the work at your lesson.</dd></div>
+    <div><dt>Who can see my homework?</dt><dd>You, your parent, your tutor for that subject and the Magnolia team.</dd></div>
+  </dl>
+
+  <p class="signoff">Questions about homework or sprints? Write to us at hello@magnolia-education.com.</p>
+  <p>Magnolia Education</p>
+
+  <div class="notes">
+    <ol>
+      <li id="n1">Ariely, D., &amp; Wertenbroch, K. (2002). Procrastination, deadlines, and performance: Self-control by precommitment. <em>Psychological Science</em>, 13(3), 219–224.</li>
+      <li id="n2">Steel, P. (2007). The nature of procrastination: A meta-analytic and theoretical review of quintessential self-regulatory failure. <em>Psychological Bulletin</em>, 133(1), 65–94.</li>
+      <li id="n3">Gollwitzer, P. M. (1999). Implementation intentions: Strong effects of simple plans. <em>American Psychologist</em>, 54(7), 493–503.</li>
+      <li id="n4">Cirillo, F. (2018). <em>The Pomodoro Technique.</em> Currency.</li>
+    </ol>
+  </div>
+</article>
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="images/MAGNOLIA.PNG" alt="Magnolia Education logo" />
+      <p id="f-tagline"></p>
+      <p class="footer-tagline-text" id="f-quote"></p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="tutoring.html">Tutoring</a>
+      <a href="mock-exams.html">Mock Exams</a>
+      <a href="study-skills.html">Study Skills</a>
+      <a href="prep-cohorts.html">Prep Cohorts</a>
+    </div>
+    <div class="footer-col">
+      <h4>About</h4>
+      <a href="story.html">Our Story</a>
+      <a href="our-tutors.html">Our Tutors</a>
+      <a href="/apply">Join Our Team</a>
+      <a href="policies.html">Policies</a>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <a href="contact.html">Contact</a>
+      <a href="mailto:hello@magnolia-education.com" style="white-space:nowrap">hello@magnolia-education.com</a>
+      <a href="https://calendly.com/hello-magnolia-education/30min" target="_blank">Book a Consultation</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p id="f-copyright"></p>
+    <p class="footer-fun-fact" id="f-funfact"></p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Footer content from content.js
+  const C = window.CONTENT;
+  if (C && C.homepage) {
+    const H = C.homepage;
+    function setText(id, val) {
+      const el = document.getElementById(id);
+      if (el && val != null) el.textContent = val;
+    }
+    setText('f-tagline', H.footer.tagline);
+    setText('f-quote', H.footer.quote);
+    setText('f-copyright', H.footer.copyright);
+    setText('f-funfact', H.footer.funFact);
+  }
+
+  // Hamburger
+  var hamburger = document.getElementById('hamburger');
+  var mobileNav = document.getElementById('mobile-nav');
+  hamburger && hamburger.addEventListener('click', function () {
+    hamburger.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+  });
+  mobileNav && mobileNav.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      hamburger.classList.remove('open');
+      mobileNav.classList.remove('open');
+    });
+  });
+})();
+</script>
+
+<!-- DEV TOOL: Image tuner overlay (local only, inactive in production) -->
+<script src="dev/image-tuner-overlay.js"></script>
+
+</body>
+</html>

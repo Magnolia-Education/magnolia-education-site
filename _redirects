@@ -8,6 +8,10 @@
 # so it never depends on pretty-URL shadowing. /portal/test-center is the app; this is the page.
 /test-center    /test-center.html  200
 
+# The homework and sprints guide, the address its launch emails link to. Pinned like /test-center.
+# /portal/dashboard is where the homework lives in the app; this is the page.
+/homework       /homework.html     200
+
 # Jobs: the admin role and the tutor role. Pinned like /test-center so the address the hiring
 # emails link to never depends on pretty-URL shadowing. The tutor form itself stays at /apply.
 /jobs           /jobs.html         200
